@@ -56,7 +56,7 @@ class CreateStanding extends Command
                     $stading->home_draw=$data[$i]->home->draw;
                     $stading->home_goal_for=$data[$i]->home->goals->for;
                     $stading->home_goal_against=$data[$i]->home->goals->against;
-                    $stading->update_round=date('Y-m-d',$data[$i]->update);
+                    $stading->update_round=date('Y-m-d',date_timestamp_get($data[$i]->update));
                     $stading->away_played=$data[$i]->away->played;
                     $stading->away_win=$data[$i]->away->win;
                     $stading->away_lost=$data[$i]->away->lose;
