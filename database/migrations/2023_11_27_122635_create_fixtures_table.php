@@ -24,8 +24,8 @@ return new class extends Migration
             $table->integer('league_id');
             $table->integer('league_season');
             $table->string('league_round');
-            $table->unsignedInteger('team_home_id');
-            $table->unsignedInteger('team_away_id');
+            $table->integer('team_home_id');
+            $table->integer('team_away_id');
             $table->boolean('team_away_winner')->default(false);
             $table->boolean('team_home_winner')->default(false);
             $table->integer('goal_home')->nullable();

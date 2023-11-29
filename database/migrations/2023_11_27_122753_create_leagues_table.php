@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('leagues', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('league_id')->index();
+            $table->integer('league_id')->index();
             $table->string('name');
             $table->string('type')->nullable();
             $table->string('logo');

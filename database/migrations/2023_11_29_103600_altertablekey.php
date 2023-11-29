@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('stadings', function (Blueprint $table) {
-            $table->unsignedInteger('league_id')->nullable()->change();
-            $table->unsignedInteger('team_id')->nullable()->change();
+            $table->integer('league_id')->nullable()->change();
+            $table->integer('team_id')->nullable()->change();
         });
         Schema::table('fixtures', function (Blueprint $table) {
-            $table->unsignedInteger('team_home_id')->nullable()->change();
-            $table->unsignedInteger('team_away_id')->nullable()->change();
+            $table->integer('team_home_id')->nullable()->change();
+            $table->integer('team_away_id')->nullable()->change();
         });
     }
 

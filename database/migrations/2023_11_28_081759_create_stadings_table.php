@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('stadings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('league_id');
-            $table->unsignedInteger('team_id');
+            $table->integer('league_id');
+            $table->integer('team_id');
             $table->string('season');
             $table->string('group');
             $table->integer('rank');
