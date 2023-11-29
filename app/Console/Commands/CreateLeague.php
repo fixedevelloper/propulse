@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Country;
 use App\Models\League;
+use App\Models\LeagueSeason;
 use App\Models\Team;
 use App\Services\FootballAPIService;
 use Illuminate\Console\Command;
@@ -31,8 +32,8 @@ class CreateLeague extends Command
     {
         logger(env("APIFOOT_KEY"));
        // $this->createCountry();
-       // $this->createLeagues();
-        $leagues = League::all();
+        $this->createLeagues();
+       $leagues = League::all();
         foreach ($leagues as $league) {
             $res = FootballAPIService::getTeams($league->league_id, "2023");
             $data = $res->response;
@@ -65,6 +66,19 @@ class CreateLeague extends Command
             $league->type=$data[$i]->league->type;
             $league->logo=$data[$i]->league->logo;
             $league->save();
+            $seasons=$data[$i]->seasons;
+            for ($k=0;$k<sizeof($seasons);$k++) {
+                $season=LeagueSeason::query()->firstWhere(['league_id'=>$data[$i]->league->id,'year'=>$seasons[$k]->year]);
+                if (is_null($season)){
+                    $season=new LeagueSeason();
+                    $season->league_id=$data[$i]->league->id;
+                }
+                $season->year=$seasons[$k]->year;
+                $season->start=$seasons[$k]->start;
+                $season->end=$seasons[$k]->end;
+                $season->current=$seasons[$k]->current;
+                $season->save();
+            }
         }
 
     }
