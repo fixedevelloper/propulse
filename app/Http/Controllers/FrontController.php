@@ -27,7 +27,9 @@ class FrontController extends Controller
     }
     public function live(){
         return view('live', []);
-
+    }
+    public function standings(){
+        return view('standings', []);
     }
     public function sportbetting(){
         return view('sportbetting', []);

@@ -18,6 +18,8 @@ Route::get('/', [FrontController::class, 'home'])
     ->name('home');
 Route::get('/live', [FrontController::class, 'live'])
     ->name('live');
+Route::get('/standings', [FrontController::class, 'standings'])
+    ->name('standings');
 Route::get('/sportbetting', [FrontController::class, 'sportbetting'])
     ->name('sportbetting');
 Route::get('/casino', [FrontController::class, 'casino'])

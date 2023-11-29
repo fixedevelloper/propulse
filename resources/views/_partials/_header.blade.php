@@ -62,6 +62,11 @@
                             <span>Promotions</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{route('standings')}}">
+                            <span>standings</span>
+                        </a>
+                    </li>
                     <li class="cmn-grp">
                             <span class="cmn--btn" data-bs-toggle="modal" data-bs-target="#signup">
                                 <span class="rela">Sign In</span>

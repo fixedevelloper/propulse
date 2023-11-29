@@ -70,7 +70,7 @@ class CreateLeague extends Command
             $league->save();
             $seasons = $data[$i]->seasons;
             for ($k = 0; $k < sizeof($seasons); $k++) {
-                $season = LeagueSeason::query()->firstWhere(['league_id' => $data[$i]->league->id, 'year' => $seasons[$k]->year]);
+                $season = LeagueSeason::query()->firstWhere(['league_id' => $league->id, 'year' => $seasons[$k]->year]);
                 if (is_null($season)) {
                     $season = new LeagueSeason();
 
