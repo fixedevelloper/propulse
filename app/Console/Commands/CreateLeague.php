@@ -30,8 +30,8 @@ class CreateLeague extends Command
     public function handle()
     {
         logger(env("APIFOOT_KEY"));
-        $this->createCountry();
-        $this->createLeagues();
+       // $this->createCountry();
+       // $this->createLeagues();
         $leagues = League::query()->where(['type'=>'League'])->get();
         foreach ($leagues as $league) {
             $res = FootballAPIService::getTeams($league->league_id, "2023");
