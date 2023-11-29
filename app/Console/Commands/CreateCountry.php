@@ -15,7 +15,8 @@ class CreateCountry extends Command
      *
      * @var string
      */
-    protected $signature = 'app:create-country';
+    protected $signature = 'app:create-country {--league=}';
+
 
     /**
      * The console command description.
@@ -29,7 +30,7 @@ class CreateCountry extends Command
      */
     public function handle()
     {
-        $res = FootballAPIService::getTeams(297, "2023");
+        $res = FootballAPIService::getTeams($this->option('league'), "2023");
         $data = $res->response;
         for ($i = 0; $i < sizeof($data); $i++) {
             $team = Team::query()->firstWhere(['team_id' => $data[$i]->team->id]);
