@@ -290,7 +290,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="cart__point"><span> {{$fixture->goal_home}}</span>
+                                    <div class="cart__point"><span> {{$fixture->goal_home}}</span>-
                                         <span>{{$fixture->goal_home}}</span>
                                     </div>
                                     <div class="mart__point__items">

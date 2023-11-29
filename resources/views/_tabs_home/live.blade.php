@@ -82,12 +82,12 @@
                                                 Live
                                             </a>
                                             <span>
-                                                    2H 45:34
+                                                     {{\App\Helpers\Helpers::makeTime($fixture)}}
                                                 </span>
                                         </p>
                                     </div>
                                 </div>
-                                <div class="cart__point"><span> {{$fixture->goal_home}}</span>
+                                <div class="cart__point"><span> {{$fixture->goal_home}}</span>-
                                     <span>{{$fixture->goal_home}}</span>
                                 </div>
                                 <div class="mart__point__items">
