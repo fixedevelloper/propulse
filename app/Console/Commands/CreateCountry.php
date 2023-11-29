@@ -33,6 +33,7 @@ class CreateCountry extends Command
         $res = FootballAPIService::getTeams($this->option('league'), "2023");
         $data = $res->response;
         for ($i = 0; $i < sizeof($data); $i++) {
+            logger($data[$i]->team->id);
             $team = Team::query()->firstWhere(['team_id' => $data[$i]->team->id]);
             if (is_null($team)) {
                 $team = new Team();
