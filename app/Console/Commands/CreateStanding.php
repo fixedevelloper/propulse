@@ -42,7 +42,7 @@ class CreateStanding extends Command
         try {
             foreach ($leagues as $league) {
                 $res = FootballAPIService::getStatdings($league->league->league_id, $season);
-                if (sizeof($res->response[0]->league->standings)>0){
+                if (sizeof($res->response)>0){
                     $data = $res->response[0]->league->standings[0];
                     logger(sizeof($data));
                     for ($i = 0; $i < sizeof($data); $i++) {
@@ -77,7 +77,7 @@ class CreateStanding extends Command
 
             }
         }catch (\Exception $exception){
-            logger($exception->getMessage());
+            logger($exception);
         }
 
 
