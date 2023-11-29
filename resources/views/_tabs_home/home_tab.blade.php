@@ -14,7 +14,7 @@
                     </span>
                 </div>
                 <span class="today">
-                    Today / 22:00
+                    {{\App\Helpers\Helpers::makeTime($fixture)}}
                 </span>
             </div>
             <div class="match__vs">
@@ -285,7 +285,7 @@
                                                     Live
                                                 </a>
                                                 <span>
-                                                    2H 45:34
+                                                    {{\App\Helpers\Helpers::makeTime($fixture)}}
                                                 </span>
                                             </p>
                                         </div>

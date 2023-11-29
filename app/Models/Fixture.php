@@ -19,6 +19,6 @@ class Fixture extends Model
     }
     public function odd()
     {
-        return $this->hasOne(Odd::class, 'fixture_id', 'id');
+        return $this->hasOne(Odd::class, 'fixture_id', 'fixture_id');
     }
 }
