@@ -9,13 +9,13 @@ class Fixture extends Model
 {
     use HasFactory;
     public function team_home() {
-        return $this->belongsTo(Team::class, 'team_home_id', 'id');
+        return $this->belongsTo(Team::class, 'team_home_id', 'team_id');
     }
     public function team_away() {
-        return $this->belongsTo(Team::class, 'team_away_id', 'id');
+        return $this->belongsTo(Team::class, 'team_away_id', 'team_id');
     }
     public function league() {
-        return $this->belongsTo(League::class, 'league_id', 'id');
+        return $this->belongsTo(League::class, 'league_id', 'league_id');
     }
     public function odd()
     {
