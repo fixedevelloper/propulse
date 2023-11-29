@@ -73,8 +73,9 @@ class CreateLeague extends Command
                 $season = LeagueSeason::query()->firstWhere(['league_id' => $data[$i]->league->id, 'year' => $seasons[$k]->year]);
                 if (is_null($season)) {
                     $season = new LeagueSeason();
-                    $season->league_id = $data[$i]->league->id;
+
                 }
+                $season->league_id = $league->id;
                 $season->year = $seasons[$k]->year;
                 $season->start = $seasons[$k]->start;
                 $season->end = $seasons[$k]->end;
