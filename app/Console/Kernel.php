@@ -12,7 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('app:create-fixture')->dailyAt('08:00');
+       // $schedule->command('app:create-fixture')->dailyAt('08:00');
+        $schedule->command('app:create-fixture')->daily();
+        //$schedule->command('app:create-fixture')->everyFourMinutes(); //livescore
         // $schedule->command('inspire')->hourly();
     }
 

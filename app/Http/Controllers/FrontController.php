@@ -16,7 +16,7 @@ class FrontController extends Controller
         $today_timestamp=Carbon::parse($today)->getTimestamp();
         $leagues=League::query()->whereIn('league_id',[3,1,5])->get();
         logger($today_timestamp);
-        $fixtures=Fixture::query()->where(['day_timestamp'=>$today_timestamp])->get();
+        $fixtures=Fixture::query()->where(['day_timestamp'=>$today_timestamp])->paginate(15);
         $fixture_limit=Fixture::query()->where(['day_timestamp'=>$today_timestamp])->orderByDesc('fixture_id')->limit(10)->get();
         return view('home', [
             'fixture_days'=>$fixtures,

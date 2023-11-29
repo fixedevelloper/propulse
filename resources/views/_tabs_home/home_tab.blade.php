@@ -698,7 +698,7 @@
                                         Open Football lobby
                                     </a>
                                     <a href="#0" class="footerpoing">
-                                        <span>322</span>
+                                        <span> {!! $fixture_days->links() !!}</span>
                                         <span><i
                                                 class="fas fa-angle-right"></i></span>
                                     </a>
