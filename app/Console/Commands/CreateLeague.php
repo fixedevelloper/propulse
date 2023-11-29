@@ -31,9 +31,9 @@ class CreateLeague extends Command
     public function handle()
     {
         logger(env("APIFOOT_KEY"));
-       // $this->createCountry();
+        // $this->createCountry();
         $this->createLeagues();
-       $leagues = League::all();
+        $leagues = League::all();
         foreach ($leagues as $league) {
             $res = FootballAPIService::getTeams($league->league_id, "2023");
             $data = $res->response;
@@ -41,58 +41,63 @@ class CreateLeague extends Command
                 $team = Team::query()->firstWhere(['team_id' => $data[$i]->team->id]);
                 if (is_null($team)) {
                     $team = new Team();
-                $team->name=$data[$i]->team->name;
-                $team->team_id=$data[$i]->team->id;
-                $team->code=is_null($data[$i]->team->code)?" ":$data[$i]->team->code;
-                $team->logo=$data[$i]->team->logo;
-                $team->country=$data[$i]->team->country;
-                $team->founded=is_null($data[$i]->team->founded)?2023:$data[$i]->team->founded;
-                $team->national=$data[$i]->team->national;
-                $team->save();}
+                    $team->name = $data[$i]->team->name;
+                    $team->team_id = $data[$i]->team->id;
+                    $team->code = is_null($data[$i]->team->code) ? " " : $data[$i]->team->code;
+                    $team->logo = $data[$i]->team->logo;
+                    $team->country = $data[$i]->team->country;
+                    $team->founded = is_null($data[$i]->team->founded) ? 2023 : $data[$i]->team->founded;
+                    $team->national = $data[$i]->team->national;
+                    $team->save();
+                }
             }
         }
     }
-    function createLeagues(){
-        $res=FootballAPIService::getLeagues();
-        $data=$res->response;
-        for ($i=0;$i<sizeof($data);$i++) {
-            $league=League::query()->firstWhere(['league_id'=>$data[$i]->league->id]);
-            if (is_null($league)){
-                $league=new League();
+
+    function createLeagues()
+    {
+        $res = FootballAPIService::getLeagues();
+        $data = $res->response;
+        for ($i = 0; $i < sizeof($data); $i++) {
+            $league = League::query()->firstWhere(['league_id' => $data[$i]->league->id]);
+            if (is_null($league)) {
+                $league = new League();
             }
-            $league->name=$data[$i]->league->name;
-            $league->league_id=$data[$i]->league->id;
-            $league->type=$data[$i]->league->type;
-            $league->logo=$data[$i]->league->logo;
+            $league->name = $data[$i]->league->name;
+            $league->league_id = $data[$i]->league->id;
+            $league->type = $data[$i]->league->type;
+            $league->logo = $data[$i]->league->logo;
             $league->save();
-            $seasons=$data[$i]->seasons;
-            for ($k=0;$k<sizeof($seasons);$k++) {
-                $season=LeagueSeason::query()->firstWhere(['league_id'=>$data[$i]->league->id,'year'=>$seasons[$k]->year]);
-                if (is_null($season)){
-                    $season=new LeagueSeason();
-                    $season->league_id=$data[$i]->league->id;
+            $seasons = $data[$i]->seasons;
+            for ($k = 0; $k < sizeof($seasons); $k++) {
+                $season = LeagueSeason::query()->firstWhere(['league_id' => $data[$i]->league->id, 'year' => $seasons[$k]->year]);
+                if (is_null($season)) {
+                    $season = new LeagueSeason();
+                    $season->league_id = $data[$i]->league->id;
                 }
-                $season->year=$seasons[$k]->year;
-                $season->start=$seasons[$k]->start;
-                $season->end=$seasons[$k]->end;
-                $season->current=$seasons[$k]->current;
+                $season->year = $seasons[$k]->year;
+                $season->start = $seasons[$k]->start;
+                $season->end = $seasons[$k]->end;
+                $season->current = $seasons[$k]->current;
                 $season->save();
             }
         }
 
     }
-    function createCountry(){
-        $res=FootballAPIService::getCountries();
-        $data=$res->response;
-        for ($i=0;$i<sizeof($data);$i++) {
-            $country=Country::query()->firstWhere(['name'=>$data[$i]->name]);
-            if (is_null($country)){
-                $country=new Country();
-                $country->country_id=$data[$i]->name;
+
+    function createCountry()
+    {
+        $res = FootballAPIService::getCountries();
+        $data = $res->response;
+        for ($i = 0; $i < sizeof($data); $i++) {
+            $country = Country::query()->firstWhere(['name' => $data[$i]->name]);
+            if (is_null($country)) {
+                $country = new Country();
+                $country->country_id = $data[$i]->name;
             }
-            $country->name=$data[$i]->name;
-            $country->code=$data[$i]->code;
-            $country->flag=$data[$i]->flag;
+            $country->name = $data[$i]->name;
+            $country->code = $data[$i]->code;
+            $country->flag = $data[$i]->flag;
             $country->save();
         }
 

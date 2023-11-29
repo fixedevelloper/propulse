@@ -53,7 +53,6 @@ class FootballAPIService
     }
 
     /**
-     * @param $league
      * @param $from
      * @param $to
      * @return mixed
