@@ -41,7 +41,6 @@ class CreateLeague extends Command
                 $team = Team::query()->firstWhere(['team_id' => $data[$i]->team->id]);
                 if (is_null($team)) {
                     $team = new Team();
-
                 $team->name=$data[$i]->team->name;
                 $team->team_id=$data[$i]->team->id;
                 $team->code=is_null($data[$i]->team->code)?" ":$data[$i]->team->code;
