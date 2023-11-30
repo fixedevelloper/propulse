@@ -137,7 +137,7 @@
                                     @foreach($stadings as $staging)
                                         <tr>
                                             <td>{{$staging->rank}}</td>
-                                            <td>@if($staging->team->logo)
+                                            <td>@if($staging->team)
                                                 <img src="{{$staging->team->logo}}" height="20" alt="">
                                                 @endif
                                             </td>
