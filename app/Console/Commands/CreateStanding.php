@@ -71,6 +71,10 @@ class CreateStanding extends Command
                             $stading->away_goal_for=$data[$i]->away->goals->for;
                             $stading->away_goal_against=$data[$i]->away->goals->against;
                             $stading->form=$data[$i]->form;
+                            $stading->point_home=$data[$i]->home->win*3 + $data[$i]->home->draw;
+                            $stading->point_away=$data[$i]->away->win*3 + $data[$i]->away->draw;
+                            $stading->goal_diff_home=$data[$i]->home->goals->for - $data[$i]->home->goals->against;
+                            $stading->goal_diff_away=$data[$i]->away->goals->for - $data[$i]->away->goals->against;
                         }$stading->save();
                     }
                 }

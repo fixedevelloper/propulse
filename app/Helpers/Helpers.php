@@ -38,4 +38,7 @@ class Helpers
             'logo'=>is_null($team)?"":$team->logo,
         ];
     }
+    static function calculPointHome($stading){
+        return $stading->home_win*3 + $stading->home_draw;
+    }
 }

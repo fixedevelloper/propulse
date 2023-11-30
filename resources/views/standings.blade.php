@@ -168,10 +168,106 @@
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
+                                <table class="table table-ranking">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th></th>
+                                        <th width="40%">Team</th>
+                                        <th>MP</th>
+                                        <th>W</th>
+                                        <th>L</th>
+                                        <th>D</th>
+                                        <th>G</th>
+                                        <th>GD</th>
+                                        <th>PTS</th>
+                                        <th width="20%">FORM</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                 @foreach($stadings_home as $staging_home)
+                                        <tr>
+                                            <td>{{$staging_home->rank}}</td>
+                                            <td>@if($staging_home->team)
+                                                    <img src="{{$staging_home->team->logo}}" height="20" alt="">
+                                                @endif
+                                            </td>
+                                            <td>{{$staging_home->team->name}}</td>
+                                            <td>{{$staging_home->home_played}}</td>
+                                            <td>{{$staging_home->home_win}}</td>
+                                            <td>{{$staging_home->home_lost}}</td>
+                                            <td>{{$staging_home->home_draw}}</td>
+                                            <td>{{$staging_home->home_goal_for}}
+                                                : {{$staging_home->home_goal_against}}</td>
+                                            <td>{{$staging_home->home_goal_for - $staging_home->home_goal_against}}</td>
+                                            <td>{{\App\Helpers\Helpers::calculPointHome($staging_home)}}</td>
+                                            <td>
+                                                @for($i=0;$i<strlen($staging_home->form);$i++)
 
+                                                    <span @if(str_split($staging_home->form)[$i]=='W')
+                                                          class="btn btn-sm btn-success"
+                                                          @elseif(str_split($staging_home->form)[$i]=='L')  class="btn btn-sm btn-danger"
+                                                          @else
+                                                          class="btn btn-sm btn-warning"  @endif>{{str_split($staging_home->form)[$i]}}</span>
+                                                @endfor
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+
+                                </table>
                             </div>
                             <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
+                                <table class="table table-ranking">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th></th>
+                                        <th width="40%">Team</th>
+                                        <th>MP</th>
+                                        <th>W</th>
+                                        <th>L</th>
+                                        <th>D</th>
+                                        <th>G</th>
+                                        <th>GD</th>
+                                        <th>PTS</th>
+                                        <th width="20%">FORM</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($stadings_home as $staging_home)
+                                        <tr>
+                                            <td>{{$staging_home->rank}}</td>
+                                            <td>@if($staging_home->team)
+                                                    <img src="{{$staging_home->team->logo}}" height="20" alt="">
+                                                @endif
+                                            </td>
+                                            <td>{{$staging_home->team->name}}</td>
+                                            <td>{{$staging_home->away_played}}</td>
+                                            <td>{{$staging_home->away_win}}</td>
+                                            <td>{{$staging_home->away_lost}}</td>
+                                            <td>{{$staging_home->away_draw}}</td>
+                                            <td>{{$staging_home->away_goal_for}}
+                                                : {{$staging_home->away_goal_against}}</td>
+                                            <td>{{$staging_home->away_goal_for - $staging_home->away_goal_against}}</td>
+                                            <td>{{$staging_home->points}}</td>
+                                            <td>
+                                                @for($i=0;$i<strlen($staging_home->form);$i++)
 
+                                                    <span @if(str_split($staging_home->form)[$i]=='W')
+                                                          class="btn btn-sm btn-success"
+                                                          @elseif(str_split($staging_home->form)[$i]=='L')  class="btn btn-sm btn-danger"
+                                                          @else
+                                                          class="btn btn-sm btn-warning"  @endif>{{str_split($staging_home->form)[$i]}}</span>
+                                                @endfor
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+
+                                </table>
                             </div>
                         </div>
                     </div>
