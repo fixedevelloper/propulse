@@ -41,15 +41,15 @@ class CreateStanding extends Command
 
         try {
             foreach ($leagues as $league) {
-                $res = FootballAPIService::getStatdings($league->league->league_id, $season);
+                $res = FootballAPIService::getStatdings($league->league_id, $season);
                 if (sizeof($res->response)>0){
                     $data = $res->response[0]->league->standings[0];
                     logger(sizeof($data));
                     for ($i = 0; $i < sizeof($data); $i++) {
-                        $stading = Stadings::query()->firstWhere(['league_id' => $league->league->league_id,'team_id'=>$data[$i]->team->id,'season'=>$season]);
+                        $stading = Stadings::query()->firstWhere(['league_id' => $league->league_id,'team_id'=>$data[$i]->team->id,'season'=>$season]);
                         if (is_null($stading)) {
                             $stading = new Stadings();
-                            $stading->league_id=$league->league->league_id;
+                            $stading->league_id=$league->league_id;
                             $stading->team_id=$data[$i]->team->id;
                             $stading->season=$season;
                             $stading->group=$data[$i]->group;
