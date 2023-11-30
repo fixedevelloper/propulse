@@ -1,5 +1,7 @@
 @extends('base')
-
+@section('sub_header')
+    @include('_partials._sub_header')
+@endsection
 @section('content')
     <!--Global Main Body-->
     <section class="main__body__area">

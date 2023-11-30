@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Fixture extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'team_home_id' => 'integer',
+    ];
 /*    public function team_home() {
         return $this->belongsTo(Team::class, 'team_id', 'team_home_id');
     }*/
@@ -16,6 +19,7 @@ class Fixture extends Model
     }
     public function scopeTeam_home($query,$team_id)
     {
+
       return  $query->firstWhere(['team_home_id'=>$team_id]);
     }
     public function league() {

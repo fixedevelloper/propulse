@@ -51,9 +51,8 @@
 
 <body>
 <div class="main-wrapper">
-
 @include('_partials._header')
-    @include('_partials._sub_header')
+    @yield('sub_header')
         <div class="page-content">
 @yield('content')
         </div>
