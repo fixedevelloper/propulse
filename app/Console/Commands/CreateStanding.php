@@ -33,11 +33,11 @@ class CreateStanding extends Command
         $this->standing();
     }
     function standing(){
-        //$leagues = League::query()->where(['type'=>'League'])->get();
+        $leagues = League::query()->where(['type'=>'League'])->get();
         $season="2023";
-        $leagues = LeagueSeason::query()
+/*        $leagues = LeagueSeason::query()
             ->leftJoin('leagues','leagues.id','=','league_seasons.league_id')
-            ->where(['leagues.type'=>'League','year'=>$season])->get();
+            ->where(['leagues.type'=>'League','year'=>$season])->get();*/
 
         try {
             foreach ($leagues as $league) {
