@@ -46,6 +46,7 @@
     <!--Main custom Css-->
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
     <!-- main css for template -->
+    <link rel="stylesheet" href="{{asset('css/custom.css')}}">
 </head>
 
 <body>

@@ -1,0 +1,26 @@
+.left_country {
+    position: sticky;
+    top: 140px;
+    height: 200px;
+    padding-bottom: 200px;
+    overflow-y: scroll;
+    background-color: var(--slidebox);
+    border-bottom: solid #ffffff 2px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+}
+.block_country{
+    max-height: 50px;
+    height: 200px;
+}
+.block_league{
+
+}
+.block-item{
+    border-bottom: solid #ffffff 1px;
+    padding: 5px;
+    display: block;
+}
+.table-ranking{
+    color: #ffffff;
+}
