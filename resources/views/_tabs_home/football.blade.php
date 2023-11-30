@@ -1,3 +1,4 @@
+{{--
 <div class="tab-pane mt__30 text-white fade" id="mainTab4" role="tabpanel" tabindex="0">
     <!--Main Body-->
     <div class="main__body__wrap left__right__space pb-60">
@@ -469,3 +470,4 @@
     <!--Footer End-->
 </div>
 
+--}}

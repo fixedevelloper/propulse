@@ -20,10 +20,10 @@
             <div class="match__vs">
                 <div class="match__vs__left">
                     <span>
-                      {{$fixture->team_home->name}}
+                      {{$fixture->team_home($fixture->team_home_id)->name}}
                     </span>
                     <span class="flag">
-                        <img src="{{$fixture->team_home->logo}}" alt="flag">
+                        <img src="{{$fixture->team_home($fixture->team_home_id)->logo}}" alt="flag">
                     </span>
                 </div>
                 <span class="vs">
@@ -31,10 +31,10 @@
                 </span>
                 <div class="match__vs__left">
                     <span class="flag">
-                        <img src="{{$fixture->team_away->logo}}" alt="flag">
+                        <img src="{{$fixture->team_home($fixture->team_home_id)->logo}}" alt="flag">
                     </span>
                     <span>
-                       {{$fixture->team_away->name}}
+                       {{$fixture->team_home($fixture->team_home_id)->name}}
                     </span>
                 </div>
             </div>
@@ -275,10 +275,10 @@
                                     <div class="t__items">
                                         <div class="t__items__left">
                                             <h6>
-                                            <img height="20" src="{{$fixture->team_home->logo}}">   {{$fixture->team_home->name}}
+                                            <img height="20" src="{{$fixture->team_home($fixture->team_home_id)->logo}}">   {{$fixture->team_home($fixture->team_home_id)->name}}
                                             </h6>
                                             <span class="text">
-                                              <img height="20" src="{{$fixture->team_away->logo}}">  {{$fixture->team_away->name}}
+                                              <img height="20" src="{{$fixture->team_home($fixture->team_home_id)->logo}}">  {{$fixture->team_home($fixture->team_home_id)->name}}
                                             </span>
                                             <p>
                                                 <a href="#0">

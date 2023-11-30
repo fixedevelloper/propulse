@@ -1,4 +1,4 @@
-<div class="tab-pane text-white fade" id="mainTab2" role="tabpanel" tabindex="0">
+{{--<div class="tab-pane text-white fade" id="mainTab2" role="tabpanel" tabindex="0">
     <!--Main Body-->
     <div class="main__body__wrap left__right__space pb-60">
         <!--Home Here-->
@@ -152,7 +152,7 @@
         </div>
         <!--Home End-->
 
-{{--        <!--Tennis Start-->
+--}}{{--        <!--Tennis Start-->
         <div class="live__heightlight">
             <div class="height__table">
                 <div class="main__table main__table__tennis">
@@ -2398,7 +2398,7 @@
                 </div>
             </div>
         </div>
-        <!--Table Tennis End-->--}}
+        <!--Table Tennis End-->--}}{{--
     </div>
     <!--Main Body-->
 
@@ -2724,5 +2724,5 @@
         </div>
     </footer>
     <!--Footer End-->
-</div>
+</div>--}}
 
