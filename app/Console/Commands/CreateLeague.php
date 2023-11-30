@@ -30,15 +30,15 @@ class CreateLeague extends Command
      */
     public function handle()
     {
-        logger("*****");
         // $this->createCountry();
         $this->createLeagues();
         $season="2023";
-/*        $leagueseasons = LeagueSeason::query()
+/*       $leagueseasons = LeagueSeason::query()
             ->leftJoin('leagues','leagues.id','=','league_seasons.league_id')
-            ->where(['leagues.type'=>'League','year'=>$season,'current'=>true])->get();
+            ->where(['leagues.type'=>'League','year'=>$season,'current'=>true])->get();*/
+        $leagueseasons=League::all();
         foreach ($leagueseasons as $leagueseason) {
-            $res = FootballAPIService::getTeams($leagueseason->league->league_id, $season);
+            $res = FootballAPIService::getTeams($leagueseason->league_id, $season);
             $data = $res->response;
             for ($i = 0; $i < sizeof($data); $i++) {
                 $team = Team::query()->firstWhere(['team_id' => $data[$i]->team->id]);
@@ -54,7 +54,8 @@ class CreateLeague extends Command
                     $team->save();
                 }
             }
-        }*/
+        }
+
     }
 
     function createLeagues()
