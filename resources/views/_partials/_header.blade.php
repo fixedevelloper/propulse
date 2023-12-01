@@ -33,7 +33,7 @@
                 </div>
                 <ul class="main-menu">
                     <li>
-                        <a href="{{route('live')}}">
+                        <a href="{{route('home')}}">
                             <span>Live</span>
                         </a>
                     </li>

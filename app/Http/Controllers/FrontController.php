@@ -16,23 +16,28 @@ class FrontController extends Controller
 
     public function home()
     {
-        $today = date('y-m-d');
-        $today_timestamp = Carbon::parse($today)->getTimestamp();
-        $leagues = League::query()->whereIn('league_id', [3, 1, 5])->get();
-        logger($today_timestamp);
-        $fixtures = Fixture::query()->where(['day_timestamp' => $today_timestamp])->paginate(15);
-        $fixture_limit = Fixture::query()->where(['day_timestamp' => $today_timestamp])->orderByDesc('fixture_id')->limit(10)->get();
+        $timestamp=Carbon::today()->getTimestamp();
+        $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->distinct('league_id')->get(['league_id','league_season','league_round']);
         return view('home', [
-            'fixture_days' => $fixtures,
-            'fixture_slides' => $fixture_limit,
-            'leagues' => $leagues
+          "leagues"=>$leagues
         ]);
 
     }
 
     public function live()
     {
-        return view('live', []);
+        $today = date('y-m-d');
+        $today_timestamp = Carbon::parse($today)->getTimestamp();
+        $leagues = League::query()->whereIn('league_id', [3, 1, 5])->get();
+        logger($today_timestamp);
+        $fixtures = Fixture::query()->where(['day_timestamp' => $today_timestamp])->paginate(15);
+        $fixture_limit = Fixture::query()->where(['day_timestamp' => $today_timestamp])->orderByDesc('fixture_id')->limit(10)->get();
+
+        return view('live', [
+            'fixture_days' => $fixtures,
+            'fixture_slides' => $fixture_limit,
+            'leagues' => $leagues
+        ]);
     }
 
     public function standings(Request $request)

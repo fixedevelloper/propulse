@@ -27,6 +27,13 @@
 .table-ranking{
     color: #ffffff;
 }
+.accordion-button{
+    background-color: var(--header) !important;
+    color: #f1f1f1 !important;
+}
+.accordion-item{
+    color: #f1f1f1 !important;
+}
 /* The side navigation menu */
 .sidebar {
     top: 140px;

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 d-none d-md-block">
             @if(sizeof($leagues)>0)
                 <div>
                     @if($country_by)
@@ -15,7 +15,7 @@
                 <div class="sidebar mb-3">
                     @foreach($leagues as $league_)
                         <a class="block-item"
-                           href="{{route('standings',['country'=>$country_code,'league'=>$league_->league_id])}}"><img
+                           href="{{route('standings',['country'=>$league_->country_code,'league'=>$league_->league_id])}}"><img
                                 alt="" src="{{$league_->logo}}" height="20"> {{$league_->name}}</a>
 
                     @endforeach

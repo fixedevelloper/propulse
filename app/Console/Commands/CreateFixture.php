@@ -40,7 +40,8 @@ class CreateFixture extends Command
     public function handle()
     {
         logger("----index---");
-        $this->createFixture();
+        //$this->createFixture();
+        $this->createLeagueOfTheDay();
         logger("----index---");
     }
     function createFixture()
@@ -110,5 +111,10 @@ class CreateFixture extends Command
     }
     function createOddAll(){
 
+    }
+    function createLeagueOfTheDay(){
+        $timestamp=Carbon::today()->getTimestamp();
+        $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])->distinct()->get(['league_id']);
+        logger($fixtures);
     }
 }

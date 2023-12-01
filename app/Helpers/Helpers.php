@@ -4,6 +4,8 @@
 namespace App\Helpers;
 
 
+use App\Models\Fixture;
+use App\Models\Stadings;
 use App\Models\Team;
 use Carbon\Carbon;
 
@@ -26,9 +28,17 @@ class Helpers
         }
 
     }
+    static function rankTeam($fixture){
+        $standing=Stadings::query()->firstWhere(['team_id'=>$fixture->team_id,'league_id'=>$fixture->league_id]);
+        return $standing;
+    }
     static function teamFormArray($form){
         $arrays=str_split($form);
         return $arrays;
+    }
+    static function fixtureOfDayByLeague($league){
+        $fixtures=Fixture::query()->where(['league_id'=>$league])->get();
+        return $fixtures;
     }
     static function getTeamByID($team_id)
     {
