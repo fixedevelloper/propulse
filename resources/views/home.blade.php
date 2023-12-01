@@ -146,11 +146,11 @@
                                                                 <div class="t__items__left">
                                                                     <h6>
                                                                         <img height="20"
-                                                                             src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_home_id)['logo']}}"> {{\App\Helpers\Helpers::getTeamByID($fixture->team_home_id)['name']}} @if(\App\Helpers\Helpers::rankTeam($fixture)){{\App\Helpers\Helpers::rankTeam($fixture)->rank}})@endif
+                                                                             src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_home_id)['logo']}}"> {{\App\Helpers\Helpers::getTeamByID($fixture->team_home_id)['name']}} @if(\App\Helpers\Helpers::rankTeam($fixture))({{\App\Helpers\Helpers::rankTeam($fixture)->rank}})@endif
                                                                     </h6>
                                                                     <span class="text">
                                               <img height="20"
-                                                   src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['logo']}}">   {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['name']}}@if(\App\Helpers\Helpers::rankTeamAway($fixture)){{\App\Helpers\Helpers::rankTeamAway($fixture)->rank}})@endif
+                                                   src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['logo']}}">   {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['name']}}@if(\App\Helpers\Helpers::rankTeamAway($fixture))({{\App\Helpers\Helpers::rankTeamAway($fixture)->rank}})@endif
                                             </span>
                                                                     <p>
                                                                         <a href="#0">
