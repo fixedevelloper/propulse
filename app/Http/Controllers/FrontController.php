@@ -14,12 +14,20 @@ use Illuminate\Http\Request;
 class FrontController extends Controller
 {
 
-    public function home()
+    public function home(Request $request)
     {
-        $timestamp=Carbon::today()->getTimestamp();
-        $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->distinct('league_id')->get(['league_id','league_season','league_round']);
+        if (is_null($request->get('date'))){
+            $date_=Carbon::today()->format('Y-m-d');
+            $timestamp=Carbon::today()->getTimestamp();
+        }else{
+            $date_=$request->get('date');
+            $timestamp=Carbon::parse($date_)->getTimestamp();
+        }
+        $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->distinct('league_id')
+            ->get(['league_id','league_season','league_round']);
         return view('home', [
-          "leagues"=>$leagues
+          "leagues"=>$leagues,
+            'date'=>$date_
         ]);
 
     }

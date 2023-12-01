@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="light">
 
 <head>
-    <title>Propulse4U </title>
+    <title>Propulse4U- @yield('title') </title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -227,6 +227,21 @@
 <script src="{{asset('js/jquery-ui.min.js')}}"></script>
 <!--Main js-->
 <script src="{{asset('js/main.js')}}"></script>
+<script>
+    var configs={
+        routes:{
+            index: "{{\Illuminate\Support\Facades\URL::to('/')}}",
+            home: "{{\Illuminate\Support\Facades\URL::route('home')}}",
+        }
+    }
+    $(function () {
+        $('#date_home').change(function () {
+            console.log($(this).val())
+            console.log(configs.routes.home+'?date='+$(this).val())
+            $('#form_date').submit()
+        })
+    })
+</script>
 
 </body>
 

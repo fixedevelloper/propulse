@@ -1,5 +1,5 @@
 @extends('base')
-
+@section('title') Last results @endsection
 @section('content')
     <!--Sub-Header Tabs Here-->
     <section class="main__tab__slide">
@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li class="nav-item" role="presentation">
-                <a href="{{route('home',['date'=>'today'])}}" class="nav-link" id="main-tab3" type="button" role="tab"  aria-selected="false">
+                <a href="{{route('home',['date'=>date('Y-m-d')])}}" class="nav-link" id="main-tab3" type="button" role="tab"  aria-selected="false">
                     <span class="icons"><i class="icon-calender"></i></span>
                     <span>Today</span>
                 </a>
@@ -114,7 +114,11 @@
         <div class="col-md-9 mt-5">
             <div class="row justify-content-end container">
                 <div class="col-md-3">
-                    <input type="date" class="form-control m-2">
+                    <form id="form_date">
+                        <input name="date" id="date_home" type="date" value="{{$date}}" class="form-control m-2">
+
+                    </form>
+
                 </div>
 
             </div>
