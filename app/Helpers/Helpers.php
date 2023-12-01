@@ -29,7 +29,11 @@ class Helpers
 
     }
     static function rankTeam($fixture){
-        $standing=Stadings::query()->firstWhere(['team_id'=>$fixture->team_id,'league_id'=>$fixture->league_id]);
+        $standing=Stadings::query()->firstWhere(['team_id'=>$fixture->team_home_id,'league_id'=>$fixture->league_id]);
+        return $standing;
+    }
+    static function rankTeamAway($fixture){
+        $standing=Stadings::query()->firstWhere(['team_id'=>$fixture->team_away_id,'league_id'=>$fixture->league_id]);
         return $standing;
     }
     static function teamFormArray($form){

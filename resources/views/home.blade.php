@@ -150,7 +150,7 @@
                                                                     </h6>
                                                                     <span class="text">
                                               <img height="20"
-                                                   src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['logo']}}">   {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['name']}}
+                                                   src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['logo']}}">   {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['name']}}@if(\App\Helpers\Helpers::rankTeamAway($fixture)){{\App\Helpers\Helpers::rankTeamAway($fixture)->rank}})@endif
                                             </span>
                                                                     <p>
                                                                         <a href="#0">
