@@ -167,7 +167,22 @@
                                                             $standing_home=\App\Helpers\Helpers::rankTeam($fixture);
                                                             $standing_away=\App\Helpers\Helpers::rankTeamAway($fixture);
                                                             $team_home=\App\Helpers\Helpers::getTeamByID($fixture->team_home_id);
-                                                             $team_away=\App\Helpers\Helpers::getTeamByID($fixture->team_away_id);
+                                                            $team_away=\App\Helpers\Helpers::getTeamByID($fixture->team_away_id);
+                                                            if ($standing_home){
+                                                                $last_home_="";
+                                                            if (strlen($standing_home->form)>0){
+                                                                $last_home=str_split($standing_home->form);
+                                                                $last_home_=$last_home[strlen($standing_home->form)-1];
+                                                            }
+                                                            }
+                                                            if ($standing_away){
+                                                                $last_away_="";
+                                                                if (strlen($standing_away->form)>0){
+                                                                $last_away=str_split($standing_away->form);
+                                                                $last_away_=$last_away[strlen($standing_away->form)-1];
+                                                            }
+                                                            }
+
                                                             @endphp
                                                             <div class="table__items b__bottom">
                                                                 <div class="t__items">
@@ -176,14 +191,12 @@
                                                                             <img height="20"
                                                                                  src=" {{$team_home['logo']}}"> {{$team_home['name']}}
                                                                             @if($standing_home)
-                                                                                ({{$standing_home->rank}} - {{ $standing_home->points}}
-                                                                                )@endif
+                                                                                ({{$standing_home->rank}} - ({{ $standing_home->points}})) {{$last_home_}}@endif
                                                                         </h6>
                                                                         <span class="text">
                                               <img height="20"  src=" {{$team_away['logo']}}" alt="">   {{$team_away['name']}}
                                                                             @if($standing_away)
-                                                                                ({{$standing_away->rank}} - {{$standing_away->points }}
-                                                                                )@endif
+                                                                                ({{$standing_away->rank}} - ({{$standing_away->points }})) {{$last_away_}}@endif
                                             </span>
                                                                         <p>
                                                                             <a href="#0">
