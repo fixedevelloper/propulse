@@ -226,7 +226,9 @@
                                                                         @endif
                                                                     </a>
                                                                     <a href="#0box" class="point__box">
-                                                                        2.70
+                                                                        @if($fixture->odd)
+                                                                            {{$fixture->odd->mt_draw}}
+                                                                        @endif
                                                                     </a>
                                                                     <a href="#0box" class="point__box">
                                                                         @if($fixture->odd)
@@ -234,19 +236,22 @@
                                                                         @endif
                                                                     </a>
                                                                 </div>
-                                                                <div
-                                                                    class="cart__point cart__point__two">
+                                                                <div   class="cart__point cart__point__two">
                                                                     2,6
                                                                 </div>
                                                                 <div class="mart__point__two">
                                                                     <div class="mart__point__left">
                                                                         <a href="#box"
                                                                            class="point__box">
-                                                                            8.55
+                                                                            @if($fixture->odd)
+                                                                                {{$fixture->odd->both_score_yes}}
+                                                                            @endif
                                                                         </a>
                                                                         <a href="#box"
                                                                            class="point__box">
-                                                                            2.70
+                                                                            @if($fixture->odd)
+                                                                                {{$fixture->odd->both_score_no}}
+                                                                            @endif
                                                                         </a>
                                                                     </div>
                                                                     <div class="mart__point__right">
