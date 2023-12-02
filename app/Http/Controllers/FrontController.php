@@ -23,8 +23,8 @@ class FrontController extends Controller
             $date_=$request->get('date');
             $timestamp=Carbon::parse($date_)->getTimestamp();
         }
-        $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->distinct('league_id')
-            ->get(['league_id','league_season','league_round']);
+        $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->distinct('league_id')->paginate(12)->appends(['date'=>$date_])
+            ;
         return view('home', [
           "leagues"=>$leagues,
             'date'=>$date_

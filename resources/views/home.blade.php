@@ -126,6 +126,9 @@
         <div class="col-md-9 mt-5">
             <div class="row justify-content-end container">
                 <div class="col-md-3">
+                    {!! $leagues->links() !!}
+                </div>
+                <div class="col-md-3">
                     <form id="form_date">
                         <input name="date" id="date_home" type="date" value="{{$date}}" class="form-control m-2">
 
@@ -179,7 +182,7 @@
                                                                         <span class="text">
                                               <img height="20"  src=" {{$team_away['logo']}}" alt="">   {{$team_away['name']}}
                                                                             @if($standing_away)
-                                                                                ({{$standing_away->rank}} {{$standing_away->points }}
+                                                                                ({{$standing_away->rank}} - {{$standing_away->points }}
                                                                                 )@endif
                                             </span>
                                                                         <p>
