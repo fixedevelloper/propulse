@@ -172,14 +172,14 @@
                                                                 $last_home_="";
                                                             if (strlen($standing_home->form)>0){
                                                                 $last_home=str_split($standing_home->form);
-                                                                $last_home_=$last_home[strlen($standing_home->form)-1];
+                                                                $last_home_=$last_home[0];
                                                             }
                                                             }
                                                             if ($standing_away){
                                                                 $last_away_="";
                                                                 if (strlen($standing_away->form)>0){
                                                                 $last_away=str_split($standing_away->form);
-                                                                $last_away_=$last_away[strlen($standing_away->form)-1];
+                                                                $last_away_=$last_away[0];
                                                             }
                                                             }
 
