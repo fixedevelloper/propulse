@@ -160,19 +160,26 @@
                                                 <div class="main__table">
                                                     <div class="table__wrap">
                                                         @foreach(\App\Helpers\Helpers::fixtureOfDayByLeague($league->league->league_id) as $fixture)
+                                                            @php
+                                                            $standing_home=\App\Helpers\Helpers::rankTeam($fixture);
+                                                            $standing_away=\App\Helpers\Helpers::rankTeamAway($fixture);
+                                                            $team_home=\App\Helpers\Helpers::getTeamByID($fixture->team_home_id);
+                                                             $team_away=\App\Helpers\Helpers::getTeamByID($fixture->team_away_id);
+                                                            @endphp
                                                             <div class="table__items b__bottom">
                                                                 <div class="t__items">
                                                                     <div class="t__items__left">
                                                                         <h6>
                                                                             <img height="20"
-                                                                                 src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_home_id)['logo']}}"> {{\App\Helpers\Helpers::getTeamByID($fixture->team_home_id)['name']}}
-                                                                            @if(\App\Helpers\Helpers::rankTeam($fixture))
-                                                                                ({{\App\Helpers\Helpers::rankTeam($fixture)->rank}} - {{ \App\Helpers\Helpers::rankTeam($fixture)->points}}
+                                                                                 src=" {{$team_home['logo']}}"> {{$team_home['name']}}
+                                                                            @if($standing_home)
+                                                                                ({{$standing_home->rank}} - {{ $standing_home->points}}
                                                                                 )@endif
                                                                         </h6>
                                                                         <span class="text">
-                                              <img height="20"  src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['logo']}}" alt="">   {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['name']}}@if(\App\Helpers\Helpers::rankTeamAway($fixture))
-                                                                                ({{\App\Helpers\Helpers::rankTeamAway($fixture)->rank}} {{\App\Helpers\Helpers::rankTeamAway($fixture)->points }}
+                                              <img height="20"  src=" {{$team_away['logo']}}" alt="">   {{$team_away['name']}}
+                                                                            @if($standing_away)
+                                                                                ({{$standing_away->rank}} {{$standing_away->points }}
                                                                                 )@endif
                                             </span>
                                                                         <p>
