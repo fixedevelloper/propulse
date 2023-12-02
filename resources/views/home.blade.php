@@ -221,13 +221,13 @@
                                                                         <i class="icon-pmart"></i>
                                                                     </a>
                                                                     <a href="#0box" class="point__box">
-                                                                        8.55
+                                                                       {{$fixture->odd->mt_win_home}}
                                                                     </a>
                                                                     <a href="#0box" class="point__box">
                                                                         2.70
                                                                     </a>
                                                                     <a href="#0box" class="point__box">
-                                                                        8.50
+                                                                        {{\App\Helpers\Helpers::odd($fixture->id)->mt_away_home}}
                                                                     </a>
                                                                 </div>
                                                                 <div

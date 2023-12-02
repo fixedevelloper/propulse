@@ -5,12 +5,17 @@ namespace App\Helpers;
 
 
 use App\Models\Fixture;
+use App\Models\Odd;
 use App\Models\Stadings;
 use App\Models\Team;
 use Carbon\Carbon;
 
 class Helpers
 {
+    static function odd($fixture_id){
+        $odd=Odd::query()->firstWhere(['fixture_id'=>$fixture_id]);
+        return $odd;
+    }
     static function makeTime($fixture)
     {
         $today = date('y-m-d');

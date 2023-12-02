@@ -90,25 +90,7 @@ class CreateFixture extends Command
         }
 
     }
-    function createOdd($fixture_id){
-        $odd=Odd::query()->firstWhere(['fixture_id'=>$fixture_id]);
-        if (is_null($odd)){
-            $odd=new Odd();
 
-        }
-        $res=FootballAPIService::getAllBetOddvalue1xbetAll($fixture_id);
-        $reponse=$res->response;
-        for ($k=0;$k<sizeof($reponse);$k++){
-            $data=$reponse[$k]->bookmakers[0]->bets[0]->values;
-            $data2_marque=$reponse[$k]->bookmakers[0]->bets[7]->values;
-            $odd->mt_win_home=$data[0]->odd;
-            $odd->mt_win_away=$data[1]->odd;
-            $odd->mt_draw=$data[2]->odd;
-            $odd->both_score_yes=$data2_marque[0]->odd;
-            $odd->both_score_no=$data2_marque[1]->odd;
-        }
-
-    }
     function createOddAll(){
 
     }
