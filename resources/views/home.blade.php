@@ -167,12 +167,12 @@
                                                                             <img height="20"
                                                                                  src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_home_id)['logo']}}"> {{\App\Helpers\Helpers::getTeamByID($fixture->team_home_id)['name']}}
                                                                             @if(\App\Helpers\Helpers::rankTeam($fixture))
-                                                                                ({{\App\Helpers\Helpers::rankTeam($fixture)->rank}} - {{str_split(\App\Helpers\Helpers::rankTeam($fixture)->form)[(strlen(\App\Helpers\Helpers::rankTeam($fixture)->form)-1) ]." - ". \App\Helpers\Helpers::rankTeam($fixture)->points}}
+                                                                                ({{\App\Helpers\Helpers::rankTeam($fixture)->rank}} - {{ \App\Helpers\Helpers::rankTeam($fixture)->points}}
                                                                                 )@endif
                                                                         </h6>
                                                                         <span class="text">
                                               <img height="20"  src=" {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['logo']}}" alt="">   {{\App\Helpers\Helpers::getTeamByID($fixture->team_away_id)['name']}}@if(\App\Helpers\Helpers::rankTeamAway($fixture))
-                                                                                ({{\App\Helpers\Helpers::rankTeamAway($fixture)->rank}} - {{str_split(\App\Helpers\Helpers::rankTeamAway($fixture)->form)[(strlen(\App\Helpers\Helpers::rankTeamAway($fixture)->form)-1)] ." - ". \App\Helpers\Helpers::rankTeamAway($fixture)->points }}
+                                                                                ({{\App\Helpers\Helpers::rankTeamAway($fixture)->rank}} {{\App\Helpers\Helpers::rankTeamAway($fixture)->points }}
                                                                                 )@endif
                                             </span>
                                                                         <p>
