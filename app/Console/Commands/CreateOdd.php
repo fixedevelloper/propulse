@@ -54,12 +54,15 @@ class CreateOdd extends Command
                 }
                 $bookmakers=$reponse[$k]->bookmakers[0];
                 $data=$bookmakers->bets[0]->values;
-                $data2_marque=$bookmakers->bets[7]->values;
                 $odd->mt_win_home=$data[0]->odd;
                 $odd->mt_win_away=$data[1]->odd;
                 $odd->mt_draw=$data[2]->odd;
-                $odd->both_score_yes=$data2_marque[0]->odd;
-                $odd->both_score_no=$data2_marque[1]->odd;
+                if (isset($bookmakers->bets[7])){
+                    $data2_marque=$bookmakers->bets[7]->values;
+                    $odd->both_score_yes=$data2_marque[0]->odd;
+                    $odd->both_score_no=$data2_marque[1]->odd;
+                }
+
                 $odd->save();
             }
 
