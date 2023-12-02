@@ -23,9 +23,16 @@ class FrontController extends Controller
             $date_=$request->get('date');
             $timestamp=Carbon::parse($date_)->getTimestamp();
         }
-        $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])
-            ->distinct()->paginate(12,['league_id','league_round','league_season'])->appends(['date'=>$date_])
+        if ($request->get('act')=="live"){
+            $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->whereIn('st_short',['1H','2H'])
+                ->distinct()->paginate(12,['league_id','league_round','league_season'])->appends(['date'=>$date_,'act'=>$request->get('act')])
             ;
+        }else{
+            $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])
+                ->distinct()->paginate(12,['league_id','league_round','league_season'])->appends(['date'=>$date_,'act'=>$request->get('act')])
+            ;
+        }
+
         return view('home', [
           "leagues"=>$leagues,
             'date'=>$date_

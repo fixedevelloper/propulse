@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:create-fixture')->daily();
         //$schedule->command('app:create-league')->dailyAt('16:00');
         $schedule->command('app:create-standing')->daily()->between('01:00','02:00');
-        //$schedule->command('app:create-fixture')->everyFourMinutes(); //livescore
+        $schedule->command('app:live-score')->everyTenMinutes(); //livescore
         // $schedule->command('inspire')->hourly();
     }
 

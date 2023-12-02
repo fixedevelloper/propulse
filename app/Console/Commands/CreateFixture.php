@@ -39,21 +39,21 @@ class CreateFixture extends Command
      */
     public function handle()
     {
-        logger("----index---");
-        //$this->createFixture();
-        $this->createLeagueOfTheDay();
-        logger("----index---");
+        logger("----fixture create---");
+        $this->createFixture();
+        //$this->createLeagueOfTheDay();
+        logger("----end fixture create---");
     }
     function createFixture()
     {
         $leagues=League::query()->where('id','>',0)->get();
         $from=date('Y-m-d');
         $to=date('Y-m-d', strtotime($from. ' + 1 days'));
+        logger($from."****".$to);
       foreach ($leagues as $league){
             $data = FootballAPIService::getAllFixturesBetweenDateWithLeague($league->league_id,$from,$to);
             $response=$data->response;
             for ($i = 0; $i < sizeof($response); $i++) {
-                logger("----index---".$i);
                 $fixture=Fixture::query()->firstWhere(['fixture_id'=>$response[$i]->fixture->id]);
                 if (is_null($fixture)){
                     $fixture=new Fixture();
