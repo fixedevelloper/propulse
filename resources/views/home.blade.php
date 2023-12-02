@@ -125,7 +125,7 @@
         <x-sider-bar/>
         <div class="col-md-9 mt-5">
             <div class="row container">
-                <div class="col-md-6">
+                <div class="col-md-9">
                     {!! $leagues->links() !!}
                 </div>
                 <div class="col-md-3" style="float: right">
