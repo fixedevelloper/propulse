@@ -124,11 +124,11 @@
     <div class="row">
         <x-sider-bar/>
         <div class="col-md-9 mt-5">
-            <div class="row justify-content-end container">
-                <div class="col-md-3">
+            <div class="row container">
+                <div class="col-md-6">
                     {!! $leagues->links() !!}
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3" style="float: right">
                     <form id="form_date">
                         <input name="date" id="date_home" type="date" value="{{$date}}" class="form-control m-2">
 

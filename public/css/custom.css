@@ -34,6 +34,9 @@
 .accordion-item{
     color: #f1f1f1 !important;
 }
+.pagination {
+    --bs-pagination-bg: var(--header) !important;
+}
 /* The side navigation menu */
 .sidebar {
     top: 140px;
