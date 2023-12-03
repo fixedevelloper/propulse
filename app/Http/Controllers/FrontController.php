@@ -28,7 +28,7 @@ class FrontController extends Controller
                 ->distinct()->paginate(12,['league_id','league_round','league_season'])->appends(['date'=>$date_,'act'=>$request->get('act')])
             ;
         }else{
-            $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->orderByDesc('league_id')
+            $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->orderBy('league_id','asc')
                 ->distinct()->paginate(12,['league_id','league_round','league_season'])->appends(['date'=>$date_,'act'=>$request->get('act')])
             ;
         }
