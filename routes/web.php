@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 Route::match(['POST','GET'],'/login', [LoginController::class, 'login'])
     ->name('login');
-Route::get('/deposit', [LoginController::class, 'deposit'])
+Route::get('/destroy', [LoginController::class, 'destroy'])
+    ->name('destroy');
+Route::match(['POST','GET'],'/deposit', [LoginController::class, 'deposit'])
     ->name('deposit');
 Route::get('/', [FrontController::class, 'home'])
     ->name('home');
@@ -37,3 +39,6 @@ Route::match(['POST','GET'],'/registration', [LoginController::class, 'register'
     ->name('register');
 Route::get('/contact_us', [FrontController::class, 'contact_us'])
     ->name('contact_us');
+
+Route::get('/dashboard', [FrontController::class, 'dashboard'])
+    ->name('dashboard');

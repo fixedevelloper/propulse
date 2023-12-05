@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('league_thedays', function (Blueprint $table) {
             $table->id();
             $table->integer('league_id')->nullable();
+            $table->string('season')->nullable();
+            $table->string('round')->nullable();
             $table->integer('timestamp')->nullable();
             $table->date('date')->nullable();
             $table->timestamps();

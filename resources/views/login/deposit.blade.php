@@ -76,13 +76,28 @@
             <h3>
                 Complete Your Deposit
             </h3>
+            <div class="row">
+                <dl class="text-white text-start">
+                    <dt>IBAN (International Bank Account Number)</dt>
+                    <dd>FR76 1659 8000 0140 0000 3727 486</dd>
+                    <dt>BIC/Swift</dt>
+                    <dd>FPELFR21XXX</dd>
+                    <dt>Titulaire</dt>
+                    <dd>MR DONALD EBVOUNDI
+                        29 DE LA BASE
+                        14000 CAEN</dd>
+                    <dt></dt>
+                    <dd></dd>
+                </dl>
+            </div>
             <p class="mb-3 text-white">download proof of deposit</p>
-            <form action="#">
+            <form method="POST">
+                @csrf
                 <div class="single-input mb__20">
                     <input type="file" id="dAmount" placeholder="download proof of deposit" value="$20.00" autocomplete="off">
                 </div>
                 <div class="btn-area">
-                    <button class="cmn--btn">
+                    <button type="submit" class="cmn--btn">
                         <span>Deposit</span>
                     </button>
                 </div>

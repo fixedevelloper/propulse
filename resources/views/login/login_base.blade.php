@@ -60,7 +60,7 @@
 
 
 
-
+@include('_partials._modal')
 
 
 <!-- vendor plugins -->

@@ -10,6 +10,7 @@ use App\Models\League;
 use App\Models\Stadings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use function Symfony\Component\Translation\Extractor\Visitor\leaveNode;
 
 class FrontController extends Controller
@@ -104,7 +105,14 @@ class FrontController extends Controller
         return view('sportbetting', []);
 
     }
+    public function dashboard()
+    {
+        if (!Auth::authenticate()){
+            return redirect()->route('login');
+        }
+        return view('dashboard', []);
 
+    }
     public function casino()
     {
         return view('casino', []);
