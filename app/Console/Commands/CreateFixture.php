@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Fixture;
 use App\Models\League;
+use App\Models\LeagueTheday;
 use App\Models\Odd;
 use App\Services\FootballAPIService;
 use Carbon\Carbon;
@@ -40,8 +41,8 @@ class CreateFixture extends Command
     public function handle()
     {
         logger("----fixture create---");
-        $this->createFixture();
-        //$this->createLeagueOfTheDay();
+       // $this->createFixture();
+        $this->createLeagueOfTheDay();
         logger("----end fixture create---");
     }
     function createFixture()
@@ -96,7 +97,20 @@ class CreateFixture extends Command
     }
     function createLeagueOfTheDay(){
         $timestamp=Carbon::today()->getTimestamp();
-        $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])->distinct()->get(['league_id']);
-        logger($fixtures);
+       // $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])->distinct()->get(['league_id','day_timestamp','league_round','league_season']);
+        $fixtures=Fixture::query()->distinct()->get(['league_id','day_timestamp','league_round','league_season']);
+        foreach ($fixtures as $fixture){
+            $league=LeagueTheday::query()->firstWhere(['league_id'=>$fixture->league_id,'timestamp'=>$fixture->day_timestamp]);
+            if (is_null($league)){
+                $league=new LeagueTheday();
+                $league->league_id=$fixture->league_id;
+
+           }
+            $league->date=$fixture->date;
+            $league->season=$fixture->league_season;
+            $league->round=$fixture->league_round;
+            $league->timestamp=$fixture->day_timestamp;
+            $league->save();
+        }
     }
 }

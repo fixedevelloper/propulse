@@ -148,7 +148,7 @@
                                             <td>{{$staging->home_draw + $staging->away_draw}}</td>
                                             <td>{{$staging->home_goal_for + $staging->away_goal_for}}
                                                 : {{$staging->home_goal_against + $staging->away_goal_against}}</td>
-                                            <td>{{$staging->goal_diff}}</td>
+                                            <td> <span @if($staging->goal_diff<0) class="text-danger"@endif>{{$staging->goal_diff}}</span></td>
                                             <td>{{$staging->points}}</td>
                                             <td>
                                                 @for($i=0;$i<strlen($staging->form);$i++)
@@ -199,7 +199,7 @@
                                             <td>{{$staging_home->home_draw}}</td>
                                             <td>{{$staging_home->home_goal_for}}
                                                 : {{$staging_home->home_goal_against}}</td>
-                                            <td>{{$staging_home->home_goal_for - $staging_home->home_goal_against}}</td>
+                                            <td><span @if(($staging_home->home_goal_for - $staging_home->home_goal_against)<0) class="text-danger"@endif>{{$staging_home->home_goal_for - $staging_home->home_goal_against}}</span></td>
                                             <td>{{\App\Helpers\Helpers::calculPointHome($staging_home)}}</td>
                                             <td>
                                                 @for($i=0;$i<strlen($staging_home->form);$i++)
@@ -250,7 +250,7 @@
                                             <td>{{$staging_home->away_draw}}</td>
                                             <td>{{$staging_home->away_goal_for}}
                                                 : {{$staging_home->away_goal_against}}</td>
-                                            <td>{{$staging_home->away_goal_for - $staging_home->away_goal_against}}</td>
+                                            <td><span @if(($staging_home->away_goal_for - $staging_home->away_goal_against)<0) class="text-danger"@endif>{{$staging_home->away_goal_for - $staging_home->away_goal_against}}</span></td>
                                             <td>{{$staging_home->points}}</td>
                                             <td>
                                                 @for($i=0;$i<strlen($staging_home->form);$i++)

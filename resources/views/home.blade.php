@@ -145,24 +145,24 @@
                     <div class="accordion" id="accordionExample">
                         @foreach($leagues as $league)
                             <div class="accordion-item card_dark">
-                                <h2 class="accordion-header" id="headingOne{{$league->league->id}}">
+                                <h2 class="accordion-header" id="headingOne{{$league->id}}">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne{{$league->league->id}}" aria-expanded="true"
+                                            data-bs-target="#collapseOne{{$league->id}}" aria-expanded="true"
                                             aria-controls="collapseOne">
-                                        <img src="{{$league->league->logo}}" height="20"> <span
-                                            class="m-x-2">{{$league->league->name}}</span>
+                                        <img src="{{$league->logo}}" height="20"> <span
+                                            class="m-x-2">{{$league->name}}</span>
                                         <span class="mx-2">{{$league->league_round}}</span> - <span
                                             class="mx-2">{{$league->league_season}}</span>
                                     </button>
                                 </h2>
-                                <div id="collapseOne{{$league->league->id}}" class="accordion-collapse collapse show"
+                                <div id="collapseOne{{$league->id}}" class="accordion-collapse collapse show"
                                      aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <div class="live__heightlight mb__30">
                                             <div class="height__table">
                                                 <div class="main__table">
                                                     <div class="table__wrap">
-                                                        @foreach(\App\Helpers\Helpers::fixtureOfDayByLeague($league->league->league_id) as $fixture)
+                                                        @foreach(\App\Helpers\Helpers::fixtureOfDayByLeague($league->league_id,$league->timestamp) as $fixture)
                                                             @php
                                                             $standing_home=\App\Helpers\Helpers::rankTeam($fixture);
                                                             $standing_away=\App\Helpers\Helpers::rankTeamAway($fixture);

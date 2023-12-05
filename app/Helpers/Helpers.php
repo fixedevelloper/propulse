@@ -45,8 +45,8 @@ class Helpers
         $arrays=str_split($form);
         return $arrays;
     }
-    static function fixtureOfDayByLeague($league){
-        $fixtures=Fixture::query()->where(['league_id'=>$league])->get();
+    static function fixtureOfDayByLeague($league,$time){
+        $fixtures=Fixture::query()->where(['league_id'=>$league,'day_timestamp'=>$time])->get();
         return $fixtures;
     }
     static function getTeamByID($team_id)

@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\Fixture;
 use App\Models\League;
+use App\Models\LeagueTheday;
 use App\Models\Stadings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,16 +35,17 @@ class FrontController extends Controller
             ;
         }else{
             logger('-------not live');
-            $leagues=Fixture::query()->select(['league_id','league_round','league_season'])->where(['day_timestamp'=>$timestamp])
+        /*    $leagues=Fixture::query()->select(['league_id','league_round','league_season'])->where(['day_timestamp'=>$timestamp])
                 ->orderBy('league_id','asc')
                 //->(['league_id'])
                 ->distinct()->paginate(12,['league_id'])->appends(['date'=>$date_,'act'=>$request->get('act')])
             ;
-      /*      $leagues= League::query()->leftJoin('fixtures','fixtures.league_id',"=",'leagues.league_id')
-                ->where(['day_timestamp'=>$timestamp])
+            */
+           $leagues= LeagueTheday::query()->leftJoin('leagues','leagues.league_id',"=",'league_thedays.league_id')
+                ->where(['timestamp'=>$timestamp])
                 ->orderBy('leagues.league_id','asc')
-                ->distinct()->paginate(12,['leagues.league_id'])->appends(['date'=>$date_,'act'=>$request->get('act')]);
-        */
+                ->distinct()->paginate(12)->appends(['date'=>$date_,'act'=>$request->get('act')]);
+logger($leagues);
         }
         logger($leagues->total());
 
