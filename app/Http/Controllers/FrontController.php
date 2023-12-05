@@ -10,6 +10,7 @@ use App\Models\League;
 use App\Models\Stadings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use function Symfony\Component\Translation\Extractor\Visitor\leaveNode;
 
 class FrontController extends Controller
 {
@@ -23,18 +24,30 @@ class FrontController extends Controller
             $date_=$request->get('date');
             $timestamp=Carbon::parse($date_)->getTimestamp();
         }
+
+
         if ($request->get('act')=="live"){
+            logger('-------live live');
             $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->whereIn('st_short',['1H','2H'])
                 ->distinct()->paginate(12,['league_id','league_round','league_season'])->appends(['date'=>$date_,'act'=>$request->get('act')])
             ;
         }else{
-            $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->orderBy('league_id','asc')
-                ->distinct()->paginate(12,['league_id','league_round','league_season'])->appends(['date'=>$date_,'act'=>$request->get('act')])
+            logger('-------not live');
+            $leagues=Fixture::query()->select(['league_id','league_round','league_season'])->where(['day_timestamp'=>$timestamp])
+                ->orderBy('league_id','asc')
+                //->(['league_id'])
+                ->distinct()->paginate(12,['league_id'])->appends(['date'=>$date_,'act'=>$request->get('act')])
             ;
+      /*      $leagues= League::query()->leftJoin('fixtures','fixtures.league_id',"=",'leagues.league_id')
+                ->where(['day_timestamp'=>$timestamp])
+                ->orderBy('leagues.league_id','asc')
+                ->distinct()->paginate(12,['leagues.league_id'])->appends(['date'=>$date_,'act'=>$request->get('act')]);
+        */
         }
+        logger($leagues->total());
 
         return view('home', [
-          "leagues"=>$leagues,
+            "leagues"=>$leagues,
             'date'=>$date_
         ]);
 

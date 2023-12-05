@@ -19,6 +19,19 @@
 .block_league{
 
 }
+.card_body_dark{
+    background-color: var(--slidebox);
+}
+.card_d{
+    --bs-card-border-radius:0px !important;
+    color: #f7fafc;
+}
+.dashboard__body__wrap .account__head2 {
+    color: var(--white);
+    background: var(--slidebox);
+    padding: 20px 30px 27px;
+    z-index: 1;
+}
 .block-item{
     border-bottom: solid #ffffff 1px;
     padding: 5px;

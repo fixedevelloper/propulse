@@ -94,10 +94,10 @@
                         </option>
                     </select>
                 </div>
-                <a href="#0" class="cmn--btn" data-bs-toggle="modal" data-bs-target="#signupin">
+                <a href="#0" class="cmn--btn" data-bs-toggle="modal" data-bs-target="#signin">
                     <span>Sign In</span>
                 </a>
-                <a href="#0" class="cmn--btn2" data-bs-toggle="modal" data-bs-target="#signupin">
+                <a href="#0" class="cmn--btn2" data-bs-toggle="modal" data-bs-target="#signup">
                     <span class="rela">Sign Up</span>
                 </a>
             </div>

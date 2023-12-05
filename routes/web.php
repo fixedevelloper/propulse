@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::match(['POST','GET'],'/login', [LoginController::class, 'login'])
+    ->name('login');
+Route::get('/deposit', [LoginController::class, 'deposit'])
+    ->name('deposit');
 Route::get('/', [FrontController::class, 'home'])
     ->name('home');
 Route::get('/live', [FrontController::class, 'live'])
@@ -29,7 +33,7 @@ Route::get('/promotions', [FrontController::class, 'promotions'])
 
 Route::get('/about_us', [FrontController::class, 'about_us'])
     ->name('about_us');
-Route::get('/registration', [FrontController::class, 'register'])
+Route::match(['POST','GET'],'/registration', [LoginController::class, 'register'])
     ->name('register');
 Route::get('/contact_us', [FrontController::class, 'contact_us'])
     ->name('contact_us');
