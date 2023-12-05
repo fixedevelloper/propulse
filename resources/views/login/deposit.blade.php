@@ -83,9 +83,7 @@
                     <dt>BIC/Swift</dt>
                     <dd>FPELFR21XXX</dd>
                     <dt>Titulaire</dt>
-                    <dd>MR DONALD EBVOUNDI
-                        29 DE LA BASE
-                        14000 CAEN</dd>
+                    <dd>MR DONALD EBVOUNDI</dd>
                     <dt></dt>
                     <dd></dd>
                 </dl>
