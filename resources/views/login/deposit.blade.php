@@ -34,7 +34,7 @@
                             <div class="payment__cart__items">
                                 <input class="form-check-input" checked name="deposit" type="radio" id="deposit2">
                                 <label class="form-check-label" for="deposit2">
-                                    One time free:  1398€/year
+                                    One time free:  1379€/year
                                 </label>
 
                             </div>
