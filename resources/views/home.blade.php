@@ -191,12 +191,12 @@
                                                                             <img height="20"
                                                                                  src=" {{$team_home['logo']}}"> {{$team_home['name']}}
                                                                             @if($standing_home)
-                                                                                ({{$standing_home->rank}} - <span @if($standing_home->goal_diff<0) class="text-danger"@endif>({{ $standing_home->points}}))</span> {{$last_home_}}@endif
+                                                                                ({{$standing_home->rank}} - <span @if($standing_home->goal_diff<0) class="text-danger"@endif>({{ $standing_home->goal_diff}}))</span> {{$last_home_}}@endif
                                                                         </h6>
                                                                         <span class="text">
                                               <img height="20"  src=" {{$team_away['logo']}}" alt="">   {{$team_away['name']}}
                                                                             @if($standing_away)
-                                                                                ({{$standing_away->rank}} - <span @if($standing_away->goal_diff<0) class="text-danger"@endif>({{$standing_away->points }}))</span> {{$last_away_}}@endif
+                                                                                ({{$standing_away->rank}} - <span @if($standing_away->goal_diff<0) class="text-danger"@endif>({{$standing_away->goal_diff }}))</span> {{$last_away_}}@endif
                                                                         </span>
                                                                         <p>
                                                                             <a href="#0">
