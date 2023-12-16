@@ -63,7 +63,9 @@
     </tbody>
 </table>
 
-
+        </div>
+        <div class="card-footer">
+            {!! $fixtures->links() !!}
         </div>
     </div>
 @endsection
