@@ -101,7 +101,17 @@ logger($leagues);
             'country_by' => $country,
         ]);
     }
+    public function ontheday(Request $request)
+    {
+        $timestamp=Carbon::today()->getTimestamp();
+        $features=Fixture::query()->where(['day_timestamp'=>$timestamp])
+            ->distinct()->paginate(12)->appends([])
+        ;
+        return view('ontheday', [
+            'fixtures'=>$features
+        ]);
 
+    }
     public function sportbetting()
     {
         return view('sportbetting', []);

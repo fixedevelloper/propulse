@@ -58,8 +58,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('promotions')}}">
-                            <span>Promotions</span>
+                        <a href="{{route('ontheday')}}">
+                            <span>Match the day</span>
                         </a>
                     </li>
                     <li>

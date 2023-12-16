@@ -32,7 +32,8 @@ Route::get('/casino', [FrontController::class, 'casino'])
     ->name('casino');
 Route::get('/promotions', [FrontController::class, 'promotions'])
     ->name('promotions');
-
+Route::get('/ontheday', [FrontController::class, 'ontheday'])
+    ->name('ontheday');
 Route::get('/about_us', [FrontController::class, 'about_us'])
     ->name('about_us');
 Route::match(['POST','GET'],'/registration', [LoginController::class, 'register'])
