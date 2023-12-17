@@ -40,21 +40,27 @@ class Helpers
     {
         $standing_home = Stadings::query()->firstWhere(['team_id' => $fixture->team_home_id, 'league_id' => $fixture->league_id]);
         $standing_away = Stadings::query()->firstWhere(['team_id' => $fixture->team_away_id, 'league_id' => $fixture->league_id]);
-        $mp=$standing_home->home_played + $standing_home->away_played;
+        $mp=is_null($standing_home)?0:$standing_home->home_played + $standing_home->away_played;
+        $mp_anay=is_null($standing_away)?0:$standing_away->home_played + $standing_away->away_played;
         if ($mp>0){
             $ratio_a_for = is_null($standing_home)?0: round(($standing_home->goal_home_for + $standing_home->goal_away_for) / ($standing_home->home_played + $standing_home->away_played), 2);
-            $ratio_b_for = is_null($standing_away)?0: round(($standing_away->goal_home_for + $standing_away->goal_away_for) / ($standing_away->home_played + $standing_away->away_played), 2);
             $ratio_a_against =is_null($standing_home)?0 :round(($standing_home->goal_away_against + $standing_home->goal_away_against) / ($standing_home->home_played + $standing_home->away_played), 2);
-            $ratio_b_against =is_null($standing_away)?0: round(($standing_away->goal_away_against + $standing_away->goal_away_against) / ($standing_away->home_played + $standing_away->away_played), 2);
 
         }else{
             $ratio_a_for = 0;
-            $ratio_b_for = 0;
             $ratio_a_against =0;
+
+        }
+        if ($mp_anay>0){
+          $ratio_b_for = is_null($standing_away)?0: round(($standing_away->goal_home_for + $standing_away->goal_away_for) / ($standing_away->home_played + $standing_away->away_played), 2);
+           $ratio_b_against =is_null($standing_away)?0: round(($standing_away->goal_away_against + $standing_away->goal_away_against) / ($standing_away->home_played + $standing_away->away_played), 2);
+
+        }else{
+
+            $ratio_b_for = 0;
             $ratio_b_against =0;
 
         }
-
         return [
             'ratio_a_for' => $ratio_a_for,
             'ratio_b_for' => $ratio_b_for,
