@@ -12,10 +12,12 @@ use Carbon\Carbon;
 
 class Helpers
 {
-    static function odd($fixture_id){
-        $odd=Odd::query()->firstWhere(['fixture_id'=>$fixture_id]);
+    static function odd($fixture_id)
+    {
+        $odd = Odd::query()->firstWhere(['fixture_id' => $fixture_id]);
         return $odd;
     }
+
     static function makeTime($fixture)
     {
         $today = date('y-m-d');
@@ -33,31 +35,59 @@ class Helpers
         }
 
     }
-    static function rankTeam($fixture){
-        $standing=Stadings::query()->firstWhere(['team_id'=>$fixture->team_home_id,'league_id'=>$fixture->league_id]);
-        return $standing;
-    }
-    static function rankTeamAway($fixture){
-        $standing=Stadings::query()->firstWhere(['team_id'=>$fixture->team_away_id,'league_id'=>$fixture->league_id]);
-        return $standing;
-    }
-    static function teamFormArray($form){
-        $arrays=str_split($form);
-        return $arrays;
-    }
-    static function fixtureOfDayByLeague($league,$time){
-        $fixtures=Fixture::query()->where(['league_id'=>$league,'day_timestamp'=>$time])->get();
-        return $fixtures;
-    }
-    static function getTeamByID($team_id)
+
+    static function calculRatio($fixture)
     {
-        $team=Team::query()->firstWhere(['team_id' => $team_id]);
+        $standing_home = Stadings::query()->firstWhere(['team_id' => $fixture->team_home_id, 'league_id' => $fixture->league_id]);
+        $standing_away = Stadings::query()->firstWhere(['team_id' => $fixture->team_away_id, 'league_id' => $fixture->league_id]);
+        $ratio_a_for = is_null($standing_home)?0: round(($standing_home->goal_home_for + $standing_home->goal_away_for) / ($standing_home->home_played + $standing_home->away_played), 2);
+        $ratio_b_for = is_null($standing_away)?0: round(($standing_away->goal_home_for + $standing_away->goal_away_for) / ($standing_away->home_played + $standing_away->away_played), 2);
+        $ratio_a_against =is_null($standing_home)?0 :round(($standing_home->goal_away_against + $standing_home->goal_away_against) / ($standing_home->home_played + $standing_home->away_played), 2);
+        $ratio_b_against =is_null($standing_away)?0: round(($standing_away->goal_away_against + $standing_away->goal_away_against) / ($standing_away->home_played + $standing_away->away_played), 2);
+
         return [
-            'name'=>is_null($team)?"":$team->name,
-            'logo'=>is_null($team)?"":$team->logo,
+            'ratio_a_for' => $ratio_a_for,
+            'ratio_b_for' => $ratio_b_for,
+            'ratio_a_against' => $ratio_a_against,
+            'ratio_b_against' => $ratio_b_against,
         ];
     }
-    static function calculPointHome($stading){
-        return $stading->home_win*3 + $stading->home_draw;
+
+    static function rankTeam($fixture)
+    {
+        $standing = Stadings::query()->firstWhere(['team_id' => $fixture->team_home_id, 'league_id' => $fixture->league_id]);
+        return $standing;
+    }
+
+    static function rankTeamAway($fixture)
+    {
+        $standing = Stadings::query()->firstWhere(['team_id' => $fixture->team_away_id, 'league_id' => $fixture->league_id]);
+        return $standing;
+    }
+
+    static function teamFormArray($form)
+    {
+        $arrays = str_split($form);
+        return $arrays;
+    }
+
+    static function fixtureOfDayByLeague($league, $time)
+    {
+        $fixtures = Fixture::query()->where(['league_id' => $league, 'day_timestamp' => $time])->get();
+        return $fixtures;
+    }
+
+    static function getTeamByID($team_id)
+    {
+        $team = Team::query()->firstWhere(['team_id' => $team_id]);
+        return [
+            'name' => is_null($team) ? "" : $team->name,
+            'logo' => is_null($team) ? "" : $team->logo,
+        ];
+    }
+
+    static function calculPointHome($stading)
+    {
+        return $stading->home_win * 3 + $stading->home_draw;
     }
 }

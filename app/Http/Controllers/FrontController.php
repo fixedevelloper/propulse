@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\Helpers;
 use App\Models\Country;
 use App\Models\Fixture;
 use App\Models\League;
@@ -104,11 +105,42 @@ logger($leagues);
     public function ontheday(Request $request)
     {
         $timestamp=Carbon::today()->getTimestamp();
-        $features=Fixture::query()->where(['day_timestamp'=>$timestamp])
-            ->distinct()->paginate(12)->appends([])
-        ;
+        $request_filter=$request->get('filter');
+        if (isset($request_filter)){
+            logger('****'.$request->get('percent'));
+            $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
+                ->distinct()->get();
+            $fixture_filter=[];
+            $filter=$request->get('filter');
+            $percent=$request->get('percent');
+            foreach ($fixtures as $fixture){
+                $ratio=Helpers::calculRatio($fixture);
+                if ($filter=="ratio_for"){
+                    if ($ratio['ratio_a_for']==$percent || $ratio['ratio_b_for']==$percent){
+                        logger('****'.$ratio['ratio_a_for']);
+                        $fixture_filter[]=$fixture->id;
+
+                    }
+                }
+                if ($filter=="ratio_against"){
+                    if ($ratio['ratio_a_against']==$percent || $ratio['ratio_b_against']==$percent){
+                        logger('****'.$ratio['ratio_a_against']);
+                        $fixture_filter[]=$fixture->id;
+
+                    }
+                }
+            }
+            $fixtures=  Fixture::query()->where(['day_timestamp'=>$timestamp])
+               ->whereIn('id',$fixture_filter)->paginate(12)->appends([]);
+            return view('ontheday', [
+                'fixtures'=>$fixtures
+            ]);
+        }
+        $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
+            ->distinct()->paginate(12)->appends([]);
+
         return view('ontheday', [
-            'fixtures'=>$features
+            'fixtures'=>$fixtures
         ]);
 
     }
