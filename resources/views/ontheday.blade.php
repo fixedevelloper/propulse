@@ -70,7 +70,7 @@
                         <tr>
                             <td>  <img height="20" src=" {{$team_home['logo']}}"><span>{{$team_home['name']}}</span></td>
                             <td>{{ is_null($standing_home)?'-':($standing_home['home_played'] + $standing_home['away_played'])}}</td>
-                            <td>{{is_null($standing_home)?'-':($standing_home['goal_home_for'] + $standing_home['goal_away_for']}}:{{$standing_home['goal_home_against'] + $standing_home['goal_away_against']}})</td>
+                            <td>{{is_null($standing_home)?'-':($standing_home['goal_home_for'] + $standing_home['goal_away_for'])}}:{{is_null($standing_home)?'-':($standing_home['goal_home_against'] + $standing_home['goal_away_against'])}}</td>
                             <td>{{is_null($standing_home)?'-':(round(($standing_home['goal_home_for'] + $standing_home['goal_away_for']) / ($standing_home['home_played'] + $standing_home['away_played']),2))}}</td>
                             <td>{{is_null($standing_home)?'-':(round(($standing_home['goal_home_against'] + $standing_home['goal_away_against']) / ($standing_home['home_played'] + $standing_home['away_played']),2))}}</td>
                             <td>-</td>
@@ -79,7 +79,7 @@
                     </span>
                             </td>
                             <td>{{is_null($standing_away)?'-':($standing_away['home_played'] + $standing_away['away_played'])}}</td>
-                            <td>{{is_null($standing_away)?'-':($standing_away['goal_home_for'] + $standing_away['goal_away_for']}}:{{$standing_away['goal_home_against'] + $standing_away['goal_away_against']}})</td>
+                            <td>{{is_null($standing_away)?'-':($standing_away['goal_home_for'] + $standing_away['goal_away_for'])}}:{{is_null($standing_away)?'-':($standing_away['goal_home_against'] + $standing_away['goal_away_against'])}}</td>
                             <td>{{is_null($standing_away)?'-':(round(($standing_away['goal_home_for'] + $standing_away['goal_away_for']) / ($standing_away['home_played'] + $standing_home['away_played']),2))}}</td>
                             <td>{{is_null($standing_away)?'-':(round(($standing_away['goal_home_against'] + $standing_away['goal_away_against']) / ($standing_away['home_played'] + $standing_home['away_played']),2))}}</td>
                         </tr>
