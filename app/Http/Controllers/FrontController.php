@@ -104,7 +104,13 @@ logger($leagues);
     }
     public function ontheday(Request $request)
     {
-        $timestamp=Carbon::today()->getTimestamp();
+        if (is_null($request->get('date'))){
+            $date_=Carbon::today()->format('Y-m-d');
+            $timestamp=Carbon::today()->getTimestamp();
+        }else{
+            $date_=$request->get('date');
+            $timestamp=Carbon::parse($date_)->getTimestamp();
+        }
         $request_filter=$request->get('filter');
         if (isset($request_filter)){
             logger('****'.$request->get('percent'));
@@ -131,16 +137,18 @@ logger($leagues);
                 }
             }
             $fixtures=  Fixture::query()->where(['day_timestamp'=>$timestamp])
-               ->whereIn('id',$fixture_filter)->paginate(12)->appends([]);
+               ->whereIn('id',$fixture_filter)->paginate(12)->appends(['date'=>$date_,'act'=>$request_filter]);
             return view('ontheday', [
-                'fixtures'=>$fixtures
+                'fixtures'=>$fixtures,
+                'date'=>$date_
             ]);
         }
         $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])->orderByDesc('league_id')
-            ->distinct()->paginate(12)->appends([]);
+            ->distinct()->paginate(12)->appends(['date'=>$date_,'act'=>$request_filter]);
 
         return view('ontheday', [
-            'fixtures'=>$fixtures
+            'fixtures'=>$fixtures,
+            'date'=>$date_
         ]);
 
     }

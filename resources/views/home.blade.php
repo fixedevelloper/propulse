@@ -133,7 +133,6 @@
                         <input name="date" id="date_home" type="date" value="{{$date}}" class="form-control m-2">
 
                     </form>
-
                 </div>
 
             </div>

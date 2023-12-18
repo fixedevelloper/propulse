@@ -92,6 +92,10 @@
             console.log(configs.routes.home+'?date='+$(this).val())
             $('#form_date').submit()
         })
+        $('#date_ontheday').change(function () {
+            console.log($(this).val())
+            $('#form_ontheday').submit()
+        })
     })
 </script>
 
