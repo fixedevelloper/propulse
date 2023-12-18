@@ -143,7 +143,7 @@ logger($leagues);
                 'date'=>$date_
             ]);
         }
-        $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])->orderByDesc('league_id')
+        $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
             ->distinct()->paginate(12)->appends(['date'=>$date_,'act'=>$request_filter]);
 
         return view('ontheday', [
