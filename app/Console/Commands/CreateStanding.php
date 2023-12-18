@@ -3,9 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\League;
-use App\Models\LeagueSeason;
 use App\Models\Stadings;
-use App\Models\Team;
 use App\Services\FootballAPIService;
 use Illuminate\Console\Command;
 
@@ -32,63 +30,63 @@ class CreateStanding extends Command
     {
         $this->standing();
     }
-    function standing(){
-        $leagues = League::query()->where(['type'=>'League'])->get();
-        $season="2023";
-/*        $leagues = LeagueSeason::query()
-            ->leftJoin('leagues','leagues.id','=','league_seasons.league_id')
-            ->where(['leagues.type'=>'League','year'=>$season])->get();*/
+
+    function standing()
+    {
+        $leagues = League::query()->where(['type' => 'League'])->get();
+        $season = "2023";
+        /*        $leagues = LeagueSeason::query()
+                    ->leftJoin('leagues','leagues.id','=','league_seasons.league_id')
+                    ->where(['leagues.type'=>'League','year'=>$season])->get();*/
 
         try {
             foreach ($leagues as $league) {
                 $res = FootballAPIService::getStatdings($league->league_id, $season);
-                if (sizeof($res->response)>0){
+                if (sizeof($res->response) > 0) {
                     $data = $res->response[0]->league->standings[0];
-                    logger(sizeof($data));
                     for ($i = 0; $i < sizeof($data); $i++) {
-                        $stading = Stadings::query()->firstWhere(['league_id' => $league->league_id,'team_id'=>$data[$i]->team->id,'season'=>$season]);
+                        $stading = Stadings::query()->firstWhere(['league_id' => $league->league_id, 'team_id' => $data[$i]->team->id, 'season' => $season]);
                         if (is_null($stading)) {
                             $stading = new Stadings();
-
                             $stading->league_id = $league->league_id;
                             $stading->team_id = $data[$i]->team->id;
                             $stading->season = $season;
                             $stading->group = $data[$i]->group;
                         }
-                            $stading->rank=$data[$i]->rank;
-                            $stading->points=$data[$i]->points;
-                            $stading->goal_diff=$data[$i]->goalsDiff;
-                            $stading->status=$data[$i]->status;
-                            $stading->home_played=$data[$i]->home->played;
-                            $stading->home_win=$data[$i]->home->win;
-                            $stading->home_lost=$data[$i]->home->lose;
-                            $stading->home_draw=$data[$i]->home->draw;
-                            $stading->home_goal_for=$data[$i]->home->goals->for;
-                            $stading->home_goal_against=$data[$i]->home->goals->against;
-                            //$stading->update_round=date('Y-m-d',date_timestamp_get($data[$i]->update));
-                            $stading->away_played=$data[$i]->away->played;
-                            $stading->away_win=$data[$i]->away->win;
-                            $stading->away_lost=$data[$i]->away->lose;
-                            $stading->away_draw=$data[$i]->away->draw;
-                            $stading->away_goal_for=$data[$i]->away->goals->for;
-                            $stading->away_goal_against=$data[$i]->away->goals->against;
-                            $stading->form=$data[$i]->form;
-                            $stading->point_home=$data[$i]->home->win*3 + $data[$i]->home->draw;
-                            $stading->point_away=$data[$i]->away->win*3 + $data[$i]->away->draw;
-                            $stading->goal_diff_home=$data[$i]->home->goals->for - $data[$i]->home->goals->against;
-                            $stading->goal_diff_away=$data[$i]->away->goals->for - $data[$i]->away->goals->against;
+                        $stading->rank = $data[$i]->rank;
+                        $stading->points = $data[$i]->points;
+                        $stading->goal_diff = $data[$i]->goalsDiff;
+                        $stading->status = $data[$i]->status;
+                        $stading->home_played = $data[$i]->home->played;
+                        $stading->home_win = $data[$i]->home->win;
+                        $stading->home_lost = $data[$i]->home->lose;
+                        $stading->home_draw = $data[$i]->home->draw;
+                        $stading->home_goal_for = $data[$i]->home->goals->for;
+                        $stading->home_goal_against = $data[$i]->home->goals->against;
+                        //$stading->update_round=date('Y-m-d',date_timestamp_get($data[$i]->update));
+                        $stading->away_played = $data[$i]->away->played;
+                        $stading->away_win = $data[$i]->away->win;
+                        $stading->away_lost = $data[$i]->away->lose;
+                        $stading->away_draw = $data[$i]->away->draw;
+                        $stading->away_goal_for = $data[$i]->away->goals->for;
+                        $stading->away_goal_against = $data[$i]->away->goals->against;
+                        $stading->form = $data[$i]->form;
+                        $stading->point_home = $data[$i]->home->win * 3 + $data[$i]->home->draw;
+                        $stading->point_away = $data[$i]->away->win * 3 + $data[$i]->away->draw;
+                        $stading->goal_diff_home = $data[$i]->home->goals->for - $data[$i]->home->goals->against;
+                        $stading->goal_diff_away = $data[$i]->away->goals->for - $data[$i]->away->goals->against;
 
 
-                        $stading->goal_home_against=$data[$i]->home->goals->against;
-                        $stading->goal_home_for=$data[$i]->home->goals->for;
-                        $stading->goal_away_against=$data[$i]->away->goals->against;
-                        $stading->goal_away_for=$data[$i]->away->goals->for;
+                        $stading->goal_home_against = $data[$i]->home->goals->against;
+                        $stading->goal_home_for = $data[$i]->home->goals->for;
+                        $stading->goal_away_against = $data[$i]->away->goals->against;
+                        $stading->goal_away_for = $data[$i]->away->goals->for;
                         $stading->save();
                     }
                 }
 
             }
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             logger($exception);
         }
 
