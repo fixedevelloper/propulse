@@ -51,12 +51,15 @@
                              $standing_away=\App\Helpers\Helpers::rankTeamAway($fixture);
                              $team_home=\App\Helpers\Helpers::getTeamByID($fixture->team_home_id);
                              $team_away=\App\Helpers\Helpers::getTeamByID($fixture->team_away_id);
+                             $mp_b=0;
+                             $mp_a=0;
                              if ($standing_home){
                                  $last_home_="";
                              if (strlen($standing_home->form)>0){
                                  $last_home=str_split($standing_home->form);
                                  $last_home_=$last_home[0];
                              }
+                             $mp_a=$standing_home['home_played'] + $standing_home['away_played'];
                              }
                              if ($standing_away){
                                  $last_away_="";
@@ -64,6 +67,7 @@
                                  $last_away=str_split($standing_away->form);
                                  $last_away_=$last_away[0];
                              }
+                                 $mp_b=$standing_away['home_played'] + $standing_away['away_played'];
                              }
 
                         @endphp
@@ -71,8 +75,8 @@
                             <td>  <img height="20" src=" {{$team_home['logo']}}"><span>{{$team_home['name']}}</span></td>
                             <td>{{ is_null($standing_home)?'-':($standing_home['home_played'] + $standing_home['away_played'])}}</td>
                             <td>{{is_null($standing_home)?'-':($standing_home['goal_home_for'] + $standing_home['goal_away_for'])}}:{{is_null($standing_home)?'-':($standing_home['goal_home_against'] + $standing_home['goal_away_against'])}}</td>
-                            <td>{{is_null($standing_home)?'-':(round(($standing_home['goal_home_for'] + $standing_home['goal_away_for']) / ($standing_home['home_played'] + $standing_home['away_played']),2))}}</td>
-                            <td>{{is_null($standing_home)?'-':(round(($standing_home['goal_home_against'] + $standing_home['goal_away_against']) / ($standing_home['home_played'] + $standing_home['away_played']),2))}}</td>
+                            <td>@if($mp_a>0){{is_null($standing_home)?'-':(round(($standing_home['goal_home_for'] + $standing_home['goal_away_for']) / ($standing_home['home_played'] + $standing_home['away_played']),2))}}@endif</td>
+                            <td>@if($mp_a>0){{is_null($standing_home)?'-':(round(($standing_home['goal_home_against'] + $standing_home['goal_away_against']) / ($standing_home['home_played'] + $standing_home['away_played']),2))}}@endif</td>
                             <td>-</td>
                             <td>
                                 <img height="20" src=" {{$team_away['logo']}}" alt=""><span> {{$team_away['name']}}
@@ -80,8 +84,8 @@
                             </td>
                             <td>{{is_null($standing_away)?'-':($standing_away['home_played'] + $standing_away['away_played'])}}</td>
                             <td>{{is_null($standing_away)?'-':($standing_away['goal_home_for'] + $standing_away['goal_away_for'])}}:{{is_null($standing_away)?'-':($standing_away['goal_home_against'] + $standing_away['goal_away_against'])}}</td>
-                            <td>{{is_null($standing_away)?'-':(round(($standing_away['goal_home_for'] + $standing_away['goal_away_for']) / ($standing_away['home_played'] + $standing_home['away_played']),2))}}</td>
-                            <td>{{is_null($standing_away)?'-':(round(($standing_away['goal_home_against'] + $standing_away['goal_away_against']) / ($standing_away['home_played'] + $standing_home['away_played']),2))}}</td>
+                            <td>@if($mp_b>0){{is_null($standing_away)?'-':(round(($standing_away['goal_home_for'] + $standing_away['goal_away_for']) / ($standing_away['home_played'] + $standing_home['away_played']),2))}}@endif</td>
+                            <td>@if($mp_b>0){{is_null($standing_away)?'-':(round(($standing_away['goal_home_against'] + $standing_away['goal_away_against']) / ($standing_away['home_played'] + $standing_home['away_played']),2))}}@endif</td>
                         </tr>
                     @endforeach
                     </tbody>
