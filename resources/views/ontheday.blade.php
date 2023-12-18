@@ -47,7 +47,7 @@
                     @foreach($fixtures as $fixture)
 
                         @php
-                            $standing_home=\App\Helpers\Helpers::rankTeam($fixture);
+                             $standing_home=\App\Helpers\Helpers::rankTeam($fixture);
                              $standing_away=\App\Helpers\Helpers::rankTeamAway($fixture);
                              $team_home=\App\Helpers\Helpers::getTeamByID($fixture->team_home_id);
                              $team_away=\App\Helpers\Helpers::getTeamByID($fixture->team_away_id);

@@ -49,10 +49,12 @@ class CreateStanding extends Command
                         $stading = Stadings::query()->firstWhere(['league_id' => $league->league_id,'team_id'=>$data[$i]->team->id,'season'=>$season]);
                         if (is_null($stading)) {
                             $stading = new Stadings();
-                            $stading->league_id=$league->league_id;
-                            $stading->team_id=$data[$i]->team->id;
-                            $stading->season=$season;
-                            $stading->group=$data[$i]->group;
+
+                            $stading->league_id = $league->league_id;
+                            $stading->team_id = $data[$i]->team->id;
+                            $stading->season = $season;
+                            $stading->group = $data[$i]->group;
+                        }
                             $stading->rank=$data[$i]->rank;
                             $stading->points=$data[$i]->points;
                             $stading->goal_diff=$data[$i]->goalsDiff;
@@ -76,7 +78,7 @@ class CreateStanding extends Command
                             $stading->goal_diff_home=$data[$i]->home->goals->for - $data[$i]->home->goals->against;
                             $stading->goal_diff_away=$data[$i]->away->goals->for - $data[$i]->away->goals->against;
 
-                        }
+
                         $stading->goal_home_against=$data[$i]->home->goals->against;
                         $stading->goal_home_for=$data[$i]->home->goals->for;
                         $stading->goal_away_against=$data[$i]->away->goals->against;
