@@ -1,3 +1,6 @@
+.nice-select .list {
+    background-color: #0b0b0b !important;
+}
 .left_country {
     position: sticky;
     top: 140px;

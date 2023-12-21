@@ -135,6 +135,18 @@ logger($leagues);
 
                     }
                 }
+                if ($filter=="ratio_a_b_against"){
+                    if ($ratio['ratio_a_b_against']==$percent){
+                        $fixture_filter[]=$fixture->id;
+
+                    }
+                }
+                if ($filter=="ratio_a_b_for"){
+                    if ($ratio['ratio_a_b_for']==$percent){
+                        $fixture_filter[]=$fixture->id;
+
+                    }
+                }
             }
             $fixtures=  Fixture::query()->where(['day_timestamp'=>$timestamp])
                ->whereIn('id',$fixture_filter)->paginate(12)->appends(['date'=>$date_,'act'=>$request_filter]);

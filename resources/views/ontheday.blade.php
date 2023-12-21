@@ -15,6 +15,8 @@
                                         <select name="filter" class="form-select">
                                             <option value="ratio_for">Ratio for</option>
                                             <option value="ratio_against">Ratio Against</option>
+                                            <option value="ratio_a_b_for">Ratio A-B For</option>
+                                            <option value="ratio_a_b_against">Ratio A-B Against</option>
                                         </select>
                                     </div>
                                 </div>
