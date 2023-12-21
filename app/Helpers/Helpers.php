@@ -64,10 +64,10 @@ class Helpers
         return [
             'ratio_a_for' => $ratio_a_for,
             'ratio_b_for' => $ratio_b_for,
-            'ratio_a_b_for' => $ratio_a_for - $ratio_b_for,
+            'ratio_a_b_for' => round($ratio_a_for - $ratio_b_for,2),
             'ratio_a_against' => $ratio_a_against,
             'ratio_b_against' => $ratio_b_against,
-            'ratio_a_b_against' => $ratio_a_against - $ratio_b_against,
+            'ratio_a_b_against' => round($ratio_a_against - $ratio_b_against,2),
         ];
     }
 

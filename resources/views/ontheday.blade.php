@@ -65,6 +65,7 @@
                                 $standing_away=\App\Helpers\Helpers::rankTeamAway($fixture);
                                 $team_home=\App\Helpers\Helpers::getTeamByID($fixture->team_home_id);
                                 $team_away=\App\Helpers\Helpers::getTeamByID($fixture->team_away_id);
+                                $ratio=App\Helpers\Helpers::calculRatio($fixture);
                                 $mp_b=0;
                                 $mp_a=0;
                                 $ratio_a_b_for=0;
@@ -103,8 +104,8 @@
                                 <td>{{ is_null($standing_home)?'-':($standing_home['home_played'] + $standing_home['away_played'])}}</td>
                                 <td>{{is_null($standing_home)?'-':($standing_home['goal_home_for'] + $standing_home['goal_away_for'])}}
                                     :{{is_null($standing_home)?'-':($standing_home['goal_home_against'] + $standing_home['goal_away_against'])}}</td>
-                                <td>@if($mp_a>0){{is_null($standing_home)?'-':(round(($standing_home['goal_home_for'] + $standing_home['goal_away_for']) / ($mp_a),2))}}@endif</td>
-                                <td>@if($mp_a>0){{is_null($standing_home)?'-':(round(($standing_home['goal_home_against'] + $standing_home['goal_away_against']) / ($mp_a),2))}}@endif</td>
+                                <td>{{$ratio['ratio_a_for']}}</td>
+                                <td>{{$ratio['ratio_a_against']}}</td>
                                 <td class="text-center">{{$fixture->goal_home}}- {{$fixture->goal_away}}</td>
                                 <td>
                                     <img height="20" src=" {{$team_away['logo']}}" alt=""><span> {{$team_away['name']}}
@@ -113,12 +114,12 @@
                                 <td>{{is_null($standing_away)?'-':($standing_away['home_played'] + $standing_away['away_played'])}}</td>
                                 <td>{{is_null($standing_away)?'-':($standing_away['goal_home_for'] + $standing_away['goal_away_for'])}}
                                     :{{is_null($standing_away)?'-':($standing_away['goal_home_against'] + $standing_away['goal_away_against'])}}</td>
-                                <td>@if($mp_b>0){{is_null($standing_away)?'-':(round(($standing_away['goal_home_for'] + $standing_away['goal_away_for']) / ($mp_b),2))}}@endif</td>
-                                <td>@if($mp_b>0){{is_null($standing_away)?'-':(round(($standing_away['goal_home_against'] + $standing_away['goal_away_against']) / ($mp_b),2))}}@endif</td>
-                                <td class="@if($ratio_a_b_for>0) bg-success @else bg-danger @endif">
-                                    <span>{{$ratio_a_b_for}}</span></td>
-                                <td class="@if($ratio_a_b_against>0) bg-success @else bg-danger @endif">
-                                    <span>{{$ratio_a_b_against}}</span></td>
+                                <td>{{$ratio['ratio_b_for']}}</td>
+                                <td>{{$ratio['ratio_b_against']}}</td>
+                                <td class="@if($ratio['ratio_a_b_for']>0) bg-success @else bg-danger @endif">
+                                    <span>{{$ratio['ratio_a_b_for']}}</span></td>
+                                <td class="@if($ratio['ratio_a_b_against']>0) bg-success @else bg-danger @endif">
+                                    <span>{{$ratio['ratio_a_b_against']}}</span></td>
                             </tr>
                         @endforeach
                         </tbody>

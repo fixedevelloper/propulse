@@ -113,7 +113,7 @@ logger($leagues);
         }
         $request_filter=$request->get('filter');
         if (isset($request_filter)){
-            logger('****'.$request->get('percent'));
+
             $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
                 ->distinct()->get();
             $fixture_filter=[];
@@ -121,6 +121,7 @@ logger($leagues);
             $percent=$request->get('percent');
             foreach ($fixtures as $fixture){
                 $ratio=Helpers::calculRatio($fixture);
+               // logger($ratio);
                 if ($filter=="ratio_for"){
                     if ($ratio['ratio_a_for']==$percent || $ratio['ratio_b_for']==$percent){
                         logger('****'.$ratio['ratio_a_for']);
@@ -129,20 +130,22 @@ logger($leagues);
                     }
                 }
                 if ($filter=="ratio_against"){
-                    if ($ratio['ratio_a_against']==$percent || $ratio['ratio_b_against']==$percent){
+                    logger('###############'.$ratio['ratio_a_against']);
+                    if ($ratio['ratio_a_against'] ==$percent || $ratio['ratio_b_against']==$percent){
                         logger('****'.$ratio['ratio_a_against']);
                         $fixture_filter[]=$fixture->id;
 
                     }
                 }
                 if ($filter=="ratio_a_b_against"){
-                    if ($ratio['ratio_a_b_against']==$percent){
+                    logger("**********************".$percent);
+                    if ($ratio['ratio_a_b_against']===$percent){
                         $fixture_filter[]=$fixture->id;
 
                     }
                 }
                 if ($filter=="ratio_a_b_for"){
-                    if ($ratio['ratio_a_b_for']==$percent){
+                    if ($ratio['ratio_a_b_for']===$percent){
                         $fixture_filter[]=$fixture->id;
 
                     }
