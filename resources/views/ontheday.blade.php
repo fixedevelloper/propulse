@@ -120,6 +120,7 @@
                                     <span>{{$ratio['ratio_a_b_for']}}</span></td>
                                 <td class="@if($ratio['ratio_a_b_against']>0) bg-success @else bg-danger @endif">
                                     <span>{{$ratio['ratio_a_b_against']}}</span></td>
+                                <td>{{$fixture->league_id}}</td>
                             </tr>
                         @endforeach
                         </tbody>
