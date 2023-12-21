@@ -33,7 +33,7 @@ class CreateStanding extends Command
 
     function standing()
     {
-        $leagues = League::query()->where(['type' => 'League'])->get();
+        $leagues = League::all();
         $season = "2023";
         /*        $leagues = LeagueSeason::query()
                     ->leftJoin('leagues','leagues.id','=','league_seasons.league_id')
