@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('stadings', function (Blueprint $table) {
-            $table->integer('goal_home_against')->nullable()->default(0);
-            $table->integer('goal_away_against')->nullable()->default(0);
-            $table->integer('goal_home_for')->nullable()->default(0);
-            $table->integer('goal_away_for')->nullable()->default(0);
+            $table->integer('goal_home_against')->nullable()->default(0)->change();
+            $table->integer('goal_away_against')->nullable()->default(0)->change();
+            $table->integer('goal_home_for')->nullable()->default(0)->change();
+            $table->integer('goal_away_for')->nullable()->default(0)->change();
         });
     }
 
