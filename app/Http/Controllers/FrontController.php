@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\Fixture;
 use App\Models\League;
 use App\Models\LeagueTheday;
+use App\Models\Setting;
 use App\Models\Stadings;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -170,6 +171,52 @@ logger($leagues);
     public function sportbetting()
     {
         return view('sportbetting', []);
+
+    }
+    public function setting(Request $request)
+    {
+        if ($request->method()=="POST"){
+            $setting=Setting::query()->firstWhere(['title'=>$request->get('title')]);
+            if (is_null($setting)){
+                $setting=new Setting();
+                $setting->title=$request->get('title');
+            }
+            $setting->start_value=$request->get('value_start');
+            $setting->save();
+        }
+        $setting=Setting::query()->find(1);
+        return view('settings', [
+            'setting'=>$setting
+        ]);
+
+    }
+    public function setting_page(Request $request)
+    {
+        if (is_null($request->get('date'))){
+            $date_=Carbon::today()->format('Y-m-d');
+            $timestamp=Carbon::today()->getTimestamp();
+        }else{
+            $date_=$request->get('date');
+            $timestamp=Carbon::parse($date_)->getTimestamp();
+        }
+        $setting=Setting::query()->find(1);
+        $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
+            ->distinct()->get();
+        $fixture_filter=[];
+        $percent=$setting->start_value;
+        foreach ($fixtures as $fixture) {
+            $ratio = Helpers::calculRatio($fixture);
+            if ($ratio['ratio_a_b_for']<$percent || $ratio['ratio_a_b_against']<$percent){
+                $fixture_filter[]=$fixture->id;
+
+            }
+        }
+        $fixtures=  Fixture::query()->where(['day_timestamp'=>$timestamp])
+            ->whereIn('id',$fixture_filter)->paginate(12)->appends(['date'=>$date_]);
+        return view('setting_page', [
+            "fixtures"=>$fixtures,
+            'date'=>$date_
+        ]);
 
     }
     public function dashboard()

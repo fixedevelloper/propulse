@@ -48,13 +48,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('sportbetting')}}">
-                            <span>Lucky Drops</span>
+                        <a href="{{route('st_page')}}">
+                            <span>Page setting</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('casino')}}">
-                            <span>Live Casino</span>
+                        <a href="{{route('setting')}}">
+                            <span>Settings</span>
                         </a>
                     </li>
                     <li>
