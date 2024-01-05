@@ -186,7 +186,8 @@ logger($leagues);
     }
     public function score_statistic()
     {
-        $scores=StatisticPosition::query()->select(['goal_home','goal_away']);
+        $scores=StatisticPosition::query()->leftJoin("fixtures",'fixtures.fixture_id','=','fixture_id')->select(['goal_home','goal_away']);
+      // $scores=StatisticPosition::all();
         return view('score_statistic', [
             'scores'=>$scores
         ]);
