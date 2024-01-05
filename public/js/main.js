@@ -140,7 +140,7 @@ $(document).ready(function () {
 			},
 		},
 	})
-	
+
 	//Deposit complate
 	    // Number Active
 	var qvalue = $(".quick-value h5");
@@ -167,7 +167,7 @@ $(document).ready(function () {
 	$('.play-btn').magnificPopup({
 		type: 'iframe',
 		callbacks: {
-			
+
 			}
 	});
 	//Magnifiq pupup
@@ -237,7 +237,7 @@ $(document).ready(function () {
 	// 	.querySelector(".buttons")
 	// 	.addEventListener("click", handleClick);
 	//Button Click
-	
+
 	// password hide
 	$(".toggle-password, .toggle-password2, .toggle-password3, .toggle-password4, .toggle-password5, .toggle-password6, .toggle-password7, .toggle-password8, .toggle-password9, .toggle-password10").click(function() {
 		$(this).toggleClass("fa-eye fa-eye-slash");
@@ -262,8 +262,8 @@ $(document).ready(function () {
 	//preloader
 
 	//--Nice Select--//
-	$('select').niceSelect();
-	
+	//$('select').niceSelect();
+
 });
 
 

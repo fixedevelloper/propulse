@@ -11,9 +11,12 @@ use App\Models\League;
 use App\Models\LeagueTheday;
 use App\Models\Setting;
 use App\Models\Stadings;
+use App\Models\StatisticPosition;
+use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use function Symfony\Component\Translation\Extractor\Visitor\leaveNode;
 
 class FrontController extends Controller
@@ -173,6 +176,22 @@ logger($leagues);
         return view('sportbetting', []);
 
     }
+    public function evenements()
+    {
+        $countries=Country::all();
+        return view('evenements', [
+            'countries'=>$countries
+        ]);
+
+    }
+    public function score_statistic()
+    {
+        $scores=StatisticPosition::query()->select(['goal_home','goal_away']);
+        return view('score_statistic', [
+            'scores'=>$scores
+        ]);
+
+    }
     public function setting(Request $request)
     {
         if ($request->method()=="POST"){
@@ -181,12 +200,32 @@ logger($leagues);
                 $setting=new Setting();
                 $setting->title=$request->get('title');
             }
+            $setting->position=$request->get('position');
             $setting->start_value=$request->get('value_start');
             $setting->save();
         }
-        $setting=Setting::query()->find(1);
+        $settings=Setting::query()->where("id",">","0")->paginate(12);
         return view('settings', [
-            'setting'=>$setting
+            'settings'=>$settings
+        ]);
+
+    }
+    public function statistics(Request $request)
+    {
+        $start_date=Carbon::parse($request->get('start_date'))->getTimestamp();
+        $end_date=Carbon::parse($request->get('end_date'))->getTimestamp();
+        $position=$request->get('position');
+        $fixtures=[];
+        if ($position){
+            $fixtures=Fixture::query()
+                ->select(DB::raw('count(*) as num'),'goal_home','goal_away')
+                ->whereBetween('day_timestamp',[$start_date,$end_date])
+                ->groupBy(['goal_home','goal_away'])->get()
+                ;
+        }
+       // logger($fixtures);
+        return view('statistics', [
+            'fixtures'=>$fixtures
         ]);
 
     }
@@ -206,9 +245,23 @@ logger($leagues);
         $percent=$setting->start_value;
         foreach ($fixtures as $fixture) {
             $ratio = Helpers::calculRatio($fixture);
-            if ($ratio['ratio_a_b_for']<$percent || $ratio['ratio_a_b_against']<$percent){
-                $fixture_filter[]=$fixture->id;
+            if ($request->position=="ratio_a_b_for" ||$request->position=="ratio_a_b_against"){
+                if ($ratio['ratio_a_b_for']<$percent || $ratio['ratio_a_b_against']<$percent){
+                    $fixture_filter[]=$fixture->id;
 
+                }
+            }
+            if ($request->position=="ratio_for"){
+                if ($ratio['ratio_b_for']<$percent || $ratio['ratio_a_for']<$percent){
+                    $fixture_filter[]=$fixture->id;
+
+                }
+            }
+            if ($request->position=="ratio_against"){
+                if ($ratio['ratio_a_against']<$percent || $ratio['ratio_b_against']<$percent ){
+                    $fixture_filter[]=$fixture->id;
+
+                }
             }
         }
         $fixtures=  Fixture::query()->where(['day_timestamp'=>$timestamp])
@@ -254,6 +307,21 @@ logger($leagues);
     public function register()
     {
         return view('register', []);
+
+    }
+    public function getLeague(Request $request)
+    {
+       $leagues = League::query()->where(['country_code' => $request->get('country')])->get();
+        return response()->json($leagues);
+    }
+    public function getTeams(Request $request)
+    {
+        $standings = Stadings::query()->where(['league_id' => $request->get('league')])->get();
+        $teams=[];
+        foreach ($standings as $league){
+            $teams[]=Team::query()->firstWhere(['team_id'=>$league->team_id]);
+        }
+        return response()->json($teams);
 
     }
 }

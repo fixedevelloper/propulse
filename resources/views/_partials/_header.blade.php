@@ -37,14 +37,14 @@
                             <span>Live</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="{{route('sportbetting')}}">
-                            <span>Sports Betting</span>
+                 {{--   <li>
+                        <a href="{{route('evenements')}}">
+                            <span>Evenements</span>
                         </a>
-                    </li>
+                    </li>--}}
                     <li>
-                        <a href="{{route('casino')}}">
-                            <span>Casino</span>
+                        <a href="{{route('statistic')}}">
+                            <span>Statistics</span>
                         </a>
                     </li>
                     <li>
@@ -65,6 +65,11 @@
                     <li>
                         <a href="{{route('standings')}}">
                             <span>standings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('score_statistic')}}">
+                            <span>Scores</span>
                         </a>
                     </li>
                     <li class="cmn-grp">

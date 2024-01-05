@@ -3,13 +3,28 @@
 @section('content')
     <div class="card card_dark mt-3 text-white">
         <div class="card-header">
-            <input name="date" hidden type="date" value="{{$date}}" class="form-control m-2">
-            <div class="col-md-3">
-                <form id="form_ontheday">
-                    <input name="date" id="date_ontheday" type="date" value="{{$date}}"
-                           class="form-control m-2">
-                </form>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <form id="form_position">
+                        <input name="date" hidden type="date" value="{{$date}}" class="form-control m-2">
+                    <label class="form-label">Operation</label>
+                    <select name="position" id="position" class="form-select">
+                        <option value="ratio_for">Ratio for</option>
+                        <option value="ratio_against">Ratio Against</option>
+                        <option value="ratio_a_b_for">Ratio A-B For</option>
+                        <option value="ratio_a_b_against">Ratio A-B Against</option>
+                    </select>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form id="form_ontheday">
+                        <input name="date" id="date_ontheday" type="date" value="{{$date}}"
+                               class="form-control m-2">
+                    </form>
+                </div>
             </div>
+
 
         </div>
         <div class="card-body">
