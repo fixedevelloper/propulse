@@ -95,6 +95,9 @@
             console.log(configs.routes.home+'?date='+$(this).val())
             $('#form_date').submit()
         })
+        $('#stat_filter').change(function () {
+            $('#form_stat').submit()
+        })
         $('#position').change(function () {
             $('#form_position').submit()
         })

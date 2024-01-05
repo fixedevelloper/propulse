@@ -3,11 +3,11 @@
     <div class="container">
         <div class="card mt-5">
             <div class="card-header">
-                <form>
+                <form id="form_stat">
                     <div class="col-md-3">
                         <div class="">
                             <label class="form-label"></label>
-                            <select name="filter" class="form-select">
+                            <select name="filter" class="form-select" id="stat_filter">
                                 <option value="ratio_for">Ratio for</option>
                                 <option value="ratio_against">Ratio Against</option>
                                 <option value="ratio_a_b_for">Ratio A-B For</option>

@@ -186,18 +186,19 @@ class FrontController extends Controller
 
     }
 
-    public function score_statistic()
-    {
-        // $scores=StatisticPosition::query()->leftJoin("fixtures",'fixtures.fixture_id','=','fixture_id')->select(['goal_home','goal_away']);
-        $scores = StatisticPosition::query()->where('id','>','1')->get();
-        $data = [];
-        foreach ($scores as $score) {
-            $fixture = Fixture::query()
-                ->firstWhere(['fixture_id' => $score->fixture_id]);
-            $data[] = $fixture->goal_home.'-'.$fixture->goal_away;
-        }
-        $data=array_count_values($data);
-        logger($data);
+    public function score_statistic(Request $request)
+    {    $data = [];
+
+            $scores = StatisticPosition::query()->where('position','=',$request->get('filter'))->get();
+            foreach ($scores as $score) {
+                $fixture = Fixture::query()
+                    ->firstWhere(['fixture_id' => $score->fixture_id]);
+                $data[] = $fixture->goal_home.'-'.$fixture->goal_away;
+            }
+            $data=array_count_values($data);
+            logger($data);
+
+
         return view('score_statistic', [
             'scores' => $data
         ]);
