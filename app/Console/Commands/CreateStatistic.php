@@ -31,8 +31,9 @@ class CreateStatistic extends Command
     public function handle()
     {
         $timestamp=Carbon::parse(date('Y-m-d'))->getTimestamp();
-        $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
-            ->distinct()->get();
+       /* $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
+            ->distinct()->get();*/
+        $fixtures=Fixture::all();
         $setting=Setting::query()->find(1);
         $percent=$setting->start_value;
         foreach ($fixtures as $fixture){
