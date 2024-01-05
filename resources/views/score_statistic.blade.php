@@ -28,11 +28,19 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($scores as $score)
+                    @foreach($scores as $k => $v)
+                        <tr>
+                            <td></td>
+                            <td>{{ $k }}</td>
+                            <td>{{ $v }}</td>
+                        </tr>
+{{--                        <div>{{ $k }} ({{ $v->count() }})</div>--}}
+                    @endforeach
+                  {{--  @foreach($scores as $score)
                         <tr>
                             <td>{{$score->goal_home}} - {{$score->goal_away}}</td>
                         </tr>
-                    @endforeach
+                    @endforeach--}}
 
                     </tbody>
 

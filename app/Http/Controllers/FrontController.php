@@ -194,10 +194,10 @@ class FrontController extends Controller
         foreach ($scores as $score) {
             $fixture = Fixture::query()
                 ->firstWhere(['fixture_id' => $score->fixture_id]);
-            $data[] = $fixture;
-            logger($fixture);
+            $data[] = $fixture->goal_home.'-'.$fixture->goal_away;
         }
-
+        $data=array_count_values($data);
+        logger($data);
         return view('score_statistic', [
             'scores' => $data
         ]);
