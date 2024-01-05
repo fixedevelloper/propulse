@@ -17,46 +17,44 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use function Symfony\Component\Translation\Extractor\Visitor\leaveNode;
 
 class FrontController extends Controller
 {
 
     public function home(Request $request)
     {
-        if (is_null($request->get('date'))){
-            $date_=Carbon::today()->format('Y-m-d');
-            $timestamp=Carbon::today()->getTimestamp();
-        }else{
-            $date_=$request->get('date');
-            $timestamp=Carbon::parse($date_)->getTimestamp();
+        if (is_null($request->get('date'))) {
+            $date_ = Carbon::today()->format('Y-m-d');
+            $timestamp = Carbon::today()->getTimestamp();
+        } else {
+            $date_ = $request->get('date');
+            $timestamp = Carbon::parse($date_)->getTimestamp();
         }
 
 
-        if ($request->get('act')=="live"){
+        if ($request->get('act') == "live") {
             logger('-------live live');
-            $leagues=Fixture::query()->where(['day_timestamp'=>$timestamp])->whereIn('st_short',['1H','2H'])
-                ->distinct()->paginate(12,['league_id','league_round','league_season'])->appends(['date'=>$date_,'act'=>$request->get('act')])
-            ;
-        }else{
+            $leagues = Fixture::query()->where(['day_timestamp' => $timestamp])->whereIn('st_short', ['1H', '2H'])
+                ->distinct()->paginate(12, ['league_id', 'league_round', 'league_season'])->appends(['date' => $date_, 'act' => $request->get('act')]);
+        } else {
             logger('-------not live');
-        /*    $leagues=Fixture::query()->select(['league_id','league_round','league_season'])->where(['day_timestamp'=>$timestamp])
-                ->orderBy('league_id','asc')
-                //->(['league_id'])
-                ->distinct()->paginate(12,['league_id'])->appends(['date'=>$date_,'act'=>$request->get('act')])
-            ;
-            */
-           $leagues= LeagueTheday::query()->leftJoin('leagues','leagues.league_id',"=",'league_thedays.league_id')
-                ->where(['timestamp'=>$timestamp])
-                ->orderBy('leagues.league_id','asc')
-                ->distinct()->paginate(12)->appends(['date'=>$date_,'act'=>$request->get('act')]);
-logger($leagues);
+            /*    $leagues=Fixture::query()->select(['league_id','league_round','league_season'])->where(['day_timestamp'=>$timestamp])
+                    ->orderBy('league_id','asc')
+                    //->(['league_id'])
+                    ->distinct()->paginate(12,['league_id'])->appends(['date'=>$date_,'act'=>$request->get('act')])
+                ;
+                */
+            $leagues = LeagueTheday::query()->leftJoin('leagues', 'leagues.league_id', "=", 'league_thedays.league_id')
+                ->where(['timestamp' => $timestamp])
+                ->orderBy('leagues.league_id', 'asc')
+                ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request->get('act')]);
+            logger($leagues);
         }
         logger($leagues->total());
 
         return view('home', [
-            "leagues"=>$leagues,
-            'date'=>$date_
+            "leagues" => $leagues,
+            'date' => $date_
         ]);
 
     }
@@ -83,14 +81,14 @@ logger($leagues);
         $stadings = [];
         $league = null;
         $country = null;
-        $stadings_home=[];
+        $stadings_home = [];
         if ($request->has('country')) {
             $leagues = League::query()->where(['country_code' => $request->get('country')])->get();
             $country = Country::query()->firstWhere(['code' => $request->get('country')]);
         }
         if ($request->has('league')) {
             $stadings = Stadings::query()->where(['league_id' => $request->get('league')])->get();
-            $stadings_home=Stadings::query()->where(['league_id' => $request->get('league')])->orderByDesc('home_win')->get();
+            $stadings_home = Stadings::query()->where(['league_id' => $request->get('league')])->orderByDesc('home_win')->get();
             $league = League::query()->firstWhere(['league_id' => $request->get('league')]);
         }
         $countries = Country::all();
@@ -106,186 +104,195 @@ logger($leagues);
             'country_by' => $country,
         ]);
     }
+
     public function ontheday(Request $request)
     {
-        if (is_null($request->get('date'))){
-            $date_=Carbon::today()->format('Y-m-d');
-            $timestamp=Carbon::today()->getTimestamp();
-        }else{
-            $date_=$request->get('date');
-            $timestamp=Carbon::parse($date_)->getTimestamp();
+        if (is_null($request->get('date'))) {
+            $date_ = Carbon::today()->format('Y-m-d');
+            $timestamp = Carbon::today()->getTimestamp();
+        } else {
+            $date_ = $request->get('date');
+            $timestamp = Carbon::parse($date_)->getTimestamp();
         }
-        $request_filter=$request->get('filter');
-        if (isset($request_filter)){
+        $request_filter = $request->get('filter');
+        if (isset($request_filter)) {
 
-            $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
                 ->distinct()->get();
-            $fixture_filter=[];
-            $filter=$request->get('filter');
-            $percent=$request->get('percent');
-            foreach ($fixtures as $fixture){
-                $ratio=Helpers::calculRatio($fixture);
-               // logger($ratio);
-                if ($filter=="ratio_for"){
-                    if ($ratio['ratio_a_for']==$percent || $ratio['ratio_b_for']==$percent){
-                        logger('****'.$ratio['ratio_a_for']);
-                        $fixture_filter[]=$fixture->id;
+            $fixture_filter = [];
+            $filter = $request->get('filter');
+            $percent = $request->get('percent');
+            foreach ($fixtures as $fixture) {
+                $ratio = Helpers::calculRatio($fixture);
+                // logger($ratio);
+                if ($filter == "ratio_for") {
+                    if ($ratio['ratio_a_for'] == $percent || $ratio['ratio_b_for'] == $percent) {
+                        logger('****' . $ratio['ratio_a_for']);
+                        $fixture_filter[] = $fixture->id;
 
                     }
                 }
-                if ($filter=="ratio_against"){
-                    logger('###############'.$ratio['ratio_a_against']);
-                    if ($ratio['ratio_a_against'] ==$percent || $ratio['ratio_b_against']==$percent){
-                        logger('****'.$ratio['ratio_a_against']);
-                        $fixture_filter[]=$fixture->id;
+                if ($filter == "ratio_against") {
+                    logger('###############' . $ratio['ratio_a_against']);
+                    if ($ratio['ratio_a_against'] == $percent || $ratio['ratio_b_against'] == $percent) {
+                        logger('****' . $ratio['ratio_a_against']);
+                        $fixture_filter[] = $fixture->id;
 
                     }
                 }
-                if ($filter=="ratio_a_b_against"){
-                    logger("**********************".$percent);
-                    if ($ratio['ratio_a_b_against']===$percent){
-                        $fixture_filter[]=$fixture->id;
+                if ($filter == "ratio_a_b_against") {
+                    logger("**********************" . $percent);
+                    if ($ratio['ratio_a_b_against'] === $percent) {
+                        $fixture_filter[] = $fixture->id;
 
                     }
                 }
-                if ($filter=="ratio_a_b_for"){
-                    if ($ratio['ratio_a_b_for']===$percent){
-                        $fixture_filter[]=$fixture->id;
+                if ($filter == "ratio_a_b_for") {
+                    if ($ratio['ratio_a_b_for'] === $percent) {
+                        $fixture_filter[] = $fixture->id;
 
                     }
                 }
             }
-            $fixtures=  Fixture::query()->where(['day_timestamp'=>$timestamp])
-               ->whereIn('id',$fixture_filter)->paginate(12)->appends(['date'=>$date_,'act'=>$request_filter]);
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+                ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
             return view('ontheday', [
-                'fixtures'=>$fixtures,
-                'date'=>$date_
+                'fixtures' => $fixtures,
+                'date' => $date_
             ]);
         }
-        $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
-            ->distinct()->paginate(12)->appends(['date'=>$date_,'act'=>$request_filter]);
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+            ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
 
         return view('ontheday', [
-            'fixtures'=>$fixtures,
-            'date'=>$date_
+            'fixtures' => $fixtures,
+            'date' => $date_
         ]);
 
     }
+
     public function sportbetting()
     {
         return view('sportbetting', []);
 
     }
+
     public function evenements()
     {
-        $countries=Country::all();
+        $countries = Country::all();
         return view('evenements', [
-            'countries'=>$countries
+            'countries' => $countries
         ]);
 
     }
+
     public function score_statistic()
     {
-       // $scores=StatisticPosition::query()->leftJoin("fixtures",'fixtures.fixture_id','=','fixture_id')->select(['goal_home','goal_away']);
-       $scores=StatisticPosition::all();
-       $data=[];
-       foreach ($scores as $score){
-           $fixture=Fixture::query()->firstWhere(['fixture_id'=>$score->fixture_id])->select(['goal_home','goal_away'])->get();
-      $data[]=$fixture;
-       }
+        // $scores=StatisticPosition::query()->leftJoin("fixtures",'fixtures.fixture_id','=','fixture_id')->select(['goal_home','goal_away']);
+        $scores = StatisticPosition::all();
+        $data = [];
+        foreach ($scores as $score) {
+            $fixture = Fixture::query()->firstWhere(['fixture_id' => $score->fixture_id])->select(['goal_home', 'goal_away'])->get();
+            $data[] = $fixture;
+        }
+        logger($data);
         return view('score_statistic', [
-            'scores'=>$data
+            'scores' => $data
         ]);
 
     }
+
     public function setting(Request $request)
     {
-        if ($request->method()=="POST"){
-            $setting=Setting::query()->firstWhere(['title'=>$request->get('title')]);
-            if (is_null($setting)){
-                $setting=new Setting();
-                $setting->title=$request->get('title');
+        if ($request->method() == "POST") {
+            $setting = Setting::query()->firstWhere(['title' => $request->get('title')]);
+            if (is_null($setting)) {
+                $setting = new Setting();
+                $setting->title = $request->get('title');
             }
-            $setting->position=$request->get('position');
-            $setting->start_value=$request->get('value_start');
+            $setting->position = $request->get('position');
+            $setting->start_value = $request->get('value_start');
             $setting->save();
         }
-        $settings=Setting::query()->where("id",">","0")->paginate(12);
+        $settings = Setting::query()->where("id", ">", "0")->paginate(12);
         return view('settings', [
-            'settings'=>$settings
+            'settings' => $settings
         ]);
 
     }
+
     public function statistics(Request $request)
     {
-        $start_date=Carbon::parse($request->get('start_date'))->getTimestamp();
-        $end_date=Carbon::parse($request->get('end_date'))->getTimestamp();
-        $position=$request->get('position');
-        $fixtures=[];
-        if ($position){
-            $fixtures=Fixture::query()
-                ->select(DB::raw('count(*) as num'),'goal_home','goal_away')
-                ->whereBetween('day_timestamp',[$start_date,$end_date])
-                ->groupBy(['goal_home','goal_away'])->get()
-                ;
+        $start_date = Carbon::parse($request->get('start_date'))->getTimestamp();
+        $end_date = Carbon::parse($request->get('end_date'))->getTimestamp();
+        $position = $request->get('position');
+        $fixtures = [];
+        if ($position) {
+            $fixtures = Fixture::query()
+                ->select(DB::raw('count(*) as num'), 'goal_home', 'goal_away')
+                ->whereBetween('day_timestamp', [$start_date, $end_date])
+                ->groupBy(['goal_home', 'goal_away'])->get();
         }
-       // logger($fixtures);
+        // logger($fixtures);
         return view('statistics', [
-            'fixtures'=>$fixtures
+            'fixtures' => $fixtures
         ]);
 
     }
+
     public function setting_page(Request $request)
     {
-        if (is_null($request->get('date'))){
-            $date_=Carbon::today()->format('Y-m-d');
-            $timestamp=Carbon::today()->getTimestamp();
-        }else{
-            $date_=$request->get('date');
-            $timestamp=Carbon::parse($date_)->getTimestamp();
+        if (is_null($request->get('date'))) {
+            $date_ = Carbon::today()->format('Y-m-d');
+            $timestamp = Carbon::today()->getTimestamp();
+        } else {
+            $date_ = $request->get('date');
+            $timestamp = Carbon::parse($date_)->getTimestamp();
         }
-        $setting=Setting::query()->find(1);
-        $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
+        $setting = Setting::query()->find(1);
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
             ->distinct()->get();
-        $fixture_filter=[];
-        $percent=$setting->start_value;
+        $fixture_filter = [];
+        $percent = $setting->start_value;
         foreach ($fixtures as $fixture) {
             $ratio = Helpers::calculRatio($fixture);
-            if ($request->position=="ratio_a_b_for" ||$request->position=="ratio_a_b_against"){
-                if ($ratio['ratio_a_b_for']<$percent || $ratio['ratio_a_b_against']<$percent){
-                    $fixture_filter[]=$fixture->id;
+            if ($request->position == "ratio_a_b_for" || $request->position == "ratio_a_b_against") {
+                if ($ratio['ratio_a_b_for'] < $percent || $ratio['ratio_a_b_against'] < $percent) {
+                    $fixture_filter[] = $fixture->id;
 
                 }
             }
-            if ($request->position=="ratio_for"){
-                if ($ratio['ratio_b_for']<$percent || $ratio['ratio_a_for']<$percent){
-                    $fixture_filter[]=$fixture->id;
+            if ($request->position == "ratio_for") {
+                if ($ratio['ratio_b_for'] < $percent || $ratio['ratio_a_for'] < $percent) {
+                    $fixture_filter[] = $fixture->id;
 
                 }
             }
-            if ($request->position=="ratio_against"){
-                if ($ratio['ratio_a_against']<$percent || $ratio['ratio_b_against']<$percent ){
-                    $fixture_filter[]=$fixture->id;
+            if ($request->position == "ratio_against") {
+                if ($ratio['ratio_a_against'] < $percent || $ratio['ratio_b_against'] < $percent) {
+                    $fixture_filter[] = $fixture->id;
 
                 }
             }
         }
-        $fixtures=  Fixture::query()->where(['day_timestamp'=>$timestamp])
-            ->whereIn('id',$fixture_filter)->paginate(12)->appends(['date'=>$date_]);
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+            ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_]);
         return view('setting_page', [
-            "fixtures"=>$fixtures,
-            'date'=>$date_
+            "fixtures" => $fixtures,
+            'date' => $date_
         ]);
 
     }
+
     public function dashboard()
     {
-        if (!Auth::authenticate()){
+        if (!Auth::authenticate()) {
             return redirect()->route('login');
         }
         return view('dashboard', []);
 
     }
+
     public function casino()
     {
         return view('casino', []);
@@ -315,17 +322,19 @@ logger($leagues);
         return view('register', []);
 
     }
+
     public function getLeague(Request $request)
     {
-       $leagues = League::query()->where(['country_code' => $request->get('country')])->get();
+        $leagues = League::query()->where(['country_code' => $request->get('country')])->get();
         return response()->json($leagues);
     }
+
     public function getTeams(Request $request)
     {
         $standings = Stadings::query()->where(['league_id' => $request->get('league')])->get();
-        $teams=[];
-        foreach ($standings as $league){
-            $teams[]=Team::query()->firstWhere(['team_id'=>$league->team_id]);
+        $teams = [];
+        foreach ($standings as $league) {
+            $teams[] = Team::query()->firstWhere(['team_id' => $league->team_id]);
         }
         return response()->json($teams);
 
