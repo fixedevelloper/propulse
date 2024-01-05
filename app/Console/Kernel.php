@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('app:create-fixture')->daily();
-      //  $schedule->command('app:create-standing')->daily();
+        $schedule->command('app:create-statistic')->daily()->between('02:00','03:00');
         $schedule->command('app:create-odd')->hourly();
         //$schedule->command('app:create-league')->hourly();
 /*        $schedule->command('app:create-standing')->daily()->between('01:00','02:00');*/
