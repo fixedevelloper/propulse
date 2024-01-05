@@ -186,10 +186,15 @@ logger($leagues);
     }
     public function score_statistic()
     {
-        $scores=StatisticPosition::query()->leftJoin("fixtures",'fixtures.fixture_id','=','fixture_id')->select(['goal_home','goal_away']);
-      // $scores=StatisticPosition::all();
+       // $scores=StatisticPosition::query()->leftJoin("fixtures",'fixtures.fixture_id','=','fixture_id')->select(['goal_home','goal_away']);
+       $scores=StatisticPosition::all();
+       $data=[];
+       foreach ($scores as $score){
+           $fixture=Fixture::query()->firstWhere(['fixture_id'=>$score->fixture_id])->select(['goal_home','goal_away'])->get();
+      $data[]=$fixture;
+       }
         return view('score_statistic', [
-            'scores'=>$scores
+            'scores'=>$data
         ]);
 
     }
