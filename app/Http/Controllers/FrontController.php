@@ -192,10 +192,12 @@ class FrontController extends Controller
         $scores = StatisticPosition::all();
         $data = [];
         foreach ($scores as $score) {
-            $fixture = Fixture::query()->firstWhere(['fixture_id' => $score->fixture_id])->select(['goal_home', 'goal_away']);
+            $fixture = Fixture::query()
+                ->firstWhere(['fixture_id' => $score->fixture_id])->select(['goal_home', 'goal_away']);
             $data[] = $fixture;
+            logger($fixture);
         }
-        logger($data);
+
         return view('score_statistic', [
             'scores' => $data
         ]);
