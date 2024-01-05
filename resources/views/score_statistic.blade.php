@@ -30,7 +30,7 @@
                     <tbody>
                     @foreach($scores as $k => $v)
                         <tr>
-                            <td></td>
+                            <td>{{$filter_value}}</td>
                             <td>{{ $k }}</td>
                             <td>{{ $v }}</td>
                         </tr>

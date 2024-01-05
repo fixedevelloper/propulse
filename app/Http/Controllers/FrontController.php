@@ -200,7 +200,8 @@ class FrontController extends Controller
 
 
         return view('score_statistic', [
-            'scores' => $data
+            'scores' => $data,
+            'filter_value'=>$request->get('filter')
         ]);
 
     }
