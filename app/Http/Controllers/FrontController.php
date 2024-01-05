@@ -189,7 +189,7 @@ class FrontController extends Controller
     public function score_statistic()
     {
         // $scores=StatisticPosition::query()->leftJoin("fixtures",'fixtures.fixture_id','=','fixture_id')->select(['goal_home','goal_away']);
-        $scores = StatisticPosition::all();
+        $scores = StatisticPosition::query()->where('id','>','1')->get();
         $data = [];
         foreach ($scores as $score) {
             $fixture = Fixture::query()
