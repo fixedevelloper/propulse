@@ -73,7 +73,7 @@ class CreateStatistic extends Command
                             $position=new StatisticPosition();
                             $position->position="ratio_a_b_for";
                             $position->fixture_id=$fixture->fixture_id;
-                            $position->date_timestamp=$fixture->date_timestamp;
+                            $position->date_timestamp=$fixture->day_timestamp;
                             $position->save();
                         }
                         break;
