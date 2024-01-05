@@ -193,7 +193,7 @@ class FrontController extends Controller
         $data = [];
         foreach ($scores as $score) {
             $fixture = Fixture::query()
-                ->firstWhere(['fixture_id' => $score->fixture_id])->select(['goal_home', 'goal_away']);
+                ->firstWhere(['fixture_id' => $score->fixture_id]);
             $data[] = $fixture;
             logger($fixture);
         }
