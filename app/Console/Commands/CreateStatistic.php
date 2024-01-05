@@ -34,51 +34,55 @@ class CreateStatistic extends Command
        /* $fixtures=Fixture::query()->where(['day_timestamp'=>$timestamp])
             ->distinct()->get();*/
         $fixtures=Fixture::all();
-        $setting=Setting::query()->find(1);
-        $percent=$setting->start_value;
+        $settings=Setting::all();
+
         foreach ($fixtures as $fixture){
             $ratio=Helpers::calculRatio($fixture);
-            switch ($setting->position){
-                case "ratio_for":
-                    if($ratio['ratio_a_for']==$percent || $ratio['ratio_b_for']==$percent){
-                        $position=new StatisticPosition();
-                        $position->position="ratio_for";
-                        $position->fixture_id=$fixture->fixture_id;
-                        $position->date_timestamp=$fixture->date_timestamp;
-                        $position->save();
-                    }
-                    break;
-                case "ratio_against":
-                    if($ratio['ratio_against']==$percent || $ratio['ratio_against']==$percent){
-                        $position=new StatisticPosition();
-                        $position->position="ratio_against";
-                        $position->fixture_id=$fixture->fixture_id;
-                        $position->date_timestamp=$fixture->date_timestamp;
-                        $position->save();
-                    }
-                    break;
-                case "ratio_a_b_against":
-                    if($ratio['ratio_a_b_against']==$percent || $ratio['ratio_a_b_against']==$percent){
-                        $position=new StatisticPosition();
-                        $position->position="ratio_a_b_against";
-                        $position->fixture_id=$fixture->fixture_id;
-                        $position->date_timestamp=$fixture->date_timestamp;
-                        $position->save();
-                    }
-                    break;
-                case "ratio_a_b_for":
-                    if($ratio['ratio_a_b_for']==$percent || $ratio['ratio_a_b_for']==$percent){
-                        $position=new StatisticPosition();
-                        $position->position="ratio_a_b_for";
-                        $position->fixture_id=$fixture->fixture_id;
-                        $position->date_timestamp=$fixture->date_timestamp;
-                        $position->save();
-                    }
-                    break;
-                default :
-                    break;
+            foreach ($settings as $setting){
+                $percent=$setting->start_value;
+                switch ($setting->position){
+                    case "ratio_for":
+                        if($ratio['ratio_a_for']==$percent || $ratio['ratio_b_for']==$percent){
+                            $position=new StatisticPosition();
+                            $position->position="ratio_for";
+                            $position->fixture_id=$fixture->fixture_id;
+                            $position->date_timestamp=$fixture->day_timestamp;
+                            $position->save();
+                        }
+                        break;
+                    case "ratio_against":
+                        if($ratio['ratio_against']==$percent || $ratio['ratio_against']==$percent){
+                            $position=new StatisticPosition();
+                            $position->position="ratio_against";
+                            $position->fixture_id=$fixture->fixture_id;
+                            $position->date_timestamp=$fixture->day_timestamp;
+                            $position->save();
+                        }
+                        break;
+                    case "ratio_a_b_against":
+                        if($ratio['ratio_a_b_against']==$percent || $ratio['ratio_a_b_against']==$percent){
+                            $position=new StatisticPosition();
+                            $position->position="ratio_a_b_against";
+                            $position->fixture_id=$fixture->fixture_id;
+                            $position->date_timestamp=$fixture->day_timestamp;
+                            $position->save();
+                        }
+                        break;
+                    case "ratio_a_b_for":
+                        if($ratio['ratio_a_b_for']==$percent || $ratio['ratio_a_b_for']==$percent){
+                            $position=new StatisticPosition();
+                            $position->position="ratio_a_b_for";
+                            $position->fixture_id=$fixture->fixture_id;
+                            $position->date_timestamp=$fixture->date_timestamp;
+                            $position->save();
+                        }
+                        break;
+                    default :
+                        break;
 
+                }
             }
+
         }
     }
 }
