@@ -34,10 +34,10 @@ class UpdateFixture extends Command
 
     function updateFixture()
     {
-        $from="2024-01-01";
-        $to=date('Y-m-d');
-        $timestamp = Carbon::today()->getTimestamp();
-        $timestamp_from=Carbon::parse($from)->getTimestamp();
+        $from=date('Y-m-d');
+        $to=date('Y-m-d', strtotime($from. ' + 1 days'));
+        $timestamp =Carbon::parse($to)->getTimestamp();
+        $timestamp_from=Carbon::today()->getTimestamp();
         $leagues = LeagueTheday::query()->whereBetween('timestamp', [$timestamp_from,$timestamp])->get();
         foreach ($leagues as $league) {
             $data = FootballAPIService::getAllFixturesBetweenDateWithLeague($league->league_id, $from, $to);

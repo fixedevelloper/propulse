@@ -50,7 +50,6 @@ class CreateFixture extends Command
         $leagues=League::query()->where('id','>',0)->get();
         $from=date('Y-m-d');
         $to=date('Y-m-d', strtotime($from. ' + 1 days'));
-        logger($from."****".$to);
       foreach ($leagues as $league){
             $data = FootballAPIService::getAllFixturesBetweenDateWithLeague($league->league_id,$from,$to);
             $response=$data->response;
