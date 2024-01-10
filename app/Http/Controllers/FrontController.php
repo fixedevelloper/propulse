@@ -117,7 +117,7 @@ class FrontController extends Controller
         $request_filter = $request->get('filter');
         if (isset($request_filter)) {
 
-            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC"])
                 ->distinct()->get();
             $fixture_filter = [];
             $filter = $request->get('filter');
@@ -154,14 +154,14 @@ class FrontController extends Controller
                     }
                 }
             }
-            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC"])
                 ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
             return view('ontheday', [
                 'fixtures' => $fixtures,
                 'date' => $date_
             ]);
         }
-        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC"])
             ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
 
         return view('onthedaymulticolor', [
@@ -183,7 +183,7 @@ class FrontController extends Controller
         $request_filter = $request->get('filter');
         if (isset($request_filter)) {
 
-            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC"])
                 ->distinct()->get();
             $fixture_filter = [];
             $filter = $request->get('filter');
@@ -220,14 +220,14 @@ class FrontController extends Controller
                     }
                 }
             }
-            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC"])
                 ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
             return view('ontheday', [
                 'fixtures' => $fixtures,
                 'date' => $date_
             ]);
         }
-        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC"])
             ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
 
         return view('ontheday', [
@@ -298,7 +298,7 @@ class FrontController extends Controller
         $position = $request->get('position');
         $fixtures = [];
         if ($position) {
-            $fixtures = Fixture::query()
+            $fixtures = Fixture::query()->whereNotIn("st_short",["CANC"])
                 ->select(DB::raw('count(*) as num'), 'goal_home', 'goal_away')
                 ->whereBetween('day_timestamp', [$start_date, $end_date])
                 ->groupBy(['goal_home', 'goal_away'])->get();
@@ -320,7 +320,7 @@ class FrontController extends Controller
             $timestamp = Carbon::parse($date_)->getTimestamp();
         }
         $setting = Setting::query()->find(1);
-        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC"])
             ->distinct()->get();
         $fixture_filter = [];
         $percent = $setting->start_value;
@@ -345,7 +345,7 @@ class FrontController extends Controller
                 }
             }
         }
-        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC"])
             ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_]);
         return view('setting_page', [
             "fixtures" => $fixtures,
