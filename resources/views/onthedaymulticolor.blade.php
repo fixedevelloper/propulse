@@ -107,7 +107,8 @@
                                     :{{is_null($standing_home)?'-':($standing_home['goal_home_against'] + $standing_home['goal_away_against'])}}</td>
                                 <td>{{$ratio['ratio_a_for']}}</td>
                                 <td>{{$ratio['ratio_a_against']}}</td>
-                                <td class="text-center">{{$fixture->goal_home}}- {{$fixture->goal_away}}</td>
+                                <td class="text-center">{{$fixture->goal_home}}- {{$fixture->goal_away}}
+                                <p>{{$fixture->st_short}}</p></td>
                                 <td>
                                     <img height="20" src=" {{$team_away['logo']}}" alt=""><span> {{$team_away['name']}}
                     </span>
