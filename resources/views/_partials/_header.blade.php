@@ -72,6 +72,11 @@
                             <span>Scores</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{route('ontheday_multi_color')}}">
+                            <span>Match stats</span>
+                        </a>
+                    </li>
                     <li class="cmn-grp">
                             <span class="cmn--btn" data-bs-toggle="modal" data-bs-target="#signup">
                                 <span class="rela">Sign In</span>

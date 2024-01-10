@@ -105,6 +105,72 @@ class FrontController extends Controller
         ]);
     }
 
+    public function ontheday_multi_color(Request $request)
+    {
+        if (is_null($request->get('date'))) {
+            $date_ = Carbon::today()->format('Y-m-d');
+            $timestamp = Carbon::today()->getTimestamp();
+        } else {
+            $date_ = $request->get('date');
+            $timestamp = Carbon::parse($date_)->getTimestamp();
+        }
+        $request_filter = $request->get('filter');
+        if (isset($request_filter)) {
+
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+                ->distinct()->get();
+            $fixture_filter = [];
+            $filter = $request->get('filter');
+            $percent = $request->get('percent');
+            foreach ($fixtures as $fixture) {
+                $ratio = Helpers::calculRatio($fixture);
+                // logger($ratio);
+                if ($filter == "ratio_for") {
+                    if ($ratio['ratio_a_for'] == $percent || $ratio['ratio_b_for'] == $percent) {
+                        logger('****' . $ratio['ratio_a_for']);
+                        $fixture_filter[] = $fixture->id;
+
+                    }
+                }
+                if ($filter == "ratio_against") {
+                    logger('###############' . $ratio['ratio_a_against']);
+                    if ($ratio['ratio_a_against'] == $percent || $ratio['ratio_b_against'] == $percent) {
+                        logger('****' . $ratio['ratio_a_against']);
+                        $fixture_filter[] = $fixture->id;
+
+                    }
+                }
+                if ($filter == "ratio_a_b_against") {
+                    logger("**********************" . $percent);
+                    if ($ratio['ratio_a_b_against'] === $percent) {
+                        $fixture_filter[] = $fixture->id;
+
+                    }
+                }
+                if ($filter == "ratio_a_b_for") {
+                    if ($ratio['ratio_a_b_for'] === $percent) {
+                        $fixture_filter[] = $fixture->id;
+
+                    }
+                }
+            }
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+                ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
+            return view('ontheday', [
+                'fixtures' => $fixtures,
+                'date' => $date_
+            ]);
+        }
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])
+            ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
+
+        return view('onthedaymulticolor', [
+            'fixtures' => $fixtures,
+            'date' => $date_
+        ]);
+
+    }
+
     public function ontheday(Request $request)
     {
         if (is_null($request->get('date'))) {

@@ -38,6 +38,8 @@ Route::get('/promotions', [FrontController::class, 'promotions'])
     ->name('promotions');
 Route::get('/ontheday', [FrontController::class, 'ontheday'])
     ->name('ontheday');
+Route::get('/ontheday_multi_color', [FrontController::class, 'ontheday_multi_color'])
+    ->name('ontheday_multi_color');
 Route::match(["POST","GET"],'/setting', [FrontController::class, 'setting'])
     ->name('setting');
 Route::match(["POST","GET"],'/statistic', [FrontController::class, 'statistics'])
