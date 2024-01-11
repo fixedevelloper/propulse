@@ -120,44 +120,21 @@ class FrontController extends Controller
         }
         $request_filter = $request->get('percent');
         if (isset($request_filter)) {
-
             $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
                 ->distinct()->get();
             $fixture_filter = [];
-            $filter = $request->get('filter');
             $percent = $request->get('percent');
             foreach ($fixtures as $fixture) {
                 $ratio = Helpers::calculRatio($fixture);
-   /*             if ($filter == "ratio_for") {
-                    if ($ratio['ratio_a_for'] == $percent || $ratio['ratio_b_for'] == $percent) {
-                        logger('****' . $ratio['ratio_a_for']);
-                        $fixture_filter[] = $fixture->id;
-
-                    }
-                }
-                if ($filter == "ratio_against") {
-                    logger('###############' . $ratio['ratio_a_against']);
-                    if ($ratio['ratio_a_against'] == $percent || $ratio['ratio_b_against'] == $percent) {
-                        logger('****' . $ratio['ratio_a_against']);
-                        $fixture_filter[] = $fixture->id;
-
-                    }
-                }
-                if ($filter == "ratio_a_b_against") {
-                    logger("**********************" . $percent);
-                    if ($ratio['ratio_a_b_against'] === $percent) {
-                        $fixture_filter[] = $fixture->id;
-
-                    }
-                }*/
-
+                if (($ratio['ratio_a_b_for'] > 0 && $ratio['ratio_a_b_against'] < 0) || ($ratio['ratio_a_b_for'] < 0 && $ratio['ratio_a_b_against'] > 0)){
                     if ($ratio['ratio_a_b_for'] >= $percent || $ratio['ratio_a_b_against'] >= $percent) {
                         $fixture_filter[] = $fixture->id;
 
-                }
+                    }
+            }
             }
             $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
-                ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
+                ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'percent' => $percent,'date_end'=>$date_end]);
             return view('onthedaymulticolor', [
                 'fixtures' => $fixtures,
                 'date' => $date_,
@@ -166,7 +143,7 @@ class FrontController extends Controller
             ]);
         }
         $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC","PST"])
-            ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
+            ->distinct()->paginate(12)->appends(['date' => $date_,'date_end'=>$date_end]);
 
         return view('onthedaymulticolor', [
             'fixtures' => $fixtures,

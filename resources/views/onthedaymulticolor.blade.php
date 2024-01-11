@@ -60,24 +60,13 @@
                             $team_home=\App\Helpers\Helpers::getTeamByID($fixture->team_home_id);
                             $team_away=\App\Helpers\Helpers::getTeamByID($fixture->team_away_id);
                             $ratio=App\Helpers\Helpers::calculRatio($fixture);
-                            $mp_b=0;
-                            $mp_a=0;
-                            $ratio_a_b_for=0;
-                            $ratio_a_b_against=0;
-                            $ratio_f_a=0;
-                             $ratio_f_b=0;
-                             $ratio_ag_a=0;
-                             $ratio_ag_b=0;
                             if ($standing_home){
                                 $last_home_="";
                             if (strlen($standing_home->form)>0){
                                 $last_home=str_split($standing_home->form);
                                 $last_home_=$last_home[0];
                             }
-                            $mp_a=$standing_home['home_played'] + $standing_home['away_played'];
-                            $ratio_f_a=round(($standing_home['goal_home_for'] + $standing_home['goal_away_for']) / ($mp_a),2);
-                            $ratio_ag_a=round(($standing_home['goal_home_against'] + $standing_home['goal_away_against']) / ($mp_a),2);
-                            }
+
                             if ($standing_away){
                                 $last_away_="";
                                 if (strlen($standing_away->form)>0){
@@ -89,8 +78,6 @@
                                  $ratio_ag_b=round(($standing_away['goal_home_against'] + $standing_away['goal_away_against']) / ($mp_b),2);
 
                             }
-                            $ratio_a_b_for=$ratio_f_a-$ratio_f_b;
-                            $ratio_a_b_against=$ratio_ag_a-$ratio_ag_b;
                         @endphp
                         @if(($ratio['ratio_a_b_for']>0 && $ratio['ratio_a_b_against']<0) || ($ratio['ratio_a_b_for']<0 && $ratio['ratio_a_b_against']>0))
                             <tr>
