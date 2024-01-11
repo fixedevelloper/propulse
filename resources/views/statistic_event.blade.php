@@ -96,39 +96,39 @@
                         </tr>
                         <tr>
                             <td>0</td>
-                            <td>(0-0) {{round(($score_0_0/$total)*100,2)}}</td>
-                            <td>(0-1) {{round(($score_0_1/$total)*100,2)}}</td>
-                            <td>(0-2) {{round(($score_0_2/$total)*100,2)}}</td>
-                            <td>(0-3) {{round(($score_0_3/$total)*100,2)}}</td>
-                            <td>(0-4) {{round(($score_0_4/$total)*100,2)}}</td>
+                            <td>(0-0) {{round(($score_0_0/$total)*100,2)}} %</td>
+                            <td>(0-1) {{round(($score_0_1/$total)*100,2)}} %</td>
+                            <td>(0-2) {{round(($score_0_2/$total)*100,2)}} %</td>
+                            <td>(0-3) {{round(($score_0_3/$total)*100,2)}} %</td>
+                            <td>(0-4) {{round(($score_0_4/$total)*100,2)}} %</td>
                             <td>(0-5) -</td>
                         </tr>
                         <tr>
                             <td>1</td>
-                            <td>(1-0) {{round(($score_1_0/$total)*100,2)}}</td>
-                            <td>(1-1){{round(($score_1_1/$total)*100,2)}}</td>
-                            <td>(1-2 ){{round(($score_1_2/$total)*100,2)}}</td>
-                            <td>(1-3) {{round(($score_1_3/$total)*100,2)}}</td>
-                            <td>(1-4) {{round(($score_1_4/$total)*100,2)}}</td>
-                            <td>(1-5) {{round(($score_1_5/$total)*100,2)}}</td>
+                            <td>(1-0) {{round(($score_1_0/$total)*100,2)}} %</td>
+                            <td>(1-1){{round(($score_1_1/$total)*100,2)}} %</td>
+                            <td>(1-2 ){{round(($score_1_2/$total)*100,2)}} %</td>
+                            <td>(1-3) {{round(($score_1_3/$total)*100,2)}} %</td>
+                            <td>(1-4) {{round(($score_1_4/$total)*100,2)}} %</td>
+                            <td>(1-5) {{round(($score_1_5/$total)*100,2)}} %</td>
                         </tr>
                         <tr>
                             <td>2</td>
-                            <td>(2-0) {{round(($score_2_0/$total)*100,2)}}</td>
-                            <td>(2-1) {{round(($score_2_1/$total)*100,2)}}</td>
-                            <td>(2-2) {{round(($score_2_2/$total)*100,2)}}</td>
-                            <td>(2-3) {{round(($score_2_3/$total)*100,2)}}</td>
-                            <td>(2-4) {{round(($score_2_4/$total)*100,2)}}</td>
-                            <td>(2-5) {{round(($score_2_5/$total)*100,2)}}</td>
+                            <td>(2-0) {{round(($score_2_0/$total)*100,2)}} %</td>
+                            <td>(2-1) {{round(($score_2_1/$total)*100,2)}} %</td>
+                            <td>(2-2) {{round(($score_2_2/$total)*100,2)}} %</td>
+                            <td>(2-3) {{round(($score_2_3/$total)*100,2)}} %</td>
+                            <td>(2-4) {{round(($score_2_4/$total)*100,2)}} %</td>
+                            <td>(2-5) {{round(($score_2_5/$total)*100,2)}} %</td>
                         </tr>
                         <tr>
                             <td>3</td>
-                            <td>(3-0) {{round(($score_3_0/$total)*100,2)}}</td>
-                            <td>(3-1) {{round(($score_3_1/$total)*100,2)}}</td>
-                            <td>(3-2) {{round(($score_3_2/$total)*100,2)}}</td>
-                            <td>(3-3) {{round(($score_3_3/$total)*100,2)}}</td>
-                            <td>(3-4) {{round(($score_3_4/$total)*100,2)}}</td>
-                            <td>(3-5) {{round(($score_3_5/$total)*100,2)}}</td>
+                            <td>(3-0) {{round(($score_3_0/$total)*100,2)}} %</td>
+                            <td>(3-1) {{round(($score_3_1/$total)*100,2)}} %</td>
+                            <td>(3-2) {{round(($score_3_2/$total)*100,2)}} %</td>
+                            <td>(3-3) {{round(($score_3_3/$total)*100,2)}} %</td>
+                            <td>(3-4) {{round(($score_3_4/$total)*100,2)}} %</td>
+                            <td>(3-5) {{round(($score_3_5/$total)*100,2)}} %</td>
                         </tr>
                         <tr>
                             <td>4</td>
@@ -141,12 +141,12 @@
                         </tr>
                         <tr>
                             <td>5</td>
-                            <td>(5-0) {{round(($score_5_0/$total)*100,2)}}</td>
-                            <td>(5-1) {{round(($score_5_1/$total)*100,2)}}</td>
-                            <td>(5-2) {{round(($score_5_2/$total)*100,2)}}</td>
-                            <td>(5-3) {{round(($score_5_3/$total)*100,2)}}</td>
-                            <td>(5-4) {{round(($score_5_4/$total)*100,2)}}</td>
-                            <td>(5-5) {{round(($score_5_5/$total)*100,2)}}</td>
+                            <td>(5-0) {{round(($score_5_0/$total)*100,2)}} %</td>
+                            <td>(5-1) {{round(($score_5_1/$total)*100,2)}} %</td>
+                            <td>(5-2) {{round(($score_5_2/$total)*100,2)}} %</td>
+                            <td>(5-3) {{round(($score_5_3/$total)*100,2)}} %</td>
+                            <td>(5-4) {{round(($score_5_4/$total)*100,2)}} %</td>
+                            <td>(5-5) {{round(($score_5_5/$total)*100,2)}} %</td>
                         </tr>
                         </tbody>
                 </table>
