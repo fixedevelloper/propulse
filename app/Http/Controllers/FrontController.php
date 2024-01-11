@@ -448,44 +448,44 @@ class FrontController extends Controller
                     $draw += 1;
                 }
                 /** score exacte */
-                if ($ratio->score_ft_home==1 && $ratio->score_ft_away==0) {
+                if ($ratio->goal_home==1 && $ratio->goal_away==0) {
                     $score_1_0 += 1;
                 }
-                if ($ratio->score_ft_home==2 && $ratio->score_ft_away==0) {
+                if ($ratio->goal_home==2 && $ratio->goal_away==0) {
                     $score_2_0 += 1;
                 }
-                if ($ratio->score_ft_home==3 && $ratio->score_ft_away==0) {
+                if ($ratio->goal_home==3 && $ratio->goal_away==0) {
                     $score_3_0 += 1;
                 }
-                if ($ratio->score_ft_home==4 && $ratio->score_ft_away==0) {
+                if ($ratio->goal_home==4 && $ratio->goal_away==0) {
                     $score_4_0 += 1;
                 }
-                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==0) {
+                if ($ratio->goal_home==0 && $ratio->goal_away==0) {
                     $score_0_0 += 1;
                 }
-                if ($ratio->score_ft_home==1 && $ratio->score_ft_away==1) {
+                if ($ratio->goal_home==1 && $ratio->goal_away==1) {
                     $score_1_1 += 1;
                 }
-                if ($ratio->score_ft_home==2 && $ratio->score_ft_away==2) {
+                if ($ratio->goal_home==2 && $ratio->goal_away==2) {
                     $score_2_2 += 1;
                 }
-                if ($ratio->score_ft_home==3 && $ratio->score_ft_away==3) {
+                if ($ratio->goal_home==3 && $ratio->goal_away==3) {
                     $score_3_3 += 1;
                 }
-                if ($ratio->score_ft_home==4 && $ratio->score_ft_away==4) {
+                if ($ratio->goal_home==4 && $ratio->goal_away==4) {
                     $score_4_4 += 1;
                 }
 
-                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==1) {
+                if ($ratio->goal_home==0 && $ratio->goal_away==1) {
                     $score_0_1 += 1;
                 }
-                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==2) {
+                if ($ratio->goal_home==0 && $ratio->goal_away==2) {
                     $score_0_2 += 1;
                 }
-                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==3) {
+                if ($ratio->goal_home==0 && $ratio->goal_away==3) {
                     $score_0_3 += 1;
                 }
-                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==4) {
+                if ($ratio->goal_home==0 && $ratio->goal_away==4) {
                     $score_0_4 += 1;
                 }
 
