@@ -160,7 +160,7 @@ class FrontController extends Controller
                             $ratio_fixture->fixture_id=$fixture->id;
                             $ratio_fixture->ratio_a_b_for=$ratio['ratio_a_b_for'];
                             $ratio_fixture->ratio_a_b_against=$ratio['ratio_a_b_against'];
-                            $ratio_fixture->percent=$ratio['percent'];
+                            $ratio_fixture->percent=$percent;
                             $ratio_fixture->save();
                         }
                     }
