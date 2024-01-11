@@ -94,6 +94,7 @@
                             <td>4</td>
                             <td>5</td>
                         </tr>
+                        @if($total>0)
                         <tr>
                             <td>0</td>
                             <td>(0-0) {{round(($score_0_0/$total)*100,2)}} %</td>
@@ -148,6 +149,7 @@
                             <td>(5-4) {{round(($score_5_4/$total)*100,2)}} %</td>
                             <td>(5-5) {{round(($score_5_5/$total)*100,2)}} %</td>
                         </tr>
+                            @endif
                         </tbody>
                 </table>
             </div>
