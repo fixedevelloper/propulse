@@ -408,7 +408,7 @@ class FrontController extends Controller
         $p_45 = 0;
         if (isset($request_filter)) {
             $ratios = RatioFixture::query()->where(['percent' => $request_filter])
-                ->leftJoin('fixtures', 'fixtures.id', '=', 'ratio_fixtures.fixture_id')->get();
+                ->leftJoin('fixtures', 'fixtures.id', '=', 'ratio_fixtures.fixture_id')->whereNotIn("st_short", ["CANC", "PST","NS"])->get();
             foreach ($ratios as $ratio) {
                 $total_goal = $ratio->goal_home + $ratio->goal_away;
                 if ($total_goal > 0.5) {
@@ -450,7 +450,7 @@ class FrontController extends Controller
             'win_home' => $win_home,
             'win_away' => $win_away,
             'draw' => $draw,
-            'p_35' => $s_35,
+            'filter' => $request_filter,
             'p_45' => $s_45,
         ]);
 
