@@ -9,6 +9,7 @@ use App\Models\Country;
 use App\Models\Fixture;
 use App\Models\League;
 use App\Models\LeagueTheday;
+use App\Models\RatioFixture;
 use App\Models\Setting;
 use App\Models\Stadings;
 use App\Models\StatisticPosition;
@@ -119,7 +120,8 @@ class FrontController extends Controller
             $timestamp_end = Carbon::parse($date_end)->getTimestamp();
         }
         $request_filter = $request->get('percent');
-        if (isset($request_filter)) {
+        $request_save = $request->get('save_input');
+        if (isset($request_save) && $request_save===1) {
             $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
                 ->distinct()->get();
             $fixture_filter = [];
@@ -133,7 +135,6 @@ class FrontController extends Controller
                     }
             }
             }
-            logger($fixture_filter);
             $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
                 ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'percent' => $percent,'date_end'=>$date_end]);
             return view('onthedaymulticolor', [
@@ -142,6 +143,29 @@ class FrontController extends Controller
                 'date_fin' => $date_end,
                 'search'=>$percent
             ]);
+        }else{
+            logger("saveinput");
+            $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
+                ->distinct()->get();
+            $fixture_filter = [];
+            $percent = $request->get('percent');
+            foreach ($fixtures as $fixture) {
+                $ratio = Helpers::calculRatio($fixture);
+                if (($ratio['ratio_a_b_for'] > 0 && $ratio['ratio_a_b_against'] < 0) || ($ratio['ratio_a_b_for'] < 0 && $ratio['ratio_a_b_against'] > 0)){
+                    if ($ratio['ratio_a_b_for'] >= $percent || $ratio['ratio_a_b_against'] >= $percent) {
+                        $fixture_filter[] = $fixture->id;
+                        $ratio_fixture=RatioFixture::query()->firstWhere(['fixture_id'=>$fixture->id,'percent'=>$percent]);
+                        if (is_null($ratio_fixture)){
+                            $ratio_fixture=new RatioFixture();
+                            $ratio_fixture->fixture_id=$fixture->id;
+                            $ratio_fixture->ratio_a_b_for=$ratio['ratio_a_b_for'];
+                            $ratio_fixture->ratio_a_b_against=$ratio['ratio_a_b_against'];
+                            $ratio_fixture->percent=$ratio['percent'];
+                            $ratio_fixture->save();
+                        }
+                    }
+                }
+            }
         }
         $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC","PST"])
             ->distinct()->paginate(12)->appends(['date' => $date_,'date_end'=>$date_end]);

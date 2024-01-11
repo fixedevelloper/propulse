@@ -23,7 +23,8 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <button type="submit" class="input-group-text bg-gradient mt-4">Save</button>
+                            <input hidden value="0" name="save_input" class="form-control" id="save_input">
+                            <button type="button" class="input-group-text bg-gradient mt-4" id="submit_save">Save</button>
                         </div>
 
                     </div>

@@ -105,6 +105,10 @@
             console.log($(this).val())
             $('#form_ontheday').submit()
         })
+        $('#submit_save').click(function () {
+            $('#save_input').val(1)
+            $('#form_ontheday').submit()
+        })
     });
     (function($) {
 
