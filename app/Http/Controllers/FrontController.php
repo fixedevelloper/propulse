@@ -121,60 +121,60 @@ class FrontController extends Controller
         }
         $request_filter = $request->get('percent');
         $request_save = $request->get('save_input');
-        if (isset($request_save) && $request_save==0) {
-            $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
+        if (isset($request_save) && $request_save == 0) {
+            $fixtures = Fixture::query()->whereBetween("day_timestamp", [$timestamp, $timestamp_end])->whereNotIn("st_short", ["CANC", "PST"])
                 ->distinct()->get();
             $fixture_filter = [];
             $percent = $request->get('percent');
             foreach ($fixtures as $fixture) {
                 $ratio = Helpers::calculRatio($fixture);
-                if (($ratio['ratio_a_b_for'] > 0 && $ratio['ratio_a_b_against'] < 0) || ($ratio['ratio_a_b_for'] < 0 && $ratio['ratio_a_b_against'] > 0)){
+                if (($ratio['ratio_a_b_for'] > 0 && $ratio['ratio_a_b_against'] < 0) || ($ratio['ratio_a_b_for'] < 0 && $ratio['ratio_a_b_against'] > 0)) {
                     if ($ratio['ratio_a_b_for'] >= $percent || $ratio['ratio_a_b_against'] >= $percent) {
                         $fixture_filter[] = $fixture->id;
 
                     }
+                }
             }
-            }
-            $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
-                ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_,'save_input'=>$request_save, 'percent' => $percent,'date_end'=>$date_end]);
+            $fixtures = Fixture::query()->whereBetween("day_timestamp", [$timestamp, $timestamp_end])->whereNotIn("st_short", ["CANC", "PST"])
+                ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'save_input' => $request_save, 'percent' => $percent, 'date_end' => $date_end]);
             return view('onthedaymulticolor', [
                 'fixtures' => $fixtures,
                 'date' => $date_,
                 'date_fin' => $date_end,
-                'search'=>$percent
+                'search' => $percent
             ]);
         }
-        if (isset($request_save) && $request_save==1) {
-            $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
+        if (isset($request_save) && $request_save == 1) {
+            $fixtures = Fixture::query()->whereBetween("day_timestamp", [$timestamp, $timestamp_end])->whereNotIn("st_short", ["CANC", "PST"])
                 ->distinct()->get();
             $fixture_filter = [];
             $percent = $request->get('percent');
             foreach ($fixtures as $fixture) {
                 $ratio = Helpers::calculRatio($fixture);
-                if (($ratio['ratio_a_b_for'] > 0 && $ratio['ratio_a_b_against'] < 0) || ($ratio['ratio_a_b_for'] < 0 && $ratio['ratio_a_b_against'] > 0)){
+                if (($ratio['ratio_a_b_for'] > 0 && $ratio['ratio_a_b_against'] < 0) || ($ratio['ratio_a_b_for'] < 0 && $ratio['ratio_a_b_against'] > 0)) {
                     if ($ratio['ratio_a_b_for'] >= $percent || $ratio['ratio_a_b_against'] >= $percent) {
                         $fixture_filter[] = $fixture->id;
-                        $ratio_fixture=RatioFixture::query()->firstWhere(['fixture_id'=>$fixture->id,'percent'=>$percent]);
-                        if (is_null($ratio_fixture)){
-                            $ratio_fixture=new RatioFixture();
-                            $ratio_fixture->fixture_id=$fixture->id;
-                            $ratio_fixture->ratio_a_b_for=$ratio['ratio_a_b_for'];
-                            $ratio_fixture->ratio_a_b_against=$ratio['ratio_a_b_against'];
-                            $ratio_fixture->percent=$percent;
+                        $ratio_fixture = RatioFixture::query()->firstWhere(['fixture_id' => $fixture->id, 'percent' => $percent]);
+                        if (is_null($ratio_fixture)) {
+                            $ratio_fixture = new RatioFixture();
+                            $ratio_fixture->fixture_id = $fixture->id;
+                            $ratio_fixture->ratio_a_b_for = $ratio['ratio_a_b_for'];
+                            $ratio_fixture->ratio_a_b_against = $ratio['ratio_a_b_against'];
+                            $ratio_fixture->percent = $percent;
                             $ratio_fixture->save();
                         }
                     }
                 }
             }
         }
-        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC","PST"])
-            ->distinct()->paginate(12)->appends(['date' => $date_,'percent' => "",'date_end'=>$date_end]);
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short", ["CANC", "PST"])
+            ->distinct()->paginate(12)->appends(['date' => $date_, 'percent' => "", 'date_end' => $date_end]);
 
         return view('onthedaymulticolor', [
             'fixtures' => $fixtures,
             'date' => $date_,
             'date_fin' => $date_end,
-            'search'=>""
+            'search' => ""
         ]);
 
     }
@@ -191,7 +191,7 @@ class FrontController extends Controller
         $request_filter = $request->get('filter');
         if (isset($request_filter)) {
 
-            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC","PST"])
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short", ["CANC", "PST"])
                 ->distinct()->get();
             $fixture_filter = [];
             $filter = $request->get('filter');
@@ -228,14 +228,14 @@ class FrontController extends Controller
                     }
                 }
             }
-            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC","PST"])
+            $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short", ["CANC", "PST"])
                 ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
             return view('ontheday', [
                 'fixtures' => $fixtures,
                 'date' => $date_
             ]);
         }
-        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC","PST"])
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short", ["CANC", "PST"])
             ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request_filter]);
 
         return view('ontheday', [
@@ -261,21 +261,22 @@ class FrontController extends Controller
     }
 
     public function score_statistic(Request $request)
-    {    $data = [];
+    {
+        $data = [];
 
-            $scores = StatisticPosition::query()->where('position','=',$request->get('filter'))->get();
-            foreach ($scores as $score) {
-                $fixture = Fixture::query()
-                    ->firstWhere(['fixture_id' => $score->fixture_id]);
-                $data[] = $fixture->goal_home.'-'.$fixture->goal_away;
-            }
-            $data=array_count_values($data);
-            logger($data);
+        $scores = StatisticPosition::query()->where('position', '=', $request->get('filter'))->get();
+        foreach ($scores as $score) {
+            $fixture = Fixture::query()
+                ->firstWhere(['fixture_id' => $score->fixture_id]);
+            $data[] = $fixture->goal_home . '-' . $fixture->goal_away;
+        }
+        $data = array_count_values($data);
+        logger($data);
 
 
         return view('score_statistic', [
             'scores' => $data,
-            'filter_value'=>$request->get('filter')
+            'filter_value' => $request->get('filter')
         ]);
 
     }
@@ -306,7 +307,7 @@ class FrontController extends Controller
         $position = $request->get('position');
         $fixtures = [];
         if ($position) {
-            $fixtures = Fixture::query()->whereNotIn("st_short",["CANC","PST"])
+            $fixtures = Fixture::query()->whereNotIn("st_short", ["CANC", "PST"])
                 ->select(DB::raw('count(*) as num'), 'goal_home', 'goal_away')
                 ->whereBetween('day_timestamp', [$start_date, $end_date])
                 ->groupBy(['goal_home', 'goal_away'])->get();
@@ -328,7 +329,7 @@ class FrontController extends Controller
             $timestamp = Carbon::parse($date_)->getTimestamp();
         }
         $setting = Setting::query()->find(1);
-        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC","PST"])
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short", ["CANC", "PST"])
             ->distinct()->get();
         $fixture_filter = [];
         $percent = $setting->start_value;
@@ -353,7 +354,7 @@ class FrontController extends Controller
                 }
             }
         }
-        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC","PST"])
+        $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short", ["CANC", "PST"])
             ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_]);
         return view('setting_page', [
             "fixtures" => $fixtures,
@@ -388,14 +389,73 @@ class FrontController extends Controller
         return view('about_us', []);
 
     }
+
     public function statistic_event(Request $request)
     {
-        $selects=RatioFixture::query()->select(['percent'])->distinct()->get();
+        $selects = RatioFixture::query()->select(['percent'])->distinct()->get();
+        $request_filter = $request->get('filter');
+        $ratios = [];
+        $s_05 = 0;
+        $s_15 = 0;
+        $s_25 = 0;
+        $s_35 = 0;
+        $s_45 = 0;
+
+        $win_home = 0;
+        $win_away = 0;
+        $draw = 0;
+        $p_35 = 0;
+        $p_45 = 0;
+        if (isset($request_filter)) {
+            $ratios = RatioFixture::query()->where(['percent' => $request_filter])
+                ->leftJoin('fixtures', 'fixtures.id', '=', 'ratio_fixtures.fixture_id')->get();
+            foreach ($ratios as $ratio) {
+                $total_goal = $ratio->goal_home + $ratio->goal_away;
+                if ($total_goal > 0.5) {
+                    $s_05 += 1;
+                }
+                if ($total_goal > 1.5) {
+                    $s_15 += 1;
+                }
+                if ($total_goal > 2.5) {
+                    $s_25 += 1;
+                }
+                if ($total_goal > 3.5) {
+                    $s_35 += 1;
+                }
+                if ($total_goal > 4.5) {
+                    $s_45 += 1;
+                }
+                if ($ratio->goal_home > $ratio->goal_away) {
+                    $win_home += 1;
+                }
+                if ($ratio->goal_away > $ratio->goal_home) {
+                    $win_away += 1;
+                }
+                if ($ratio->goal_away == $ratio->goal_home) {
+                    $draw += 1;
+                }
+            }
+
+        }
         return view('statistic_event', [
-            "selects"=>$selects
+            "selects" => $selects,
+            "ratios" => $ratios,
+            'total' => sizeof($ratios),
+            's_05' => $s_05,
+            's_15' => $s_15,
+            's_25' => $s_25,
+            's_35' => $s_35,
+            's_45' => $s_45,
+            'win_home' => $win_home,
+            'win_away' => $win_away,
+            'draw' => $draw,
+            'p_35' => $s_35,
+            'p_45' => $s_45,
         ]);
 
     }
+
     public function contact_us()
     {
         return view('contact_us', []);
