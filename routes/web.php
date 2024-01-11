@@ -36,6 +36,8 @@ Route::get('/casino', [FrontController::class, 'casino'])
     ->name('casino');
 Route::get('/promotions', [FrontController::class, 'promotions'])
     ->name('promotions');
+Route::get('/statistic_event', [FrontController::class, 'statistic_event'])
+    ->name('statistic_event');
 Route::get('/ontheday', [FrontController::class, 'ontheday'])
     ->name('ontheday');
 Route::get('/ontheday_multi_color', [FrontController::class, 'ontheday_multi_color'])

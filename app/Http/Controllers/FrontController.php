@@ -388,7 +388,14 @@ class FrontController extends Controller
         return view('about_us', []);
 
     }
+    public function statistic_event(Request $request)
+    {
+        $selects=RatioFixture::query()->select(['percent'])->distinct()->get();
+        return view('statistic_event', [
+            "selects"=>$selects
+        ]);
 
+    }
     public function contact_us()
     {
         return view('contact_us', []);

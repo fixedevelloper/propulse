@@ -77,14 +77,19 @@
                             <span>Match stats</span>
                         </a>
                     </li>
-                    <li class="cmn-grp">
+                    <li>
+                        <a href="{{route('statistic_event')}}">
+                            <span>Statistic event</span>
+                        </a>
+                    </li>
+                {{--    <li class="cmn-grp">
                             <span class="cmn--btn" data-bs-toggle="modal" data-bs-target="#signup">
                                 <span class="rela">Sign In</span>
                             </span>
                         <span class="cmn--btn2" data-bs-toggle="modal" data-bs-target="#signup">
                                 <span class="rela">Sign Up</span>
                             </span>
-                    </li>
+                    </li>--}}
                 </ul>
             </div>
             <div class="mneu-btn-grp">
