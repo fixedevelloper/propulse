@@ -216,3 +216,17 @@ div.content {
 .remove:hover {
     color: red
 }
+
+.text-rotation {
+    text-align: center;
+    vertical-align: middle;
+    width: 50px;
+}
+.text-rotation > span {
+    position: absolute;
+    bottom: 130px;
+    left: -30px;
+    transform: translate(25px,51px) rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+}

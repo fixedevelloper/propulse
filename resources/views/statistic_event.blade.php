@@ -70,75 +70,85 @@
                     <tr>
                         <td colspan="3"><h2 class="text-center text-uppercase">Scores exactes</h2></td>
                     </tr>
-                    <tr>
-                        <th>Score 1-0</th>
-                        <th>{{$score_1_0}}</th>
-                        <th>{{round(($score_1_0/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 2-0</th>
-                        <th>{{$score_2_0}}</th>
-                        <th>{{round(($score_2_0/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 3-0</th>
-                        <th>{{$score_3_0}}</th>
-                        <th>{{round(($score_3_0/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 4-0</th>
-                        <th>{{$score_4_0}}</th>
-                        <th>{{round(($score_4_0/$total)*100,2)}}</th>
-                    </tr>
-
-                    <tr>
-                        <th>Score 0-0</th>
-                        <th>{{$score_0_0}}</th>
-                        <th>{{round(($score_0_0/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 1-1</th>
-                        <th>{{$score_1_1}}</th>
-                        <th>{{round(($score_1_1/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 2-2</th>
-                        <th>{{$score_2_2}}</th>
-                        <th>{{round(($score_2_2/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 3-3</th>
-                        <th>{{$score_3_3}}</th>
-                        <th>{{round(($score_3_3/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 4-4</th>
-                        <th>{{$score_4_4}}</th>
-                        <th>{{round(($score_4_4/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 0-1</th>
-                        <th>{{$score_0_1}}</th>
-                        <th>{{round(($score_0_1/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 0-2</th>
-                        <th>{{$score_0_2}}</th>
-                        <th>{{round(($score_0_2/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 0-3</th>
-                        <th>{{$score_0_3}}</th>
-                        <th>{{round(($score_0_3/$total)*100,2)}}</th>
-                    </tr>
-                    <tr>
-                        <th>Score 0-4</th>
-                        <th>{{$score_0_4}}</th>
-                        <th>{{round(($score_0_4/$total)*100,2)}}</th>
-                    </tr>
                     @endif
                     </tbody>
 
+                </table>
+                <table class="table table-bordered text-white">
+                        <thead>
+                        <tr>
+                            <th colspan="1"></th>
+                            <th colspan="7" class="text-center text-uppercase fw-bold">Équipe a L'exterieur</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th rowspan="8" class="text-rotation text-center text-uppercase fw-bold"><span>Équipe a Domicile</span></th>
+                        </tr>
+                        <tr>
+                            <td class="text-uppercase fw-bold">Goals</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>0</td>
+                            <td>(0-0) {{round(($score_0_0/$total)*100,2)}}</td>
+                            <td>(0-1) {{round(($score_0_1/$total)*100,2)}}</td>
+                            <td>(0-2) {{round(($score_0_2/$total)*100,2)}}</td>
+                            <td>(0-3) {{round(($score_0_3/$total)*100,2)}}</td>
+                            <td>(0-4) {{round(($score_0_4/$total)*100,2)}}</td>
+                            <td>(0-5) -</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>(1-0) {{round(($score_1_0/$total)*100,2)}}</td>
+                            <td>(1-1){{round(($score_1_1/$total)*100,2)}}</td>
+                            <td>(1-2 ){{round(($score_1_2/$total)*100,2)}}</td>
+                            <td>(1-3) {{round(($score_1_3/$total)*100,2)}}</td>
+                            <td>(1-4) {{round(($score_1_4/$total)*100,2)}}</td>
+                            <td>(1-5) {{round(($score_1_5/$total)*100,2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>(2-0) {{round(($score_2_0/$total)*100,2)}}</td>
+                            <td>(2-1) {{round(($score_2_1/$total)*100,2)}}</td>
+                            <td>(2-2) {{round(($score_2_2/$total)*100,2)}}</td>
+                            <td>(2-3) {{round(($score_2_3/$total)*100,2)}}</td>
+                            <td>(2-4) {{round(($score_2_4/$total)*100,2)}}</td>
+                            <td>(2-5) {{round(($score_2_5/$total)*100,2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>(3-0) {{round(($score_3_0/$total)*100,2)}}</td>
+                            <td>(3-1) {{round(($score_3_1/$total)*100,2)}}</td>
+                            <td>(3-2) {{round(($score_3_2/$total)*100,2)}}</td>
+                            <td>(3-3) {{round(($score_3_3/$total)*100,2)}}</td>
+                            <td>(3-4) {{round(($score_3_4/$total)*100,2)}}</td>
+                            <td>(3-5) {{round(($score_3_5/$total)*100,2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>(4-0) {{round(($score_4_0/$total)*100,2)}}</td>
+                            <td>(4-1) {{round(($score_4_1/$total)*100,2)}}</td>
+                            <td>(4-2){{round(($score_4_2/$total)*100,2)}}</td>
+                            <td>(4-3) {{round(($score_4_3/$total)*100,2)}}</td>
+                            <td>(4-4) {{round(($score_4_4/$total)*100,2)}}</td>
+                            <td>(4-5) {{round(($score_4_5/$total)*100,2)}}</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>(5-0) {{round(($score_5_0/$total)*100,2)}}</td>
+                            <td>(5-1) {{round(($score_5_1/$total)*100,2)}}</td>
+                            <td>(5-2) {{round(($score_5_2/$total)*100,2)}}</td>
+                            <td>(5-3) {{round(($score_5_3/$total)*100,2)}}</td>
+                            <td>(5-4) {{round(($score_5_4/$total)*100,2)}}</td>
+                            <td>(5-5) {{round(($score_5_5/$total)*100,2)}}</td>
+                        </tr>
+                        </tbody>
                 </table>
             </div>
         </div>

@@ -404,19 +404,48 @@ class FrontController extends Controller
         $win_home = 0;
         $win_away = 0;
         $draw = 0;
-        $score_1_0 = 0;
-        $score_2_0 = 0;
-        $score_3_0 = 0;
-        $score_4_0 = 0;
+        $score_0_0 = 0;
         $score_0_1 = 0;
         $score_0_2 = 0;
         $score_0_3 = 0;
         $score_0_4 = 0;
-        $score_0_0 = 0;
+        $score_0_5 = 0;
+
+        $score_1_0 = 0;
         $score_1_1 = 0;
+        $score_1_2 = 0;
+        $score_1_3 = 0;
+        $score_1_4 = 0;
+        $score_1_5 = 0;
+
+        $score_2_0 = 0;
+        $score_2_1 = 0;
         $score_2_2 = 0;
+        $score_2_3 = 0;
+        $score_2_4 = 0;
+        $score_2_5 = 0;
+
+        $score_3_0 = 0;
+        $score_3_1 = 0;
+        $score_3_2 = 0;
         $score_3_3 = 0;
+        $score_3_4 = 0;
+        $score_3_5 = 0;
+
+        $score_4_0 = 0;
+        $score_4_1 = 0;
+        $score_4_2 = 0;
+        $score_4_3 = 0;
         $score_4_4 = 0;
+        $score_4_5 = 0;
+
+        $score_5_0 = 0;
+        $score_5_1 = 0;
+        $score_5_2 = 0;
+        $score_5_3 = 0;
+        $score_5_4 = 0;
+        $score_5_5 = 0;
+
         $p_45 = 0;
         if (isset($request_filter)) {
             $ratios = RatioFixture::query()->where(['percent' => $request_filter])
@@ -451,43 +480,103 @@ class FrontController extends Controller
                 if ($ratio->goal_home==1 && $ratio->goal_away==0) {
                     $score_1_0 += 1;
                 }
+                if ($ratio->goal_home==1 && $ratio->goal_away==1) {
+                    $score_1_1 += 1;
+                }
+                if ($ratio->goal_home==1 && $ratio->goal_away==2) {
+                    $score_1_2 += 1;
+                }
+                if ($ratio->goal_home==1 && $ratio->goal_away==3) {
+                    $score_1_3 += 1;
+                }
+                if ($ratio->goal_home==1 && $ratio->goal_away==4) {
+                    $score_1_4 += 1;
+                }
+                if ($ratio->goal_home==1 && $ratio->goal_away==5) {
+                    $score_1_5 += 1;
+                }
+
+
+
                 if ($ratio->goal_home==2 && $ratio->goal_away==0) {
                     $score_2_0 += 1;
                 }
-                if ($ratio->goal_home==3 && $ratio->goal_away==0) {
-                    $score_3_0 += 1;
-                }
-                if ($ratio->goal_home==4 && $ratio->goal_away==0) {
-                    $score_4_0 += 1;
-                }
-                if ($ratio->goal_home==0 && $ratio->goal_away==0) {
-                    $score_0_0 += 1;
-                }
-                if ($ratio->goal_home==1 && $ratio->goal_away==1) {
-                    $score_1_1 += 1;
+                if ($ratio->goal_home==2 && $ratio->goal_away==1) {
+                    $score_2_1 += 1;
                 }
                 if ($ratio->goal_home==2 && $ratio->goal_away==2) {
                     $score_2_2 += 1;
                 }
+                if ($ratio->goal_home==2 && $ratio->goal_away==3) {
+                    $score_2_3 += 1;
+                }
+                if ($ratio->goal_home==2 && $ratio->goal_away==4) {
+                    $score_2_4 += 1;
+                }
+                if ($ratio->goal_home==2 && $ratio->goal_away==5) {
+                    $score_2_5 += 1;
+                }
+
+
+
+                if ($ratio->goal_home==3 && $ratio->goal_away==0) {
+                    $score_3_0 += 1;
+                }
+                if ($ratio->goal_home==3 && $ratio->goal_away==1) {
+                    $score_3_1 += 1;
+                }
+                if ($ratio->goal_home==3 && $ratio->goal_away==2) {
+                    $score_3_2 += 1;
+                }
                 if ($ratio->goal_home==3 && $ratio->goal_away==3) {
                     $score_3_3 += 1;
+                }
+                if ($ratio->goal_home==3 && $ratio->goal_away==4) {
+                    $score_3_4 += 1;
+                }
+                if ($ratio->goal_home==3 && $ratio->goal_away==5) {
+                    $score_3_5 += 1;
+                }
+
+
+                if ($ratio->goal_home==4 && $ratio->goal_away==0) {
+                    $score_4_0 += 1;
+                }
+                if ($ratio->goal_home==4 && $ratio->goal_away==1) {
+                    $score_4_1 += 1;
+                }
+                if ($ratio->goal_home==4 && $ratio->goal_away==2) {
+                    $score_4_2 += 1;
+                }
+                if ($ratio->goal_home==4 && $ratio->goal_away==3) {
+                    $score_4_3 += 1;
                 }
                 if ($ratio->goal_home==4 && $ratio->goal_away==4) {
                     $score_4_4 += 1;
                 }
+                if ($ratio->goal_home==4 && $ratio->goal_away==5) {
+                    $score_4_5 += 1;
+                }
 
-                if ($ratio->goal_home==0 && $ratio->goal_away==1) {
-                    $score_0_1 += 1;
+                if ($ratio->goal_home==5 && $ratio->goal_away==0) {
+                    $score_5_0 += 1;
                 }
-                if ($ratio->goal_home==0 && $ratio->goal_away==2) {
-                    $score_0_2 += 1;
+                if ($ratio->goal_home==5 && $ratio->goal_away==1) {
+                    $score_5_1 += 1;
                 }
-                if ($ratio->goal_home==0 && $ratio->goal_away==3) {
-                    $score_0_3 += 1;
+                if ($ratio->goal_home==5 && $ratio->goal_away==2) {
+                    $score_5_2 += 1;
                 }
-                if ($ratio->goal_home==0 && $ratio->goal_away==4) {
-                    $score_0_4 += 1;
+                if ($ratio->goal_home==5 && $ratio->goal_away==3) {
+                    $score_5_3 += 1;
                 }
+                if ($ratio->goal_home==5 && $ratio->goal_away==4) {
+                    $score_5_4 += 1;
+                }
+                if ($ratio->goal_home==5 && $ratio->goal_away==5) {
+                    $score_5_5 += 1;
+                }
+
 
             }
 
@@ -506,18 +595,46 @@ class FrontController extends Controller
             'draw' => $draw,
             'filter' => $request_filter,
             'score_1_0' => $score_1_0,
-            'score_2_0' => $score_2_0,
-            'score_3_0' => $score_3_0,
-            'score_4_0' => $score_4_0,
-            'score_0_0' => $score_0_0,
             'score_1_1' => $score_1_1,
+            'score_1_2' => $score_1_2,
+            'score_1_3' => $score_1_3,
+            'score_1_4' => $score_1_4,
+            'score_1_5' => $score_1_5,
+
+            'score_2_0' => $score_2_0,
+            'score_2_1' => $score_2_1,
             'score_2_2' => $score_2_2,
+            'score_2_3' => $score_2_3,
+            'score_2_4' => $score_2_4,
+            'score_2_5' => $score_2_5,
+
+            'score_3_0' => $score_3_0,
+            'score_3_1' => $score_3_1,
+            'score_3_2' => $score_3_2,
             'score_3_3' => $score_3_3,
+            'score_3_4' => $score_3_4,
+            'score_3_5' => $score_3_5,
+
+            'score_4_0' => $score_4_0,
+            'score_4_1' => $score_4_1,
+            'score_4_2' => $score_4_2,
+            'score_4_3' => $score_4_3,
             'score_4_4' => $score_4_4,
+            'score_4_5' => $score_4_5,
+
+            'score_5_0' => $score_5_0,
+            'score_5_1' => $score_5_1,
+            'score_5_2' => $score_5_2,
+            'score_5_3' => $score_5_3,
+            'score_5_4' => $score_5_4,
+            'score_5_5' => $score_5_5,
+
+            'score_0_0' => $score_0_0,
             'score_0_1' => $score_0_1,
             'score_0_2' => $score_0_2,
             'score_0_3' => $score_0_3,
             'score_0_4' => $score_0_4,
+            'score_0_5' => $score_0_5,
         ]);
 
     }
