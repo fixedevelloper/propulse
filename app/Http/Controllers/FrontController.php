@@ -121,7 +121,7 @@ class FrontController extends Controller
         }
         $request_filter = $request->get('percent');
         $request_save = $request->get('save_input');
-        if (isset($request_save) && $request_save===0) {
+        if (isset($request_save) && $request_save==0) {
             $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
                 ->distinct()->get();
             $fixture_filter = [];
@@ -144,8 +144,7 @@ class FrontController extends Controller
                 'search'=>$percent
             ]);
         }
-        if (isset($request_save) && $request_save===1) {
-            logger("saveinput");
+        if (isset($request_save) && $request_save==1) {
             $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
                 ->distinct()->get();
             $fixture_filter = [];
@@ -169,7 +168,7 @@ class FrontController extends Controller
             }
         }
         $fixtures = Fixture::query()->where(['day_timestamp' => $timestamp])->whereNotIn("st_short",["CANC","PST"])
-            ->distinct()->paginate(12)->appends(['date' => $date_,'date_end'=>$date_end]);
+            ->distinct()->paginate(12)->appends(['date' => $date_,'percent' => "",'date_end'=>$date_end]);
 
         return view('onthedaymulticolor', [
             'fixtures' => $fixtures,

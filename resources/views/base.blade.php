@@ -102,7 +102,7 @@
             $('#form_position').submit()
         })
         $('#date_ontheday').change(function () {
-            console.log($(this).val())
+            $('#save_input').val(0)
             $('#form_ontheday').submit()
         })
         $('#submit_save').click(function () {
