@@ -121,7 +121,7 @@ class FrontController extends Controller
         }
         $request_filter = $request->get('percent');
         $request_save = $request->get('save_input');
-        if (isset($request_save) && $request_save===1) {
+        if (isset($request_save) && $request_save===0) {
             $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
                 ->distinct()->get();
             $fixture_filter = [];
@@ -143,7 +143,8 @@ class FrontController extends Controller
                 'date_fin' => $date_end,
                 'search'=>$percent
             ]);
-        }else{
+        }
+        if (isset($request_save) && $request_save===1) {
             logger("saveinput");
             $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
                 ->distinct()->get();
