@@ -26,6 +26,7 @@
                         <th>Nombre</th>
                         <th>Pourcentage</th>
                     </tr>
+                    @if($total>0)
                     <tr>
                         <th>0.5 But</th>
                         <th>{{$s_05}}</th>
@@ -66,6 +67,7 @@
                         <th>{{$draw}}</th>
                         <th>{{round($draw/$total,2)}}</th>
                     </tr>
+                    @endif
                     </tbody>
 
                 </table>
