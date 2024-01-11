@@ -66,6 +66,7 @@
                                 $last_home=str_split($standing_home->form);
                                 $last_home_=$last_home[0];
                             }
+                            }
 
                             if ($standing_away){
                                 $last_away_="";
