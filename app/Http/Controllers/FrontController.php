@@ -133,6 +133,7 @@ class FrontController extends Controller
                     }
             }
             }
+            logger($fixture_filter);
             $fixtures = Fixture::query()->whereBetween("day_timestamp",[$timestamp,$timestamp_end])->whereNotIn("st_short",["CANC","PST"])
                 ->whereIn('id', $fixture_filter)->paginate(12)->appends(['date' => $date_, 'percent' => $percent,'date_end'=>$date_end]);
             return view('onthedaymulticolor', [
