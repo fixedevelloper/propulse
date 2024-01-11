@@ -67,6 +67,75 @@
                         <th>{{$draw}}</th>
                         <th>{{round(($draw/$total)*100,2)}}</th>
                     </tr>
+                    <tr>
+                        <td colspan="3"><h2 class="text-center text-uppercase">Scores exactes</h2></td>
+                    </tr>
+                    <tr>
+                        <th>Score 1-0</th>
+                        <th>{{$score_1_0}}</th>
+                        <th>{{round(($score_1_0/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 2-0</th>
+                        <th>{{$score_2_0}}</th>
+                        <th>{{round(($score_2_0/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 3-0</th>
+                        <th>{{$score_3_0}}</th>
+                        <th>{{round(($score_3_0/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 4-0</th>
+                        <th>{{$score_4_0}}</th>
+                        <th>{{round(($score_4_0/$total)*100,2)}}</th>
+                    </tr>
+
+                    <tr>
+                        <th>Score 0-0</th>
+                        <th>{{$score_0_0}}</th>
+                        <th>{{round(($score_0_0/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 1-1</th>
+                        <th>{{$score_1_1}}</th>
+                        <th>{{round(($score_1_1/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 2-2</th>
+                        <th>{{$score_2_2}}</th>
+                        <th>{{round(($score_2_2/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 3-3</th>
+                        <th>{{$score_3_3}}</th>
+                        <th>{{round(($score_3_3/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 4-4</th>
+                        <th>{{$score_4_4}}</th>
+                        <th>{{round(($score_4_4/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 0-1</th>
+                        <th>{{$score_0_1}}</th>
+                        <th>{{round(($score_0_1/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 0-2</th>
+                        <th>{{$score_0_2}}</th>
+                        <th>{{round(($score_0_2/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 0-3</th>
+                        <th>{{$score_0_3}}</th>
+                        <th>{{round(($score_0_3/$total)*100,2)}}</th>
+                    </tr>
+                    <tr>
+                        <th>Score 0-4</th>
+                        <th>{{$score_0_4}}</th>
+                        <th>{{round(($score_0_4/$total)*100,2)}}</th>
+                    </tr>
                     @endif
                     </tbody>
 

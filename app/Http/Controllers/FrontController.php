@@ -404,7 +404,19 @@ class FrontController extends Controller
         $win_home = 0;
         $win_away = 0;
         $draw = 0;
-        $p_35 = 0;
+        $score_1_0 = 0;
+        $score_2_0 = 0;
+        $score_3_0 = 0;
+        $score_4_0 = 0;
+        $score_0_1 = 0;
+        $score_0_2 = 0;
+        $score_0_3 = 0;
+        $score_0_4 = 0;
+        $score_0_0 = 0;
+        $score_1_1 = 0;
+        $score_2_2 = 0;
+        $score_3_3 = 0;
+        $score_4_4 = 0;
         $p_45 = 0;
         if (isset($request_filter)) {
             $ratios = RatioFixture::query()->where(['percent' => $request_filter])
@@ -435,6 +447,48 @@ class FrontController extends Controller
                 if ($ratio->goal_away == $ratio->goal_home) {
                     $draw += 1;
                 }
+                /** score exacte */
+                if ($ratio->score_ft_home==1 && $ratio->score_ft_away==0) {
+                    $score_1_0 += 1;
+                }
+                if ($ratio->score_ft_home==2 && $ratio->score_ft_away==0) {
+                    $score_2_0 += 1;
+                }
+                if ($ratio->score_ft_home==3 && $ratio->score_ft_away==0) {
+                    $score_3_0 += 1;
+                }
+                if ($ratio->score_ft_home==4 && $ratio->score_ft_away==0) {
+                    $score_4_0 += 1;
+                }
+                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==0) {
+                    $score_0_0 += 1;
+                }
+                if ($ratio->score_ft_home==1 && $ratio->score_ft_away==1) {
+                    $score_1_1 += 1;
+                }
+                if ($ratio->score_ft_home==2 && $ratio->score_ft_away==2) {
+                    $score_2_2 += 1;
+                }
+                if ($ratio->score_ft_home==3 && $ratio->score_ft_away==3) {
+                    $score_3_3 += 1;
+                }
+                if ($ratio->score_ft_home==4 && $ratio->score_ft_away==4) {
+                    $score_4_4 += 1;
+                }
+
+                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==1) {
+                    $score_0_1 += 1;
+                }
+                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==2) {
+                    $score_0_2 += 1;
+                }
+                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==3) {
+                    $score_0_3 += 1;
+                }
+                if ($ratio->score_ft_home==0 && $ratio->score_ft_away==4) {
+                    $score_0_4 += 1;
+                }
+
             }
 
         }
@@ -451,7 +505,19 @@ class FrontController extends Controller
             'win_away' => $win_away,
             'draw' => $draw,
             'filter' => $request_filter,
-            'p_45' => $s_45,
+            'score_1_0' => $score_1_0,
+            'score_2_0' => $score_2_0,
+            'score_3_0' => $score_3_0,
+            'score_4_0' => $score_4_0,
+            'score_0_0' => $score_0_0,
+            'score_1_1' => $score_1_1,
+            'score_2_2' => $score_2_2,
+            'score_3_3' => $score_3_3,
+            'score_4_4' => $score_4_4,
+            'score_0_1' => $score_0_1,
+            'score_0_2' => $score_0_2,
+            'score_0_3' => $score_0_3,
+            'score_0_4' => $score_0_4,
         ]);
 
     }
