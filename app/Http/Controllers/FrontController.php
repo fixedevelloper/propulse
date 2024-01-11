@@ -151,8 +151,7 @@ class FrontController extends Controller
                     }
                 }*/
 
-                    if ($ratio['ratio_a_for'] == $percent || $ratio['ratio_b_for'] == $percent||
-                        $ratio['ratio_a_b_for'] === $percent || $ratio['ratio_a_against'] == $percent || $ratio['ratio_b_against'] == $percent) {
+                    if ($ratio['ratio_a_b_for'] >= $percent || $ratio['ratio_a_b_against'] >= $percent) {
                         $fixture_filter[] = $fixture->id;
 
                 }
