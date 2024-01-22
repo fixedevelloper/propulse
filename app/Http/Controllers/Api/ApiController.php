@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Fixture;
 use App\Models\League;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class ApiController extends BaseController
 {
