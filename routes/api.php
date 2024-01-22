@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/list_fixture',
+    [ApiController::class, 'list_fixture'])
+    ->name('list_fixture');
+Route::get('/list_league',
+    [ApiController::class, 'list_league'])
+    ->name('list_league');
