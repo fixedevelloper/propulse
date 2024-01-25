@@ -39,9 +39,11 @@ class UpdateFixture extends Command
         $timestamp =Carbon::parse($to)->getTimestamp();
         $timestamp_from=Carbon::today()->getTimestamp();
         $leagues = LeagueTheday::query()->whereBetween('timestamp', [$timestamp_from,$timestamp])->get();
+        logger($leagues);
         foreach ($leagues as $league) {
             $data = FootballAPIService::getAllFixturesBetweenDateWithLeague($league->league_id, $from, $to);
             $response = $data->response;
+            logger($response);
             for ($i = 0; $i < sizeof($response); $i++) {
                 $fixture = Fixture::query()->firstWhere(['fixture_id' => $response[$i]->fixture->id]);
                 if (is_null($fixture)) {

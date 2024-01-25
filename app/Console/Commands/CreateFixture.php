@@ -40,10 +40,8 @@ class CreateFixture extends Command
      */
     public function handle()
     {
-        logger("----fixture create---");
         $this->createFixture();
-        $this->createLeagueOfTheDay();
-        logger("----end fixture create---");
+       // $this->createLeagueOfTheDay();
     }
     function createFixture()
     {
