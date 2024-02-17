@@ -89,10 +89,22 @@ class Helpers
         return $arrays;
     }
 
-    static function fixtureOfDayByLeague($league, $time)
+    static function fixtureOfDayByLeague($league, $time,$rang)
     {
+        $arrays=[];
         $fixtures = Fixture::query()->where(['league_id' => $league, 'day_timestamp' => $time])->get();
-        return $fixtures;
+        if (!is_null($rang)){
+            foreach ($fixtures as $fixture){
+                $home=self::rankTeam($fixture);
+                $away=self::rankTeamAway($fixture);
+                if ($home->rank==$rang || $away->rank==$rang){
+                    $arrays[]=$fixture;
+                }
+            }
+        }else{
+            $arrays=$fixtures;
+        }
+        return $arrays;
     }
 
     static function getTeamByID($team_id)

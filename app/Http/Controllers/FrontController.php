@@ -51,11 +51,12 @@ class FrontController extends Controller
                 ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request->get('act')]);
             logger($leagues);
         }
-        logger($leagues->total());
+
 
         return view('home', [
             "leagues" => $leagues,
-            'date' => $date_
+            'date' => $date_,
+            'rang'=>$request->rang
         ]);
 
     }

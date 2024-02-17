@@ -125,13 +125,17 @@
         <x-sider-bar/>
         <div class="col-md-9 mt-5">
             <div class="row container">
-                <div class="col-md-9">
+                <div class="col-md-6">
                     {!! $leagues->links() !!}
+                </div>
+                <div class="col-md-3" style="float: right">
+                    <form id="form_rang">
+                        <input name="rang" id="rang_home" type="text" value="{{$rang}}" class="form-control m-2">
+                    </form>
                 </div>
                 <div class="col-md-3" style="float: right">
                     <form id="form_date">
                         <input name="date" id="date_home" type="date" value="{{$date}}" class="form-control m-2">
-
                     </form>
                 </div>
 
@@ -161,7 +165,7 @@
                                             <div class="height__table">
                                                 <div class="main__table">
                                                     <div class="table__wrap">
-                                                        @foreach(\App\Helpers\Helpers::fixtureOfDayByLeague($league->league_id,$league->timestamp) as $fixture)
+                                                        @foreach(\App\Helpers\Helpers::fixtureOfDayByLeague($league->league_id,$league->timestamp,$rang) as $fixture)
                                                             @php
                                                             $standing_home=\App\Helpers\Helpers::rankTeam($fixture);
                                                             $standing_away=\App\Helpers\Helpers::rankTeamAway($fixture);
