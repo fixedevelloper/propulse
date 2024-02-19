@@ -24,6 +24,9 @@ class FrontController extends Controller
 
     public function home(Request $request)
     {
+        if (!is_null($request->rang)){
+            $rang=$request->rang;
+        }
         if (is_null($request->get('date'))) {
             $date_ = Carbon::today()->format('Y-m-d');
             $timestamp = Carbon::today()->getTimestamp();
@@ -34,11 +37,12 @@ class FrontController extends Controller
 
 
         if ($request->get('act') == "live") {
-            logger('-------live live');
+
             $leagues = Fixture::query()->where(['day_timestamp' => $timestamp])->whereIn('st_short', ['1H', '2H'])
-                ->distinct()->paginate(12, ['league_id', 'league_round', 'league_season'])->appends(['date' => $date_, 'act' => $request->get('act')]);
+                ->distinct()->paginate(12, ['league_id', 'league_round', 'league_season'])
+                ->appends(['date' => $date_, 'act' => $request->get('act'),'rang'=>$request->rang]);
         } else {
-            logger('-------not live');
+
             /*    $leagues=Fixture::query()->select(['league_id','league_round','league_season'])->where(['day_timestamp'=>$timestamp])
                     ->orderBy('league_id','asc')
                     //->(['league_id'])
@@ -48,8 +52,9 @@ class FrontController extends Controller
             $leagues = LeagueTheday::query()->leftJoin('leagues', 'leagues.league_id', "=", 'league_thedays.league_id')
                 ->where(['timestamp' => $timestamp])
                 ->orderBy('leagues.league_id', 'asc')
-                ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request->get('act')]);
-            logger($leagues);
+                ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request->get('act'),
+                    'rang'=>$request->rang]);
+
         }
 
 

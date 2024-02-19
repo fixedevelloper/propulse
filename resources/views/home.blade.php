@@ -129,16 +129,20 @@
                     {!! $leagues->links() !!}
                 </div>
                 <div class="col-md-6">
-                    <div class="col-md-6" style="float: right">
-                        <form id="form_rang">
+                    <form id="form_date">
+                        <div class="col-md-6" style="float: right">
+                        <input name="rang" id="rang_home" type="text" value="{{$rang}}" class="form-control m-2">
+
+                      {{--  <form id="form_rang">
                             <input name="rang" id="rang_home" type="text" value="{{$rang}}" class="form-control m-2">
-                        </form>
+                        </form>--}}
                     </div>
                     <div class="col-md-6" style="float: right">
-                        <form id="form_date">
+
                             <input name="date" id="date_home" type="date" value="{{$date}}" class="form-control m-2">
-                        </form>
+
                     </div>
+                    </form>
                 </div>
 
 

@@ -102,7 +102,7 @@
             $('#form_position').submit()
         })
         $('#rang_home').change(function () {
-            $('#form_rang').submit()
+            $('#form_date').submit()
         })
         $('#date_ontheday').change(function () {
             $('#save_input').val(0)
