@@ -97,9 +97,12 @@ class Helpers
             foreach ($fixtures as $fixture){
                 $home=self::rankTeam($fixture);
                 $away=self::rankTeamAway($fixture);
-                if ($home->rank==$rang || $away->rank==$rang){
-                    $arrays[]=$fixture;
+                if (!is_null($home) && !is_null($away)){
+                    if ($home->rank==$rang || $away->rank==$rang){
+                        $arrays[]=$fixture;
+                    }
                 }
+
             }
         }else{
             $arrays=$fixtures;
