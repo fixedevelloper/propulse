@@ -398,6 +398,8 @@ class FrontController extends Controller
             $restArrays_away=Helpers::eventAfterGameDraw($team_away_id);
         }
         return view('event_after', [
+            'team_home'=>Team::find($team_home_id),
+            'team_away'=>Team::find($team_away_id),
             'home'=>$restArrays,
             'away'=>$restArrays_away
         ]);
