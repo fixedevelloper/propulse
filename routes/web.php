@@ -32,6 +32,8 @@ Route::get('/sportbetting', [FrontController::class, 'sportbetting'])
     ->name('sportbetting');
 Route::get('/evenements', [FrontController::class, 'evenements'])
     ->name('evenements');
+Route::get('/event/after', [FrontController::class, 'eventAfterGame'])
+    ->name('event_after');
 Route::get('/casino', [FrontController::class, 'casino'])
     ->name('casino');
 Route::get('/promotions', [FrontController::class, 'promotions'])

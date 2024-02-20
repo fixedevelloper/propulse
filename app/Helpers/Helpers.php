@@ -123,4 +123,76 @@ class Helpers
     {
         return $stading->home_win * 3 + $stading->home_draw;
     }
+    static function eventAfterGameWin($team_id){
+        $total_win_home=0;
+        $total_lost_home=0;
+        $total_draw_home=0;
+        $listgameHome=Fixture::query()->where(['team_home_id'=>$team_id,'team_home_winner'=>true])
+            ->orWhere(['team_away_id'=>$team_id,'team_away_winner'=>true])->orderByDesc('id')->get();
+        foreach ($listgameHome as $item){
+            $lastgameHome=Fixture::query()->firstWhere('team_home_id','=',$team_id)
+                ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp);
+
+            if ($lastgameHome->team_home_winner==true){
+                $total_win_home++;
+            }elseif ($lastgameHome->team_away_winner==true){
+                $total_lost_home++;
+            }else{
+                $total_draw_home++;
+            }
+        }
+        return [
+            'win'=>$total_win_home,
+            'lost'=>$total_lost_home,
+            'draw'=>$total_draw_home
+        ];
+    }
+    static function eventAfterGameLost($team_id){
+        $total_win_home=0;
+        $total_lost_home=0;
+        $total_draw_home=0;
+        $listgameHome=Fixture::query()->where(['team_home_id'=>$team_id,'team_away_winner'=>true])
+            ->orWhere(['team_away_id'=>$team_id,'team_home_winner'=>true])->orderByDesc('id')->get();
+        foreach ($listgameHome as $item){
+            $lastgameHome=Fixture::query()->firstWhere('team_home_id','=',$team_id)
+                ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp);
+
+            if ($lastgameHome->team_home_winner==true){
+                $total_win_home++;
+            }elseif ($lastgameHome->team_away_winner==true){
+                $total_lost_home++;
+            }else{
+                $total_draw_home++;
+            }
+        }
+        return [
+            'win'=>$total_win_home,
+            'lost'=>$total_lost_home,
+            'draw'=>$total_draw_home
+        ];
+    }
+    static function eventAfterGameDraw($team_id){
+        $total_win_home=0;
+        $total_lost_home=0;
+        $total_draw_home=0;
+        $listgameHome=Fixture::query()->where(['team_home_id'=>$team_id,'team_away_winner'=>false])
+            ->orWhere(['team_away_id'=>$team_id,'team_home_winner'=>false])->orderByDesc('id')->get();
+        foreach ($listgameHome as $item){
+            $lastgameHome=Fixture::query()->firstWhere('team_home_id','=',$team_id)
+                ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp);
+
+            if ($lastgameHome->team_home_winner==true){
+                $total_win_home++;
+            }elseif ($lastgameHome->team_away_winner==true){
+                $total_lost_home++;
+            }else{
+                $total_draw_home++;
+            }
+        }
+        return [
+            'win'=>$total_win_home,
+            'lost'=>$total_lost_home,
+            'draw'=>$total_draw_home
+        ];
+    }
 }

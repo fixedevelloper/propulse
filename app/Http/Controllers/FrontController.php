@@ -368,7 +368,40 @@ class FrontController extends Controller
         ]);
 
     }
+    public function eventAfterGame(Request $request,Fixture $fixture)
+    {
+        $team_home_id=$fixture->team_home_id;
+        $team_away_id=$fixture->team_away_id;
+  /*      $last_fixture_team_home=Fixture::query()->firstWhere('team_home_id','=',$team_home_id)
+            ->orWhere('team_away_id','=',$team_home_id)->orderByDesc('id');*/
+        $standing_home=Helpers::rankTeam($fixture);
+        $standing_away=Helpers::rankTeamAway($fixture);
 
+        $last_home=str_split($standing_home->form);
+        $last_home_=$last_home[0];
+        $last_away=str_split($standing_away->form);
+        $last_away_=$last_away[0];
+
+        if ($last_home_=="w"){
+          $restArrays=Helpers::eventAfterGameWin($team_home_id);
+        }elseif ($last_home_=="l"){
+            $restArrays=Helpers::eventAfterGameLost($team_home_id);
+        }else{
+            $restArrays=Helpers::eventAfterGameDraw($team_home_id);
+        }
+        if ($last_away_=="w"){
+            $restArrays_away=Helpers::eventAfterGameWin($team_away_id);
+        }elseif ($last_away_=="l"){
+            $restArrays_away=Helpers::eventAfterGameLost($team_away_id);
+        }else{
+            $restArrays_away=Helpers::eventAfterGameDraw($team_away_id);
+        }
+        return view('event_after', [
+            'home'=>$restArrays,
+            'away'=>$restArrays_away
+        ]);
+
+    }
     public function dashboard()
     {
         if (!Auth::authenticate()) {
