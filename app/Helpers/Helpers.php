@@ -179,7 +179,7 @@ class Helpers
             ->orWhere(['team_away_id'=>$team_id,'team_home_winner'=>false])->orderByDesc('id')->get();
         foreach ($listgameHome as $item){
             $lastgameHome=Fixture::query()->firstWhere('team_home_id','=',$team_id)
-                ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp);
+                ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp)->get();
 
             if ($lastgameHome->team_home_winner==true){
                 $total_win_home++;

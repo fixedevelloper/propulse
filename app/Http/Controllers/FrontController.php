@@ -368,8 +368,9 @@ class FrontController extends Controller
         ]);
 
     }
-    public function eventAfterGame(Request $request,Fixture $fixture)
+    public function eventAfterGame(Request $request)
     {
+        $fixture=Fixture::query()->find($request->get('id'));
         $team_home_id=$fixture->team_home_id;
         $team_away_id=$fixture->team_away_id;
   /*      $last_fixture_team_home=Fixture::query()->firstWhere('team_home_id','=',$team_home_id)
