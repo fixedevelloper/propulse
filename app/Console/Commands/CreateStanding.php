@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\League;
+use App\Models\LeagueSeason;
 use App\Models\Stadings;
 use App\Services\FootballAPIService;
 use Illuminate\Console\Command;
@@ -33,12 +34,12 @@ class CreateStanding extends Command
 
     function standing()
     {
-        $leagues = League::all();
-        $season = "2023";
-        /*        $leagues = LeagueSeason::query()
+       // $leagues = League::all();
+        $season = env("season");
+              $leagues = LeagueSeason::query()
                     ->leftJoin('leagues','leagues.id','=','league_seasons.league_id')
-                    ->where(['leagues.type'=>'League','year'=>$season])->get();*/
-
+                    ->where(['leagues.type'=>'League','year'=>$season])->get();
+logger($leagues);
         try {
             foreach ($leagues as $league) {
                 $res = FootballAPIService::getStatdings($league->league_id, $season);
