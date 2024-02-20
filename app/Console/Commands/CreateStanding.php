@@ -7,6 +7,7 @@ use App\Models\LeagueSeason;
 use App\Models\LeagueTheday;
 use App\Models\Stadings;
 use App\Services\FootballAPIService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class CreateStanding extends Command
@@ -35,12 +36,16 @@ class CreateStanding extends Command
 
     function standing()
     {
+        $timestamp = Carbon::today()->getTimestamp();
        // $leagues = League::all();
         $season = env("season","2023");
               /*$leagues = LeagueSeason::query()
                     ->leftJoin('leagues','leagues.id','=','league_seasons.league_id')
                     ->where(['leagues.type'=>'League','year'=>$season])->get();*/
-              $leagues=LeagueTheday::query()->where(['date'=>date('Y-m-d')])->get();
+        $leagues = LeagueTheday::query()->leftJoin('leagues', 'leagues.league_id', "=", 'league_thedays.league_id')
+            ->where(['timestamp' => $timestamp])
+            ->orderBy('leagues.league_id', 'asc')
+            ->distinct()->get();
 logger($leagues);
         try {
             foreach ($leagues as $league) {
