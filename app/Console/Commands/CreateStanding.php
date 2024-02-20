@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\League;
 use App\Models\LeagueSeason;
+use App\Models\LeagueTheday;
 use App\Models\Stadings;
 use App\Services\FootballAPIService;
 use Illuminate\Console\Command;
@@ -35,10 +36,11 @@ class CreateStanding extends Command
     function standing()
     {
        // $leagues = League::all();
-        $season = env("season");
-              $leagues = LeagueSeason::query()
+        $season = env("season","2023");
+              /*$leagues = LeagueSeason::query()
                     ->leftJoin('leagues','leagues.id','=','league_seasons.league_id')
-                    ->where(['leagues.type'=>'League','year'=>$season])->get();
+                    ->where(['leagues.type'=>'League','year'=>$season])->get();*/
+              $leagues=LeagueTheday::query()->where(['date'=>date('Y-m-d')])->get();
 logger($leagues);
         try {
             foreach ($leagues as $league) {
