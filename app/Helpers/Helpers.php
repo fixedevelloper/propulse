@@ -144,7 +144,7 @@ class Helpers
             $lastgameHome = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
                 $builder->where('day_timestamp', '<', $item->day_timestamp)
                     ->where('team_home_id', '=', $team_id)
-                    ->orWhere('team_away_id', '=', $team_id)->orderByDesc('day_timestamp')
+                    ->orWhere('team_away_id', '=', $team_id)->orderBy('day_timestamp','asc')
                     ;
             });
             logger($lastgameHome);
