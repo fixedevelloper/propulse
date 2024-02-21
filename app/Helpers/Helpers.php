@@ -127,9 +127,10 @@ class Helpers
         $total_win_home=0;
         $total_lost_home=0;
         $total_draw_home=0;
-        $listgameHome=Fixture::query()->where(['team_home_id'=>$team_id,'team_home_winner'=>true])
+        $listgames=Fixture::query()->where(['team_home_id'=>$team_id,'team_home_winner'=>true])
             ->orWhere(['team_away_id'=>$team_id,'team_away_winner'=>true])->orderByDesc('id')->get();
-        foreach ($listgameHome as $item){
+        logger($listgames);
+        foreach ($listgames as $item){
             $lastgameHome=Fixture::query()->where('team_home_id','=',$team_id)
                 ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp)->limit(1);
             if ($lastgameHome instanceof Fixture){

@@ -371,6 +371,7 @@ class FrontController extends Controller
     public function eventAfterGame(Request $request)
     {
         $fixture=Fixture::query()->firstWhere('fixture_id','=',$request->get('id'));
+        logger($fixture);
         $team_home_id=$fixture->team_home_id;
         $team_away_id=$fixture->team_away_id;
         $standing_home=Helpers::rankTeam($fixture);
@@ -380,17 +381,17 @@ class FrontController extends Controller
         $last_home_=$last_home[0];
         $last_away=str_split($standing_away->form);
         $last_away_=$last_away[0];
-
-        if ($last_home_=="w"){
+logger($last_home_);
+        if ($last_home_=="W"){
           $restArrays=Helpers::eventAfterGameWin($team_home_id);
-        }elseif ($last_home_=="l"){
+        }elseif ($last_home_=="L"){
             $restArrays=Helpers::eventAfterGameLost($team_home_id);
         }else{
             $restArrays=Helpers::eventAfterGameDraw($team_home_id);
         }
-        if ($last_away_=="w"){
+        if ($last_away_=="W"){
             $restArrays_away=Helpers::eventAfterGameWin($team_away_id);
-        }elseif ($last_away_=="l"){
+        }elseif ($last_away_=="L"){
             $restArrays_away=Helpers::eventAfterGameLost($team_away_id);
         }else{
             $restArrays_away=Helpers::eventAfterGameDraw($team_away_id);
