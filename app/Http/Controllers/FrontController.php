@@ -370,11 +370,9 @@ class FrontController extends Controller
     }
     public function eventAfterGame(Request $request)
     {
-        $fixture=Fixture::query()->find($request->get('id'));
+        $fixture=Fixture::query()->firstWhere('fixture_id','=',$request->get('id'));
         $team_home_id=$fixture->team_home_id;
         $team_away_id=$fixture->team_away_id;
-  /*      $last_fixture_team_home=Fixture::query()->firstWhere('team_home_id','=',$team_home_id)
-            ->orWhere('team_away_id','=',$team_home_id)->orderByDesc('id');*/
         $standing_home=Helpers::rankTeam($fixture);
         $standing_away=Helpers::rankTeamAway($fixture);
 
@@ -398,8 +396,8 @@ class FrontController extends Controller
             $restArrays_away=Helpers::eventAfterGameDraw($team_away_id);
         }
         return view('event_after', [
-            'team_home'=>Team::find($team_home_id),
-            'team_away'=>Team::find($team_away_id),
+            'team_home'=>Team::query()->firstWhere(['team_id'=>$team_home_id]),
+            'team_away'=>Team::query()->firstWhere(['team_id'=>$team_away_id]),
             'home'=>$restArrays,
             'away'=>$restArrays_away
         ]);

@@ -265,7 +265,7 @@
                                                                         </a>
                                                                     </div>
                                                                     <div class="mart__point__right">
-                                                                        <a href="{{route('event_after',['id'=>$fixture->id])}}"
+                                                                        <a href="{{route('event_after',['id'=>$fixture->fixture_id])}}"
                                                                            class="point__box bg__none">
                                                                             <i class="icon-lock"></i>
                                                                         </a>
