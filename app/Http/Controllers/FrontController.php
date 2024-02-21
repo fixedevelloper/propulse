@@ -383,14 +383,14 @@ class FrontController extends Controller
         $last_away_=$last_away[0];
 logger($last_home_);
         if ($last_home_=="W"){
-          $restArrays=Helpers::eventAfterGameWin($team_home_id);
+          $restArrays=Helpers::eventAfterGameWin($team_home_id,$fixture->day_timestamp);
         }elseif ($last_home_=="L"){
             $restArrays=Helpers::eventAfterGameLost($team_home_id);
         }else{
             $restArrays=Helpers::eventAfterGameDraw($team_home_id);
         }
         if ($last_away_=="W"){
-            $restArrays_away=Helpers::eventAfterGameWin($team_away_id);
+            $restArrays_away=Helpers::eventAfterGameWin($team_away_id,$fixture->day_timestamp);
         }elseif ($last_away_=="L"){
             $restArrays_away=Helpers::eventAfterGameLost($team_away_id);
         }else{
