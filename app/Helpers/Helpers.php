@@ -9,7 +9,7 @@ use App\Models\Odd;
 use App\Models\Stadings;
 use App\Models\Team;
 use Carbon\Carbon;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use function Ramsey\Collection\Map\get;
 
 class Helpers
