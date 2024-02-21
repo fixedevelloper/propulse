@@ -9,6 +9,8 @@ use App\Models\Odd;
 use App\Models\Stadings;
 use App\Models\Team;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
+use function Ramsey\Collection\Map\get;
 
 class Helpers
 {
@@ -127,8 +129,14 @@ class Helpers
         $total_win_home=0;
         $total_lost_home=0;
         $total_draw_home=0;
-        $listgames=Fixture::query()->where(['team_home_id'=>$team_id,'team_home_winner'=>true])
-            ->orWhere(['team_away_id'=>$team_id,'team_away_winner'=>true])->orderByDesc('id')->get();
+       /* $listgames=Fixture::query()->where(['team_home_id'=>$team_id,'team_home_winner'=>true])
+            ->orWhere(['team_away_id'=>$team_id,'team_away_winner'=>true])->orderByDesc('id')->get();*/
+        $listgames=Fixture::query()->where(function (Builder $builder) use ($team_id) {
+            $builder->where('team_home_id','=',$team_id)
+                ->where('team_home_winner','=',1);
+        })->orWhere(function (Builder $builder) use ($team_id) {
+            $builder->where('team_home_id','=',$team_id)
+                ->where('team_home_winner','=',1);})->get();
         logger($listgames);
         foreach ($listgames as $item){
             $lastgameHome=Fixture::query()->where('team_home_id','=',$team_id)
