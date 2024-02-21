@@ -136,9 +136,9 @@ class Helpers
             if ($lastgameHome instanceof Fixture){
 
 
-            if ($lastgameHome->team_home_winner==true){
+            if ($lastgameHome->team_home_winner==1){
                 $total_win_home++;
-            }elseif ($lastgameHome->team_away_winner==true){
+            }elseif ($lastgameHome->team_away_winner==1){
                 $total_lost_home++;
             }else{
                 $total_draw_home++;
@@ -162,9 +162,9 @@ class Helpers
             if ($lastgameHome instanceof Fixture){
 
 
-            if ($lastgameHome->team_home_winner==true){
+            if ($lastgameHome->team_home_winner==1){
                 $total_win_home++;
-            }elseif ($lastgameHome->team_away_winner==true){
+            }elseif ($lastgameHome->team_away_winner==1){
                 $total_lost_home++;
             }else{
                 $total_draw_home++;
@@ -187,9 +187,9 @@ class Helpers
                 ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp)->limit(1);
             if ($lastgameHome instanceof Fixture){
 
-            if ($lastgameHome->team_home_winner==true){
+            if ($lastgameHome->team_home_winner==1){
                 $total_win_home++;
-            }elseif ($lastgameHome->team_away_winner==true){
+            }elseif ($lastgameHome->team_away_winner==1){
                 $total_lost_home++;
             }else{
                 $total_draw_home++;
