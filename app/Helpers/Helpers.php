@@ -137,12 +137,13 @@ class Helpers
         })->orWhere(function (Builder $builder) use ($team_id) {
             $builder->where('team_home_id','=',$team_id)
                 ->where('team_home_winner','=',1);})->get();
-        logger($listgames);
+      //  logger($listgames);
         foreach ($listgames as $item){
             $lastgameHome=Fixture::query()->firstWhere(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id','=',$team_id)
                     ->orWhere('team_away_id','=',$team_id);
             })->where('day_timestamp','<',$item->day_timestamp);
+            logger($lastgameHome);
 /*            $lastgameHome=Fixture::query()->where('team_home_id','=',$team_id)
                 ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp)->limit(1);*/
             if ($lastgameHome instanceof Fixture){
