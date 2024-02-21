@@ -142,7 +142,7 @@ class Helpers
             $lastgameHome=Fixture::query()->firstWhere(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id','=',$team_id)
                     ->orWhere('team_away_id','=',$team_id);
-            })->where('day_timestamp','<',$item->day_timestamp);
+            })->where('day_timestamp','<',$item->day_timestamp)->get();
             logger($lastgameHome);
 /*            $lastgameHome=Fixture::query()->where('team_home_id','=',$team_id)
                 ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp)->limit(1);*/
