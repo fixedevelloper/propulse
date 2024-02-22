@@ -234,6 +234,7 @@ class Helpers
                     ->where('team_home_winner', '=', false)
                     ->where('team_away_winner', '=', false);
             })->get();
+        logger(sizeof($listgamedraws));
        foreach ($listgamedraws as $item) {
            $lastgameafter=DB::table('fixtures')->where('st_short','=','FT')
                ->where('day_timestamp', '>', $item->day_timestamp)
