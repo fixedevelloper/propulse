@@ -265,7 +265,7 @@ class Helpers
             }
         }
         return [
-            'list_game'=>$listgamedraws,
+            'list_game'=>$game_after,
             'win' => $total_win_home,
             'lost' => $total_lost_home,
             'draw' => $total_draw_home
