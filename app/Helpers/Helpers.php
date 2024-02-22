@@ -243,7 +243,7 @@ class Helpers
                    $builder->where('team_away_id', '=', $team_id);
                })
                ->orderBy('day_timestamp', 'asc')->first();
-           logger($lastgameafter);
+           logger("info",$lastgameafter);
 /*        $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
                 $builder->where('st_short','=','FT')
                     ->where('day_timestamp', '>', $item->day_timestamp)
