@@ -68,6 +68,16 @@ class FootballAPIService
             ['query' => ['season' => '2023', "from"=> $from,'to' => $to]]);
         return json_decode($res->getBody());
     }
+    static function getFixtureById($id){
+        $options=[
+            'x-rapidapi-host' => 'api-football-v1.p.rapidapi.com',
+            'x-rapidapi-key' => env("APIFOOT_KEY")
+        ];
+        $client = new Client(['headers' => $options]);
+        $res = $client->request('GET', env("APIFOOT_KEY_URL").'/fixtures',
+            ['query' => ['id' => $id]]);
+        return json_decode($res->getBody());
+    }
     static function getAllFixturesBetweenDateWithLeague($league,$from,$to){
         $options=[
             'x-rapidapi-host' => 'api-football-v1.p.rapidapi.com',
