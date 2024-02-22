@@ -180,10 +180,10 @@ class Helpers
         $listgames = Fixture::query()->where('day_timestamp', '<', $day_timestamp)
             ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
-                    ->where('team_away_winner', '=', 1);
+                    ->where('team_home_winner', '=', 0);
             })->orWhere(function (Builder $builder) use ($team_id) {
                 $builder->where('team_away_id', '=', $team_id)
-                    ->where('team_home_winner', '=', 1);
+                    ->where('team_away_winner', '=', 0);
             })->get();
         logger($listgames);
 
