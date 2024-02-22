@@ -150,7 +150,7 @@ class Helpers
                     ->where('team_home_id', '=', $team_id)
                     ->orWhere('team_away_id', '=', $team_id);
 
-            })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'desc');
+            })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'asc');
             if ($lastgameafter instanceof Fixture) {
                 $game_after[] = $lastgameafter;
                 logger($lastgameafter->fixture_id . ': score' . $lastgameafter->score_ft_home . '-' . $lastgameafter->score_ft_away);
