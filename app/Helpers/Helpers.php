@@ -135,8 +135,8 @@ class Helpers
         $total_draw_home = 0;
         /* $listgames=Fixture::query()->where(['team_home_id'=>$team_id,'team_home_winner'=>true])
              ->orWhere(['team_away_id'=>$team_id,'team_away_winner'=>true])->orderByDesc('id')->get();*/
-        $listgames = Fixture::query()->where('day_timestamp', '<', $day_timestamp)
-            ->where('st_short','=','FT')
+        $listgames = Fixture::query()->where('st_short','=','FT')
+            ->where('day_timestamp', '<', $day_timestamp)
             ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
                     ->where('team_home_winner', '=', 1);
@@ -179,8 +179,8 @@ class Helpers
         $total_win_home = 0;
         $total_lost_home = 0;
         $total_draw_home = 0;
-        $listgames = Fixture::query()->where('day_timestamp', '<', $day_timestamp)
-            ->where('st_short','=','FT')
+        $listgames = Fixture::query()->where('st_short','=','FT')
+            ->where('day_timestamp', '<', $day_timestamp)
             ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
                     ->where('team_home_winner', '=', false);
@@ -224,8 +224,9 @@ class Helpers
         $total_win_home = 0;
         $total_lost_home = 0;
         $total_draw_home = 0;
-        $listgamedraws = Fixture::query()->where('day_timestamp', '<', $day_timestamp)
-            ->where('st_short','=','FT')
+        $listgamedraws = Fixture::query()->where('st_short','=','FT')
+            ->where('day_timestamp', '<', $day_timestamp)
+
             ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
                     ->where('team_away_winner', '=', 0)
