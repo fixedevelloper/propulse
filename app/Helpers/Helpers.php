@@ -185,7 +185,7 @@ class Helpers
                 $builder->where('team_away_id', '=', $team_id)
                     ->where('team_away_winner', '=', false);
             })->get();
-        logger($listgames);
+       // logger($listgames);
 
         foreach ($listgames as $item) {
            /* $lastgameafter = Fixture::query()->where('team_home_id', '=', $team_id)
@@ -198,9 +198,9 @@ class Helpers
             });
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score after lost' . $lastgameafter->score_ft_home . '-' . $lastgameafter->score_ft_away);
-                if ($lastgameafter->team_home_winner == 1) {
+                if ($lastgameafter->team_home_winner == true) {
                     $total_win_home++;
-                } elseif ($lastgameafter->team_away_winner == 1) {
+                } elseif ($lastgameafter->team_away_winner == true) {
                     $total_lost_home++;
                 } else {
                     $total_draw_home++;
