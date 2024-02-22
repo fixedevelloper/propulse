@@ -185,7 +185,7 @@ class Helpers
                 $builder->where('team_away_id', '=', $team_id)
                     ->where('team_away_winner', '=', false);
             })->get();
-       // logger($listgames);
+        logger($listgames);
 
         foreach ($listgames as $item) {
            /* $lastgameafter = Fixture::query()->where('team_home_id', '=', $team_id)
@@ -193,8 +193,9 @@ class Helpers
             */
             $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
                 $builder->where('day_timestamp', '>', $item->day_timestamp)
+                    ->where('st_short','=','FT')
                     ->where('team_home_id', '=', $team_id)
-                    ->orWhere('team_away_id', '=', $team_id)->orderBy('day_timestamp', 'asc');
+                    ->orWhere('team_away_id', '=', $team_id);
             });
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score after lost' . $lastgameafter->score_ft_home . '-' . $lastgameafter->score_ft_away);
