@@ -6,7 +6,7 @@
     <div class="col-md-6">
         <div class="card card_dark mt-3 text-white">
             <div class="card-header">
-                <h3>{{$team_home->name}}</h3>
+                <h3>{{$team_home->name}} - {{$home_lastgame}}</h3>
             </div>
             <div class="card-body">
                 <h4>Nombre victoires: {{$home['win']}}</h4>
@@ -18,7 +18,7 @@
     <div class="col-md-6">
         <div class="card card_dark mt-3 text-white">
             <div class="card-header">
-                <h3>{{$team_away->name}}</h3>
+                <h3>{{$team_away->name}} - {{$away_lastgame}}</h3>
             </div>
             <div class="card-body">
                 <h4>Nombre victoires: {{$away['win']}}</h4>

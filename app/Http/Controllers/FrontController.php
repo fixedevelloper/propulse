@@ -426,6 +426,7 @@ class FrontController extends Controller
                 $restArrays_away=Helpers::eventAfterGameDraw($team_away_id,$fixture->day_timestamp);
                 break;
         }
+
         return view('event_after', [
             'team_home' => Team::query()->firstWhere(['team_id' => $team_home_id]),
             'team_away' => Team::query()->firstWhere(['team_id' => $team_away_id]),
