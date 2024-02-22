@@ -178,13 +178,13 @@ class Helpers
         $total_lost_home = 0;
         $total_draw_home = 0;
         $listgames = Fixture::query()->where('day_timestamp', '<', $day_timestamp)
-          /*  ->where(function (Builder $builder) use ($team_id) {
+            ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
-                    ->where('team_home_winner', '=', 0);
+                    ->where('team_home_winner', '=', false);
             })->orWhere(function (Builder $builder) use ($team_id) {
                 $builder->where('team_away_id', '=', $team_id)
-                    ->where('team_away_winner', '=', 0);
-            })*/->get();
+                    ->where('team_away_winner', '=', false);
+            })->get();
         logger($listgames);
 
         foreach ($listgames as $item) {
