@@ -191,7 +191,6 @@ class Helpers
             })->get();
 
         foreach ($listgames as $item) {
-
             $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
                 $builder->where('day_timestamp', '>', $item->day_timestamp)
                     ->where('team_home_id', '=', $team_id)
@@ -199,20 +198,31 @@ class Helpers
             })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'asc');;
             if ($lastgameafter instanceof Fixture) {
                 $game_after[] = $lastgameafter;
-                if ($lastgameafter->team_home_winner == 1) {
-                    $total_win++;
-                } elseif ($lastgameafter->team_away_winner == 1) {
-                    $total_lost++;
-                } else {
-                    $total_draw++;
+                if ($lastgameafter->team_home_id==$team_id){
+                    if ($lastgameafter->team_home_winner == 1){
+                        $total_win++;
+                    }elseif ($lastgameafter->team_away_winner == 1){
+                        $total_lost++;
+                    }elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner==0){
+                        $total_draw++;
+                    }
+                }else{
+                    if ($lastgameafter->team_home_winner == 1){
+                        $total_lost++;
+                    }elseif ($lastgameafter->team_away_winner == 1){
+                        $total_win++;
+                    }elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner==0){
+                        $total_draw++;
+                    }
                 }
+
             }
         }
         return [
             'list_game'=>$game_after,
-            'win' => $total_win_home,
-            'lost' => $total_lost_home,
-            'draw' => $total_draw_home
+            'win' => $total_win,
+            'lost' => $total_lost,
+            'draw' => $total_draw
         ];
     }
 
