@@ -149,7 +149,7 @@ class Helpers
                 ->where('team_home_id', '=', $team_id)
                 ->orWhere(function (Builder $builder) use ($team_id) {
                     $builder->where('team_away_id', '=', $team_id);
-                })
+                })->orderBy('fixture_id','asc')
                 ->first();
             if ($lastgameafter instanceof Fixture) {
                 $game_after[] = $lastgameafter;

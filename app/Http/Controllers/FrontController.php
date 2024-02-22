@@ -372,7 +372,7 @@ class FrontController extends Controller
     public function eventAfterGame(Request $request)
     {
         $fixture = Fixture::query()->firstWhere('fixture_id', '=', $request->get('id'));
-        logger($fixture);
+
         $team_home_id = $fixture->team_home_id;
         $team_away_id = $fixture->team_away_id;
         $standing_home = Helpers::rankTeam($fixture);
@@ -382,7 +382,7 @@ class FrontController extends Controller
         $last_home_ = $last_home[0];
         $last_away = str_split($standing_away->form);
         $last_away_ = $last_away[0];
-        logger($last_home_);
+
         switch ($last_home_) {
             case "W":
                 $restArrays = Helpers::eventAfterGameWin($team_home_id, $fixture->day_timestamp);
@@ -397,27 +397,12 @@ class FrontController extends Controller
                  $restArrays=Helpers::eventAfterGameDraw($team_home_id,$fixture->day_timestamp);
                 break;
         }
-        /*  if ($last_home_=="W"){
-            $restArrays=Helpers::eventAfterGameWin($team_home_id,$fixture->day_timestamp);
-          }elseif ($last_home_=="L"){
-              $restArrays=Helpers::eventAfterGameLost($team_home_id,$fixture->day_timestamp);
-          }else{
-              $restArrays=Helpers::eventAfterGameDraw($team_home_id,$fixture->day_timestamp);
-          }*/
-    /*    if ($last_away_ == "W") {
-            $restArrays_away = Helpers::eventAfterGameWin($team_away_id, $fixture->day_timestamp);
-        } elseif ($last_away_ == "L") {
-            $restArrays_away = Helpers::eventAfterGameLost($team_away_id, $fixture->day_timestamp);
-        } else {
-            $restArrays_away = Helpers::eventAfterGameDraw($team_away_id, $fixture->day_timestamp);
-        }*/
-        logger($last_away_);
+
         switch ($last_away_){
             case "W":
                 $restArrays_away = Helpers::eventAfterGameWin($team_away_id, $fixture->day_timestamp);
                 break;
             case "L":
-                logger("lost");
                 $restArrays_away = Helpers::eventAfterGameLost($team_away_id, $fixture->day_timestamp);
                 break;
             case "D":
@@ -427,7 +412,6 @@ class FrontController extends Controller
                 $restArrays_away=Helpers::eventAfterGameDraw($team_away_id,$fixture->day_timestamp);
                 break;
         }
-        dump($restArrays["list_game"]);
         return view('event_after', [
             'team_home' => Team::query()->firstWhere(['team_id' => $team_home_id]),
             'team_away' => Team::query()->firstWhere(['team_id' => $team_away_id]),
