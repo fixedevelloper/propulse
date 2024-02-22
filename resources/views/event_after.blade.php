@@ -12,15 +12,16 @@
                 <h4>Nombre victoires: {{$home['win']}}</h4>
                 <h4>Nombre defaites: {{$home['lost']}}</h4>
                 <h4>Nombre Null: {{$home['draw']}}</h4>
-                <table class="table table-bordered">
+                <table class="table table-bordered text-white">
                     <tbody>
                     @foreach($home['list_game'] as $game)
                         <tr>
                             <td>{{\App\Helpers\Helpers::getTeamByID($game->team_home_id)['name']}}</td>
                             <td>{{$game->score_ft_home}}</td>
-                            <td></td>
-                            <td>{{\App\Helpers\Helpers::getTeamByID($game->team_away_id)['name']}}</td>
+                            <td>-</td>
                             <td>{{$game->score_ft_away}}</td>
+                            <td>{{\App\Helpers\Helpers::getTeamByID($game->team_away_id)['name']}}</td>
+
                         </tr>
 
                     @endforeach
