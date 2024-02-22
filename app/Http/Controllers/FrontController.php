@@ -24,8 +24,8 @@ class FrontController extends Controller
 
     public function home(Request $request)
     {
-        if (!is_null($request->rang)){
-            $rang=$request->rang;
+        if (!is_null($request->rang)) {
+            $rang = $request->rang;
         }
         if (is_null($request->get('date'))) {
             $date_ = Carbon::today()->format('Y-m-d');
@@ -40,7 +40,7 @@ class FrontController extends Controller
 
             $leagues = Fixture::query()->where(['day_timestamp' => $timestamp])->whereIn('st_short', ['1H', '2H'])
                 ->distinct()->paginate(12, ['league_id', 'league_round', 'league_season'])
-                ->appends(['date' => $date_, 'act' => $request->get('act'),'rang'=>$request->rang]);
+                ->appends(['date' => $date_, 'act' => $request->get('act'), 'rang' => $request->rang]);
         } else {
 
             /*    $leagues=Fixture::query()->select(['league_id','league_round','league_season'])->where(['day_timestamp'=>$timestamp])
@@ -53,7 +53,7 @@ class FrontController extends Controller
                 ->where(['timestamp' => $timestamp])
                 ->orderBy('leagues.league_id', 'asc')
                 ->distinct()->paginate(12)->appends(['date' => $date_, 'act' => $request->get('act'),
-                    'rang'=>$request->rang]);
+                    'rang' => $request->rang]);
 
         }
 
@@ -61,7 +61,7 @@ class FrontController extends Controller
         return view('home', [
             "leagues" => $leagues,
             'date' => $date_,
-            'rang'=>$request->rang
+            'rang' => $request->rang
         ]);
 
     }
@@ -368,42 +368,73 @@ class FrontController extends Controller
         ]);
 
     }
+
     public function eventAfterGame(Request $request)
     {
-        $fixture=Fixture::query()->firstWhere('fixture_id','=',$request->get('id'));
+        $fixture = Fixture::query()->firstWhere('fixture_id', '=', $request->get('id'));
         logger($fixture);
-        $team_home_id=$fixture->team_home_id;
-        $team_away_id=$fixture->team_away_id;
-        $standing_home=Helpers::rankTeam($fixture);
-        $standing_away=Helpers::rankTeamAway($fixture);
+        $team_home_id = $fixture->team_home_id;
+        $team_away_id = $fixture->team_away_id;
+        $standing_home = Helpers::rankTeam($fixture);
+        $standing_away = Helpers::rankTeamAway($fixture);
 
-        $last_home=str_split($standing_home->form);
-        $last_home_=$last_home[0];
-        $last_away=str_split($standing_away->form);
-        $last_away_=$last_away[0];
-logger($last_home_);
-        if ($last_home_=="W"){
-          $restArrays=Helpers::eventAfterGameWin($team_home_id,$fixture->day_timestamp);
-        }elseif ($last_home_=="L"){
-            $restArrays=Helpers::eventAfterGameLost($team_home_id);
-        }else{
-            $restArrays=Helpers::eventAfterGameDraw($team_home_id);
+        $last_home = str_split($standing_home->form);
+        $last_home_ = $last_home[0];
+        $last_away = str_split($standing_away->form);
+        $last_away_ = $last_away[0];
+        logger($last_home_);
+        switch ($last_home_) {
+            case "W":
+                $restArrays = Helpers::eventAfterGameWin($team_home_id, $fixture->day_timestamp);
+                break;
+            case "L":
+                $restArrays = Helpers::eventAfterGameLost($team_home_id, $fixture->day_timestamp);
+                break;
+            case "D":
+                $restArrays = Helpers::eventAfterGameDraw($team_home_id, $fixture->day_timestamp);
+                break;
+            default:
+                 $restArrays=Helpers::eventAfterGameDraw($team_home_id,$fixture->day_timestamp);
+                break;
         }
-        if ($last_away_=="W"){
-            $restArrays_away=Helpers::eventAfterGameWin($team_away_id,$fixture->day_timestamp);
-        }elseif ($last_away_=="L"){
-            $restArrays_away=Helpers::eventAfterGameLost($team_away_id);
-        }else{
-            $restArrays_away=Helpers::eventAfterGameDraw($team_away_id);
+        /*  if ($last_home_=="W"){
+            $restArrays=Helpers::eventAfterGameWin($team_home_id,$fixture->day_timestamp);
+          }elseif ($last_home_=="L"){
+              $restArrays=Helpers::eventAfterGameLost($team_home_id,$fixture->day_timestamp);
+          }else{
+              $restArrays=Helpers::eventAfterGameDraw($team_home_id,$fixture->day_timestamp);
+          }*/
+    /*    if ($last_away_ == "W") {
+            $restArrays_away = Helpers::eventAfterGameWin($team_away_id, $fixture->day_timestamp);
+        } elseif ($last_away_ == "L") {
+            $restArrays_away = Helpers::eventAfterGameLost($team_away_id, $fixture->day_timestamp);
+        } else {
+            $restArrays_away = Helpers::eventAfterGameDraw($team_away_id, $fixture->day_timestamp);
+        }*/
+        logger($last_away_);
+        switch ($last_away_){
+            case "W":
+                $restArrays = Helpers::eventAfterGameWin($team_away_id, $fixture->day_timestamp);
+                break;
+            case "L":
+                $restArrays_away = Helpers::eventAfterGameLost($team_away_id, $fixture->day_timestamp);
+                break;
+            case "D":
+                $restArrays_away = Helpers::eventAfterGameDraw($team_away_id, $fixture->day_timestamp);
+                break;
+            default:
+                $restArrays_away=Helpers::eventAfterGameDraw($team_away_id,$fixture->day_timestamp);
+                break;
         }
         return view('event_after', [
-            'team_home'=>Team::query()->firstWhere(['team_id'=>$team_home_id]),
-            'team_away'=>Team::query()->firstWhere(['team_id'=>$team_away_id]),
-            'home'=>$restArrays,
-            'away'=>$restArrays_away
+            'team_home' => Team::query()->firstWhere(['team_id' => $team_home_id]),
+            'team_away' => Team::query()->firstWhere(['team_id' => $team_away_id]),
+            'home' => $restArrays,
+            'away' => $restArrays_away
         ]);
 
     }
+
     public function dashboard()
     {
         if (!Auth::authenticate()) {
@@ -490,7 +521,7 @@ logger($last_home_);
         $p_45 = 0;
         if (isset($request_filter)) {
             $ratios = RatioFixture::query()->where(['percent' => $request_filter])
-                ->leftJoin('fixtures', 'fixtures.id', '=', 'ratio_fixtures.fixture_id')->whereNotIn("st_short", ["CANC", "PST","NS"])->get();
+                ->leftJoin('fixtures', 'fixtures.id', '=', 'ratio_fixtures.fixture_id')->whereNotIn("st_short", ["CANC", "PST", "NS"])->get();
             foreach ($ratios as $ratio) {
                 $total_goal = $ratio->goal_home + $ratio->goal_away;
                 if ($total_goal > 0.5) {
@@ -518,103 +549,101 @@ logger($last_home_);
                     $draw += 1;
                 }
                 /** score exacte */
-                if ($ratio->goal_home==1 && $ratio->goal_away==0) {
+                if ($ratio->goal_home == 1 && $ratio->goal_away == 0) {
                     $score_1_0 += 1;
                 }
-                if ($ratio->goal_home==1 && $ratio->goal_away==1) {
+                if ($ratio->goal_home == 1 && $ratio->goal_away == 1) {
                     $score_1_1 += 1;
                 }
-                if ($ratio->goal_home==1 && $ratio->goal_away==2) {
+                if ($ratio->goal_home == 1 && $ratio->goal_away == 2) {
                     $score_1_2 += 1;
                 }
-                if ($ratio->goal_home==1 && $ratio->goal_away==3) {
+                if ($ratio->goal_home == 1 && $ratio->goal_away == 3) {
                     $score_1_3 += 1;
                 }
-                if ($ratio->goal_home==1 && $ratio->goal_away==4) {
+                if ($ratio->goal_home == 1 && $ratio->goal_away == 4) {
                     $score_1_4 += 1;
                 }
-                if ($ratio->goal_home==1 && $ratio->goal_away==5) {
+                if ($ratio->goal_home == 1 && $ratio->goal_away == 5) {
                     $score_1_5 += 1;
                 }
 
 
-
-                if ($ratio->goal_home==2 && $ratio->goal_away==0) {
+                if ($ratio->goal_home == 2 && $ratio->goal_away == 0) {
                     $score_2_0 += 1;
                 }
-                if ($ratio->goal_home==2 && $ratio->goal_away==1) {
+                if ($ratio->goal_home == 2 && $ratio->goal_away == 1) {
                     $score_2_1 += 1;
                 }
-                if ($ratio->goal_home==2 && $ratio->goal_away==2) {
+                if ($ratio->goal_home == 2 && $ratio->goal_away == 2) {
                     $score_2_2 += 1;
                 }
-                if ($ratio->goal_home==2 && $ratio->goal_away==3) {
+                if ($ratio->goal_home == 2 && $ratio->goal_away == 3) {
                     $score_2_3 += 1;
                 }
-                if ($ratio->goal_home==2 && $ratio->goal_away==4) {
+                if ($ratio->goal_home == 2 && $ratio->goal_away == 4) {
                     $score_2_4 += 1;
                 }
-                if ($ratio->goal_home==2 && $ratio->goal_away==5) {
+                if ($ratio->goal_home == 2 && $ratio->goal_away == 5) {
                     $score_2_5 += 1;
                 }
 
 
-
-                if ($ratio->goal_home==3 && $ratio->goal_away==0) {
+                if ($ratio->goal_home == 3 && $ratio->goal_away == 0) {
                     $score_3_0 += 1;
                 }
-                if ($ratio->goal_home==3 && $ratio->goal_away==1) {
+                if ($ratio->goal_home == 3 && $ratio->goal_away == 1) {
                     $score_3_1 += 1;
                 }
-                if ($ratio->goal_home==3 && $ratio->goal_away==2) {
+                if ($ratio->goal_home == 3 && $ratio->goal_away == 2) {
                     $score_3_2 += 1;
                 }
-                if ($ratio->goal_home==3 && $ratio->goal_away==3) {
+                if ($ratio->goal_home == 3 && $ratio->goal_away == 3) {
                     $score_3_3 += 1;
                 }
-                if ($ratio->goal_home==3 && $ratio->goal_away==4) {
+                if ($ratio->goal_home == 3 && $ratio->goal_away == 4) {
                     $score_3_4 += 1;
                 }
-                if ($ratio->goal_home==3 && $ratio->goal_away==5) {
+                if ($ratio->goal_home == 3 && $ratio->goal_away == 5) {
                     $score_3_5 += 1;
                 }
 
 
-                if ($ratio->goal_home==4 && $ratio->goal_away==0) {
+                if ($ratio->goal_home == 4 && $ratio->goal_away == 0) {
                     $score_4_0 += 1;
                 }
-                if ($ratio->goal_home==4 && $ratio->goal_away==1) {
+                if ($ratio->goal_home == 4 && $ratio->goal_away == 1) {
                     $score_4_1 += 1;
                 }
-                if ($ratio->goal_home==4 && $ratio->goal_away==2) {
+                if ($ratio->goal_home == 4 && $ratio->goal_away == 2) {
                     $score_4_2 += 1;
                 }
-                if ($ratio->goal_home==4 && $ratio->goal_away==3) {
+                if ($ratio->goal_home == 4 && $ratio->goal_away == 3) {
                     $score_4_3 += 1;
                 }
-                if ($ratio->goal_home==4 && $ratio->goal_away==4) {
+                if ($ratio->goal_home == 4 && $ratio->goal_away == 4) {
                     $score_4_4 += 1;
                 }
-                if ($ratio->goal_home==4 && $ratio->goal_away==5) {
+                if ($ratio->goal_home == 4 && $ratio->goal_away == 5) {
                     $score_4_5 += 1;
                 }
 
-                if ($ratio->goal_home==5 && $ratio->goal_away==0) {
+                if ($ratio->goal_home == 5 && $ratio->goal_away == 0) {
                     $score_5_0 += 1;
                 }
-                if ($ratio->goal_home==5 && $ratio->goal_away==1) {
+                if ($ratio->goal_home == 5 && $ratio->goal_away == 1) {
                     $score_5_1 += 1;
                 }
-                if ($ratio->goal_home==5 && $ratio->goal_away==2) {
+                if ($ratio->goal_home == 5 && $ratio->goal_away == 2) {
                     $score_5_2 += 1;
                 }
-                if ($ratio->goal_home==5 && $ratio->goal_away==3) {
+                if ($ratio->goal_home == 5 && $ratio->goal_away == 3) {
                     $score_5_3 += 1;
                 }
-                if ($ratio->goal_home==5 && $ratio->goal_away==4) {
+                if ($ratio->goal_home == 5 && $ratio->goal_away == 4) {
                     $score_5_4 += 1;
                 }
-                if ($ratio->goal_home==5 && $ratio->goal_away==5) {
+                if ($ratio->goal_home == 5 && $ratio->goal_away == 5) {
                     $score_5_5 += 1;
                 }
 

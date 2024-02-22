@@ -137,25 +137,23 @@ class Helpers
             $builder->where('team_home_id', '=', $team_id)
                 ->where('team_home_winner', '=', 1);
         })->orWhere(function (Builder $builder) use ($team_id) {
-            $builder->where('team_home_id', '=', $team_id)
-                ->where('team_home_winner', '=', 1);
+            $builder->where('team_away_id', '=', $team_id)
+                ->where('team_away_winner', '=', 1);
         })->get();
         //  logger($listgames);
         foreach ($listgames as $item) {
-            $lastgameHome = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
+            logger("item after game:".$item->fixture_id);
+            $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
                 $builder->where('day_timestamp', '<', $item->day_timestamp)
                     ->where('team_home_id', '=', $team_id)
-                    ->orWhere('team_away_id', '=', $team_id)->orderBy('day_timestamp','asc')
+                    ->orWhere('team_away_id', '=', $team_id)->orderBy('day_timestamp','desc')
                     ;
             });
-            logger($lastgameHome);
-            /*            $lastgameHome=Fixture::query()->where('team_home_id','=',$team_id)
-                            ->orWhere(['team_away_id'=>$team_id])->where('day_timestamp','<',$item->day_timestamp)->limit(1);*/
-            if ($lastgameHome instanceof Fixture) {
-
-                if ($lastgameHome->team_home_winner == 1) {
+          if ($lastgameafter instanceof Fixture) {
+                logger($lastgameafter->fixture_id);
+                if ($lastgameafter->team_home_winner == 1) {
                     $total_win_home++;
-                } elseif ($lastgameHome->team_away_winner == 1) {
+                } elseif ($lastgameafter->team_away_winner == 1) {
                     $total_lost_home++;
                 } else {
                     $total_draw_home++;
@@ -169,19 +167,25 @@ class Helpers
         ];
     }
 
-    static function eventAfterGameLost($team_id)
+    static function eventAfterGameLost($team_id,$day_timestamp)
     {
         $total_win_home = 0;
         $total_lost_home = 0;
         $total_draw_home = 0;
-        $listgameHome = Fixture::query()->where(['team_home_id' => $team_id, 'team_away_winner' => true])
-            ->orWhere(['team_away_id' => $team_id, 'team_home_winner' => true])->orderByDesc('id')->get();
-        foreach ($listgameHome as $item) {
+        $listgames = Fixture::query()->where('day_timestamp','<',$day_timestamp)
+            ->where(function (Builder $builder) use ($team_id) {
+                $builder->where('team_home_id', '=', $team_id)
+                    ->where('team_away_winner', '=', 1);
+            })->orWhere(function (Builder $builder) use ($team_id) {
+                $builder->where('team_away_id', '=', $team_id)
+                    ->where('team_home_winner', '=', 1);
+            })->get();
+/*        $listgameHome = Fixture::query()->where(['team_home_id' => $team_id, 'team_away_winner' => true])
+            ->orWhere(['team_away_id' => $team_id, 'team_home_winner' => true])->orderByDesc('id')->get();*/
+        foreach ($listgames as $item) {
             $lastgameHome = Fixture::query()->where('team_home_id', '=', $team_id)
                 ->orWhere(['team_away_id' => $team_id])->where('day_timestamp', '<', $item->day_timestamp)->limit(1);
             if ($lastgameHome instanceof Fixture) {
-
-
                 if ($lastgameHome->team_home_winner == 1) {
                     $total_win_home++;
                 } elseif ($lastgameHome->team_away_winner == 1) {
@@ -198,14 +202,24 @@ class Helpers
         ];
     }
 
-    static function eventAfterGameDraw($team_id)
+    static function eventAfterGameDraw($team_id,$day_timestamp)
     {
         $total_win_home = 0;
         $total_lost_home = 0;
         $total_draw_home = 0;
-        $listgameHome = Fixture::query()->where(['team_home_id' => $team_id, 'team_away_winner' => false])
-            ->orWhere(['team_away_id' => $team_id, 'team_home_winner' => false])->orderByDesc('id')->get();
-        foreach ($listgameHome as $item) {
+        $listgamedraws = Fixture::query()->where('day_timestamp','<',$day_timestamp)
+            ->where(function (Builder $builder) use ($team_id) {
+                $builder->where('team_home_id', '=', $team_id)
+                    ->where('team_away_winner', '=', 0)
+                    ->where('team_home_winner', '=', 0);
+            })->orWhere(function (Builder $builder) use ($team_id) {
+                $builder->where('team_away_id', '=', $team_id)
+                    ->where('team_home_winner', '=', 0)
+                    ->where('team_away_winner', '=', 0);
+            })->get();
+/*        $listgameHome = Fixture::query()->where(['team_home_id' => $team_id, 'team_away_winner' => false])
+            ->orWhere(['team_away_id' => $team_id, 'team_home_winner' => false])->orderByDesc('id')->get();*/
+        foreach ($listgamedraws as $item) {
             $lastgameHome = Fixture::query()->where('team_home_id', '=', $team_id)
                 ->orWhere(['team_away_id' => $team_id])->where('day_timestamp', '<', $item->day_timestamp)->limit(1);
             if ($lastgameHome instanceof Fixture) {
