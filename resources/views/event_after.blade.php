@@ -15,10 +15,10 @@
                 <table>
                     @foreach($home['list_game'] as $game)
                         <tr>
-                            <td>{{\App\Helpers\Helpers::getTeamByID($game->team_home_id)}}</td>
+                            <td>{{\App\Helpers\Helpers::getTeamByID($game->team_home_id)['name']}}</td>
                             <td>{{$game->score_ft_home}}</td>
                             <td></td>
-                            <td>{{\App\Helpers\Helpers::getTeamByID($game->team_away_id)}}</td>
+                            <td>{{\App\Helpers\Helpers::getTeamByID($game->team_away_id)['name']}}</td>
                             <td>{{$game->score_ft_away}}</td>
                         </tr>
 
