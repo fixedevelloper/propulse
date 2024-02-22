@@ -154,10 +154,10 @@ class Helpers
             });
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score' . $lastgameafter->score_ft_home . '-' . $lastgameafter->score_ft_away);
-                if ($lastgameafter->team_home_winner == 1) {
+                if ($lastgameafter->team_home_winner === 1) {
                     $total_win_home++;
                     $game_wins[] = $lastgameafter;
-                } elseif ($lastgameafter->team_away_winner == 1) {
+                } elseif ($lastgameafter->team_away_winner === 1) {
                     $total_lost_home++;
                     $game_losts[] = $lastgameafter;
                 } else {
@@ -183,10 +183,10 @@ class Helpers
             ->where('day_timestamp', '<', $day_timestamp)
             ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
-                    ->where('team_home_winner', '=', false);
+                    ->where('team_home_winner', '=', 0);
             })->orWhere(function (Builder $builder) use ($team_id) {
                 $builder->where('team_away_id', '=', $team_id)
-                    ->where('team_away_winner', '=', false);
+                    ->where('team_away_winner', '=', 0);
             })->get();
        // logger($listgames);
 
@@ -202,9 +202,9 @@ class Helpers
             });
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score after lost' . $lastgameafter->team_home_winner . '-' . $lastgameafter->score_ft_away);
-                if ($lastgameafter->team_home_winner === true) {
+                if ($lastgameafter->team_home_winner === 1) {
                     $total_win_home++;
-                } elseif ($lastgameafter->team_away_winner === true) {
+                } elseif ($lastgameafter->team_away_winner === 1) {
                     $total_lost_home++;
                 } else {
                     $total_draw_home++;
