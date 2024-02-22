@@ -236,14 +236,14 @@ class Helpers
             })->get();
         logger(sizeof($listgamedraws));
        foreach ($listgamedraws as $item) {
-           $lastgameafter=DB::table('fixtures')
+           $lastgameafter=Fixture::query()
                ->where('day_timestamp', '>', $item->day_timestamp)
                ->where('team_home_id', '=', $team_id)
-               ->orWhere(function (\Illuminate\Database\Query\Builder $builder) use ($team_id) {
+               ->orWhere(function (Builder $builder) use ($team_id) {
                    $builder->where('team_away_id', '=', $team_id);
                })
                ->orderBy('day_timestamp', 'asc')->first();
-           logger("info",$lastgameafter);
+           logger($lastgameafter);
 /*        $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
                 $builder->where('st_short','=','FT')
                     ->where('day_timestamp', '>', $item->day_timestamp)
