@@ -12,6 +12,9 @@
                 <h4>Nombre victoires: {{$home['win']}}</h4>
                 <h4>Nombre defaites: {{$home['lost']}}</h4>
                 <h4>Nombre Null: {{$home['draw']}}</h4>
+                @foreach($home['listgame'] as $game)
+                    <p>{{$game->team_home_id}}- {{$game->score_ft_home}} : {{$game->team_away_id}} {{$game->score_ft_away}}</p>
+                @endforeach
             </div>
     </div>
     </div>
