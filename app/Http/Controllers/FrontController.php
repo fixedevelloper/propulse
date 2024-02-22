@@ -429,6 +429,8 @@ class FrontController extends Controller
         return view('event_after', [
             'team_home' => Team::query()->firstWhere(['team_id' => $team_home_id]),
             'team_away' => Team::query()->firstWhere(['team_id' => $team_away_id]),
+            'home_lastgame'=>$last_home_,
+            'away_lastgame'=>$last_away_,
             'home' => $restArrays,
             'away' => $restArrays_away
         ]);
