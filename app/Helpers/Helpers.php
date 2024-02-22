@@ -249,9 +249,9 @@ class Helpers
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score after draw' . $lastgameafter->score_ft_home . '-' . $lastgameafter->score_ft_away);
 
-                if ($lastgameafter->team_home_winner == true) {
+                if ($lastgameafter->team_home_winner === 1) {
                     $total_win_home++;
-                } elseif ($lastgameafter->team_away_winner == true) {
+                } elseif ($lastgameafter->team_away_winner === 1) {
                     $total_lost_home++;
                 } else {
                     $total_draw_home++;
