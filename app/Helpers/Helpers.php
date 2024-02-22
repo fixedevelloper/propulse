@@ -144,13 +144,13 @@ class Helpers
                     ->where('team_away_winner', '=', 1);
             })->get();
         foreach ($listgames as $item) {
-            $lastgameafter = Fixture::query()
-                ->firstWhere(function (Builder $builder) use ($item, $team_id) {
-                $builder
-                    ->where('day_timestamp', '>', $item->day_timestamp)
-                    ->where('team_home_id', '=', $team_id)
-                    ->orWhere('team_away_id', '=', $team_id);
-            })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'asc');
+            $lastgameafter=Fixture::query()
+                ->where('day_timestamp', '>', $item->day_timestamp)
+                ->where('team_home_id', '=', $team_id)
+                ->orWhere(function (Builder $builder) use ($team_id) {
+                    $builder->where('team_away_id', '=', $team_id);
+                })
+                ->first();
             if ($lastgameafter instanceof Fixture) {
                 $game_after[] = $lastgameafter;
                 logger($lastgameafter->fixture_id . ': score' . $lastgameafter->score_ft_home . '-' . $lastgameafter->score_ft_away);
@@ -191,11 +191,13 @@ class Helpers
             })->get();
 
         foreach ($listgames as $item) {
-            $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
-                $builder->where('day_timestamp', '>', $item->day_timestamp)
-                    ->where('team_home_id', '=', $team_id)
-                    ->orWhere('team_away_id', '=', $team_id);
-            })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'asc');;
+            $lastgameafter=Fixture::query()
+                ->where('day_timestamp', '>', $item->day_timestamp)
+                ->where('team_home_id', '=', $team_id)
+                ->orWhere(function (Builder $builder) use ($team_id) {
+                    $builder->where('team_away_id', '=', $team_id);
+                })
+                ->first();
             if ($lastgameafter instanceof Fixture) {
                 $game_after[] = $lastgameafter;
                 if ($lastgameafter->team_home_id==$team_id){
