@@ -242,7 +242,7 @@ class Helpers
                ->orWhere(function (Builder $builder) use ($team_id) {
                    $builder->where('team_away_id', '=', $team_id);
                })
-               ->orderBy('day_timestamp', 'asc')->first();
+               ->orderBy('day_timestamp', 'desc')->first();
            logger($lastgameafter);
 /*        $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
                 $builder->where('st_short','=','FT')
