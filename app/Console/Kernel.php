@@ -17,8 +17,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:create-odd')->hourly();
         $schedule->command('app:create-league-theday')->everySixHours();
         $schedule->command('app:update-fixture')->everyTenMinutes()->between("00:00","23:50");
-/*        $schedule->command('app:create-standing')->daily()->between('01:00','02:00');*/
-        $schedule->command('app:create-odd')->daily()->between('01:00','03:00');
+        $schedule->command('app:create-standing')->daily()->between('01:00','02:00');
+       // $schedule->command('app:create-odd')->daily()->between('01:00','03:00');
        // $schedule->command('app:live-score')->everyTenMinutes(); //livescore
         // $schedule->command('inspire')->hourly();
     }
