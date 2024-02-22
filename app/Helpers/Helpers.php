@@ -10,6 +10,7 @@ use App\Models\Stadings;
 use App\Models\Team;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class Helpers
 {
@@ -234,13 +235,17 @@ class Helpers
                     ->where('team_away_winner', '=', false);
             })->get();
        foreach ($listgamedraws as $item) {
-        $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
+           $lastgameafter=DB::table('fixtures')->where('st_short','=','FT')
+               ->where('team_home_id', '=', $team_id)
+               ->orWhere('team_away_id', '=', $team_id)
+               ->orderBy('day_timestamp', 'asc');
+/*        $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
                 $builder->where('st_short','=','FT')
                     ->where('day_timestamp', '>', $item->day_timestamp)
                     ->where('team_home_id', '=', $team_id)
                     ->orWhere('team_away_id', '=', $team_id)
                     ->orderBy('day_timestamp', 'asc');
-            })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'asc');;
+            })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'asc');;*/
 
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score after draw' . $lastgameafter->team_home_winner . '-' . $lastgameafter->score_ft_away);
