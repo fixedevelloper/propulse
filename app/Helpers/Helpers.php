@@ -201,7 +201,7 @@ class Helpers
                     ->orWhere('team_away_id', '=', $team_id);
             });
             if ($lastgameafter instanceof Fixture) {
-                logger($lastgameafter->fixture_id . ': score after lost' . $lastgameafter->score_ft_home . '-' . $lastgameafter->score_ft_away);
+                logger($lastgameafter->fixture_id . ': score after lost' . $lastgameafter->team_home_winner . '-' . $lastgameafter->score_ft_away);
                 if ($lastgameafter->team_home_winner === true) {
                     $total_win_home++;
                 } elseif ($lastgameafter->team_away_winner === true) {
