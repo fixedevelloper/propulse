@@ -417,6 +417,7 @@ class FrontController extends Controller
                 $restArrays_away = Helpers::eventAfterGameWin($team_away_id, $fixture->day_timestamp);
                 break;
             case "L":
+                logger("lost");
                 $restArrays_away = Helpers::eventAfterGameLost($team_away_id, $fixture->day_timestamp);
                 break;
             case "D":
