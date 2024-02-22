@@ -202,9 +202,9 @@ class Helpers
             });
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score after lost' . $lastgameafter->score_ft_home . '-' . $lastgameafter->score_ft_away);
-                if ($lastgameafter->team_home_winner == true) {
+                if ($lastgameafter->team_home_winner === true) {
                     $total_win_home++;
-                } elseif ($lastgameafter->team_away_winner == true) {
+                } elseif ($lastgameafter->team_away_winner === true) {
                     $total_lost_home++;
                 } else {
                     $total_draw_home++;
@@ -229,12 +229,12 @@ class Helpers
 
             ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
-                    ->where('team_away_winner', '=', 0)
-                    ->where('team_home_winner', '=', 0);
+                    ->where('team_away_winner', '=', false)
+                    ->where('team_home_winner', '=', false);
             })->orWhere(function (Builder $builder) use ($team_id) {
                 $builder->where('team_away_id', '=', $team_id)
-                    ->where('team_home_winner', '=', 0)
-                    ->where('team_away_winner', '=', 0);
+                    ->where('team_home_winner', '=', false)
+                    ->where('team_away_winner', '=', false);
             })->get();
       logger($listgamedraws);
        foreach ($listgamedraws as $item) {
@@ -249,9 +249,9 @@ class Helpers
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score after draw' . $lastgameafter->score_ft_home . '-' . $lastgameafter->score_ft_away);
 
-                if ($lastgameafter->team_home_winner == 1) {
+                if ($lastgameafter->team_home_winner == true) {
                     $total_win_home++;
-                } elseif ($lastgameafter->team_away_winner == 1) {
+                } elseif ($lastgameafter->team_away_winner == true) {
                     $total_lost_home++;
                 } else {
                     $total_draw_home++;
