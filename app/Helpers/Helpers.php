@@ -239,7 +239,7 @@ class Helpers
                     ->where('day_timestamp', '>', $item->day_timestamp)
                     ->where('team_home_id', '=', $team_id)
                     ->orWhere('team_away_id', '=', $team_id)
-                    ->orderBy('day_timestamp', 'desc');
+                    ->orderBy('day_timestamp', 'asc');
             });
 
             if ($lastgameafter instanceof Fixture) {
