@@ -177,9 +177,9 @@ class Helpers
     static function eventAfterGameLost($team_id, $day_timestamp)
     {
         $game_after = [];
-        $total_win_home = 0;
-        $total_lost_home = 0;
-        $total_draw_home = 0;
+        $total_win = 0;
+        $total_lost = 0;
+        $total_draw = 0;
         $listgames = Fixture::query()->where('st_short','=','FT')
             ->where('day_timestamp', '<', $day_timestamp)
             ->where(function (Builder $builder) use ($team_id) {
@@ -199,13 +199,12 @@ class Helpers
             })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'asc');;
             if ($lastgameafter instanceof Fixture) {
                 $game_after[] = $lastgameafter;
-                logger($lastgameafter->fixture_id . ': score after lost' . $lastgameafter->team_home_winner . '-' . $lastgameafter->score_ft_away);
-                if ($lastgameafter->team_home_winner === 1) {
-                    $total_win_home++;
-                } elseif ($lastgameafter->team_away_winner === 1) {
-                    $total_lost_home++;
+                if ($lastgameafter->team_home_winner == 1) {
+                    $total_win++;
+                } elseif ($lastgameafter->team_away_winner == 1) {
+                    $total_lost++;
                 } else {
-                    $total_draw_home++;
+                    $total_draw++;
                 }
             }
         }
