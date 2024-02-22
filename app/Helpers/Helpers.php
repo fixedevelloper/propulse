@@ -229,9 +229,9 @@ class Helpers
     static function eventAfterGameDraw($team_id, $day_timestamp)
     {
         $game_after = [];
-        $total_win_home = 0;
-        $total_lost_home = 0;
-        $total_draw_home = 0;
+        $total_win = 0;
+        $total_lost = 0;
+        $total_draw = 0;
         $listgamedraws = Fixture::query()->where('st_short','=','FT')
             ->where('day_timestamp', '<', $day_timestamp)
             ->where(function (Builder $builder) use ($team_id) {
@@ -264,20 +264,30 @@ class Helpers
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score after draw' . $lastgameafter->team_home_winner . '-' . $lastgameafter->score_ft_away);
                 $game_after[] = $lastgameafter;
-                if ($lastgameafter->team_home_winner === 1) {
-                    $total_win_home++;
-                } elseif ($lastgameafter->team_away_winner === 1) {
-                    $total_lost_home++;
-                } else {
-                    $total_draw_home++;
+                if ($lastgameafter->team_home_id==$team_id){
+                    if ($lastgameafter->team_home_winner == 1){
+                        $total_win++;
+                    }elseif ($lastgameafter->team_away_winner == 1){
+                        $total_lost++;
+                    }elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner==0){
+                        $total_draw++;
+                    }
+                }else{
+                    if ($lastgameafter->team_home_winner == 1){
+                        $total_lost++;
+                    }elseif ($lastgameafter->team_away_winner == 1){
+                        $total_win++;
+                    }elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner==0){
+                        $total_draw++;
+                    }
                 }
             }
         }
         return [
             'list_game'=>$game_after,
-            'win' => $total_win_home,
-            'lost' => $total_lost_home,
-            'draw' => $total_draw_home
+            'win' => $total_win,
+            'lost' => $total_lost,
+            'draw' => $total_draw
         ];
     }
 }
