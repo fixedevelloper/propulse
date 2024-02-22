@@ -185,6 +185,7 @@ class Helpers
                 $builder->where('team_away_id', '=', $team_id)
                     ->where('team_home_winner', '=', 1);
             })->get();
+        logger($listgames);
         /*        $listgameHome = Fixture::query()->where(['team_home_id' => $team_id, 'team_away_winner' => true])
                     ->orWhere(['team_away_id' => $team_id, 'team_home_winner' => true])->orderByDesc('id')->get();*/
         foreach ($listgames as $item) {
