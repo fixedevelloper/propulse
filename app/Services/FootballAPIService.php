@@ -78,6 +78,16 @@ class FootballAPIService
             ['query' => ['id' => $id]]);
         return json_decode($res->getBody());
     }
+    static function getFixtureByTeamId($id){
+        $options=[
+            'x-rapidapi-host' => 'api-football-v1.p.rapidapi.com',
+            'x-rapidapi-key' => env("APIFOOT_KEY")
+        ];
+        $client = new Client(['headers' => $options]);
+        $res = $client->request('GET', env("APIFOOT_KEY_URL").'/fixtures',
+            ['query' => ['team' => $id,'last'=>99,'status'=>'FT']]);
+        return json_decode($res->getBody());
+    }
     static function getAllFixturesBetweenDateWithLeague($league,$from,$to){
         $options=[
             'x-rapidapi-host' => 'api-football-v1.p.rapidapi.com',

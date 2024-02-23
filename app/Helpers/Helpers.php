@@ -8,9 +8,9 @@ use App\Models\Fixture;
 use App\Models\Odd;
 use App\Models\Stadings;
 use App\Models\Team;
+use App\Services\FootballAPIService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 
 class Helpers
 {
@@ -134,7 +134,7 @@ class Helpers
         $total_win_home = 0;
         $total_lost_home = 0;
         $total_draw_home = 0;
-        $listgames = Fixture::query()->where('st_short','=','FT')
+        $listgames = Fixture::query()->where('st_short', '=', 'FT')
             ->where('day_timestamp', '<', $day_timestamp)
             ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
@@ -144,12 +144,12 @@ class Helpers
                     ->where('team_away_winner', '=', 1);
             })->get();
         foreach ($listgames as $item) {
-            $lastgameafter=Fixture::query()
+            $lastgameafter = Fixture::query()
                 ->where('day_timestamp', '>', $item->day_timestamp)
                 ->where('team_home_id', '=', $team_id)
                 ->orWhere(function (Builder $builder) use ($team_id) {
                     $builder->where('team_away_id', '=', $team_id);
-                })->orderBy('fixture_id','asc')
+                })->orderBy('fixture_id', 'asc')
                 ->first();
             if ($lastgameafter instanceof Fixture) {
                 $game_after[] = $lastgameafter;
@@ -167,7 +167,7 @@ class Helpers
             }
         }
         return [
-            'list_game'=>$game_after,
+            'list_game' => $game_after,
             'win' => $total_win_home,
             'lost' => $total_lost_home,
             'draw' => $total_draw_home
@@ -180,7 +180,7 @@ class Helpers
         $total_win = 0;
         $total_lost = 0;
         $total_draw = 0;
-        $listgames = Fixture::query()->where('st_short','=','FT')
+        $listgames = Fixture::query()->where('st_short', '=', 'FT')
             ->where('day_timestamp', '<', $day_timestamp)
             ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
@@ -191,7 +191,7 @@ class Helpers
             })->get();
 
         foreach ($listgames as $item) {
-            $lastgameafter=Fixture::query()
+            $lastgameafter = Fixture::query()
                 ->where('day_timestamp', '>', $item->day_timestamp)
                 ->where('team_home_id', '=', $team_id)
                 ->orWhere(function (Builder $builder) use ($team_id) {
@@ -200,20 +200,20 @@ class Helpers
                 ->first();
             if ($lastgameafter instanceof Fixture) {
                 $game_after[] = $lastgameafter;
-                if ($lastgameafter->team_home_id==$team_id){
-                    if ($lastgameafter->team_home_winner == 1){
+                if ($lastgameafter->team_home_id == $team_id) {
+                    if ($lastgameafter->team_home_winner == 1) {
                         $total_win++;
-                    }elseif ($lastgameafter->team_away_winner == 1){
+                    } elseif ($lastgameafter->team_away_winner == 1) {
                         $total_lost++;
-                    }elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner==0){
+                    } elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner == 0) {
                         $total_draw++;
                     }
-                }else{
-                    if ($lastgameafter->team_home_winner == 1){
+                } else {
+                    if ($lastgameafter->team_home_winner == 1) {
                         $total_lost++;
-                    }elseif ($lastgameafter->team_away_winner == 1){
+                    } elseif ($lastgameafter->team_away_winner == 1) {
                         $total_win++;
-                    }elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner==0){
+                    } elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner == 0) {
                         $total_draw++;
                     }
                 }
@@ -221,7 +221,7 @@ class Helpers
             }
         }
         return [
-            'list_game'=>$game_after,
+            'list_game' => $game_after,
             'win' => $total_win,
             'lost' => $total_lost,
             'draw' => $total_draw
@@ -234,7 +234,7 @@ class Helpers
         $total_win = 0;
         $total_lost = 0;
         $total_draw = 0;
-        $listgamedraws = Fixture::query()->where('st_short','=','FT')
+        $listgamedraws = Fixture::query()->where('st_short', '=', 'FT')
             ->where('day_timestamp', '<', $day_timestamp)
             ->where(function (Builder $builder) use ($team_id) {
                 $builder->where('team_home_id', '=', $team_id)
@@ -245,51 +245,227 @@ class Helpers
                     ->where('team_home_winner', '=', false)
                     ->where('team_away_winner', '=', false);
             })->get();
-       // logger(sizeof($listgamedraws));
-       foreach ($listgamedraws as $item) {
-           $lastgameafter=Fixture::query()
-               ->where('day_timestamp', '>', $item->day_timestamp)
-               ->where('team_home_id', '=', $team_id)
-               ->orWhere(function (Builder $builder) use ($team_id) {
-                   $builder->where('team_away_id', '=', $team_id);
-               })
-               ->first();
+        // logger(sizeof($listgamedraws));
+        foreach ($listgamedraws as $item) {
+            $lastgameafter = Fixture::query()
+                ->where('day_timestamp', '>', $item->day_timestamp)
+                ->where('team_home_id', '=', $team_id)
+                ->orWhere(function (Builder $builder) use ($team_id) {
+                    $builder->where('team_away_id', '=', $team_id);
+                })
+                ->first();
 
-/*        $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
-                $builder->where('st_short','=','FT')
-                    ->where('day_timestamp', '>', $item->day_timestamp)
-                    ->where('team_home_id', '=', $team_id)
-                    ->orWhere('team_away_id', '=', $team_id)
-                    ->orderBy('day_timestamp', 'asc');
-            })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'asc');;*/
+            /*        $lastgameafter = Fixture::query()->firstWhere(function (Builder $builder) use ($item, $team_id) {
+                            $builder->where('st_short','=','FT')
+                                ->where('day_timestamp', '>', $item->day_timestamp)
+                                ->where('team_home_id', '=', $team_id)
+                                ->orWhere('team_away_id', '=', $team_id)
+                                ->orderBy('day_timestamp', 'asc');
+                        })->where(['st_short'=>"FT"])->orderBy('day_timestamp', 'asc');;*/
 
             if ($lastgameafter instanceof Fixture) {
                 logger($lastgameafter->fixture_id . ': score after draw' . $lastgameafter->team_home_winner . '-' . $lastgameafter->score_ft_away);
                 $game_after[] = $lastgameafter;
-                if ($lastgameafter->team_home_id==$team_id){
-                    if ($lastgameafter->team_home_winner == 1){
+                if ($lastgameafter->team_home_id == $team_id) {
+                    if ($lastgameafter->team_home_winner == 1) {
                         $total_win++;
-                    }elseif ($lastgameafter->team_away_winner == 1){
+                    } elseif ($lastgameafter->team_away_winner == 1) {
                         $total_lost++;
-                    }elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner==0){
+                    } elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner == 0) {
                         $total_draw++;
                     }
-                }else{
-                    if ($lastgameafter->team_home_winner == 1){
+                } else {
+                    if ($lastgameafter->team_home_winner == 1) {
                         $total_lost++;
-                    }elseif ($lastgameafter->team_away_winner == 1){
+                    } elseif ($lastgameafter->team_away_winner == 1) {
                         $total_win++;
-                    }elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner==0){
+                    } elseif ($lastgameafter->team_away_winner == 0 && $lastgameafter->team_home_winner == 0) {
                         $total_draw++;
                     }
                 }
             }
         }
         return [
-            'list_game'=>$game_after,
+            'list_game' => $game_after,
             'win' => $total_win,
             'lost' => $total_lost,
             'draw' => $total_draw
+        ];
+    }
+
+    static function getLastFixtureByTeam($team_id, $form)
+    {
+
+        $data = FootballAPIService::getFixtureByTeamId($team_id);
+        $response = $data->response;
+        $list_results = [];
+
+   /*     switch ($form) {
+            case "W":
+                $formWin = self::teamWhereWin($response, $team_id);
+                break;
+            case "L":
+                $formLost = self::teamWhereLost($response, $team_id);
+                break;
+            case "D":
+                $formDraw = self::teamWhereDraw($response, $team_id);
+                break;
+
+        }*/
+        $formWin = self::teamWhereWin($response, $team_id);
+        $formLost = self::teamWhereLost($response, $team_id);
+        $formDraw = self::teamWhereDraw($response, $team_id);
+        return [
+            'win' => $formWin,
+            'lost' => $formLost,
+            'draw' => $formDraw,
+            //'list_game' => $response
+        ];
+    }
+
+    static function teamWhereWin($response, $team_id)
+    {
+        $list_results = array_filter($response, function ($item) use ($team_id) {
+            $res = false;
+            if (($item->teams->home->id == $team_id && $item->teams->home->winner == true) ||
+                ($item->teams->away->id == $team_id && $item->teams->away->winner == true)) {
+                $res = true;
+            }
+            return $res;
+        });
+        $team_jums = [];
+        $win = 0;
+        $lost = 0;
+        $draw = 0;
+        for ($i = 0; $i < sizeof($list_results); $i++) {
+            if (isset($list_results[$i])) {
+                for ($j = 0; $j < sizeof($response); $j++) {
+                    if ($response[$j]->fixture->id == $list_results[$i]->fixture->id) {
+                        if ($j + 1 <= sizeof($response)) {
+                            $fix = $response[$j + 1];
+                            $team_jums[] = $fix;
+                            if ($fix->teams->home->id == $team_id && $fix->teams->home->winner == true) {
+                                $win++;
+                            } elseif ($fix->teams->home->id == $team_id && $fix->teams->away->winner == true) {
+                                $lost++;
+                            } elseif ($fix->teams->away->id == $team_id && $fix->teams->away->winner == true) {
+                                $win++;
+                            } elseif ($fix->teams->away->id == $team_id && $fix->teams->home->winner == true) {
+                                $lost++;
+                            } else {
+                                $draw++;
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+
+        }
+        return [
+            'win' => $win,
+            'lost' => $lost,
+            'draw' => $draw,
+            'list_game' => $team_jums
+        ];
+    }
+
+    static function teamWhereLost($response, $team_id)
+    {
+        $list_results = array_filter($response, function ($item) use ($team_id) {
+            $res = false;
+            if (($item->teams->home->id == $team_id && $item->teams->home->winner == false) ||
+                ($item->teams->away->id == $team_id && $item->teams->away->winner == false)) {
+                $res = true;
+            }
+            return $res;
+        });
+        $team_jums = [];
+        $win = 0;
+        $lost = 0;
+        $draw = 0;
+        for ($i = 0; $i < sizeof($list_results); $i++) {
+            if (isset($list_results[$i])) {
+                for ($j = 0; $j < sizeof($response); $j++) {
+                    if ($response[$j]->fixture->id == $list_results[$i]->fixture->id) {
+                        if ($j + 1 <= sizeof($response)) {
+                            $fix = $response[$j + 1];
+                            $team_jums[] = $fix;
+                            if ($fix->teams->home->id == $team_id && $fix->teams->home->winner == true) {
+                                $win++;
+                            } elseif ($fix->teams->home->id == $team_id && $fix->teams->away->winner == true) {
+                                $lost++;
+                            } elseif ($fix->teams->away->id == $team_id && $fix->teams->away->winner == true) {
+                                $win++;
+                            } elseif ($fix->teams->away->id == $team_id && $fix->teams->home->winner == true) {
+                                $lost++;
+                            } else {
+                                $draw++;
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+
+        }
+        return [
+            'win' => $win,
+            'lost' => $lost,
+            'draw' => $draw,
+            'list_game' => $team_jums
+        ];
+    }
+
+    static function teamWhereDraw($response, $team_id)
+    {
+        $list_results = array_filter($response, function ($item) use ($team_id) {
+            $res = false;
+            if ($item->teams->home->winner == null && $item->teams->away->winner == null) {
+                $res = true;
+            }
+            return $res;
+        });
+        $team_jums = [];
+        $win = 0;
+        $lost = 0;
+        $draw = 0;
+        for ($i = 0; $i < sizeof($list_results); $i++) {
+            if (isset($list_results[$i])) {
+                for ($j = 0; $j < sizeof($response); $j++) {
+                    if ($response[$j]->fixture->id == $list_results[$i]->fixture->id) {
+                        if ($j + 1 <= sizeof($response)) {
+                            $fix = $response[$j + 1];
+                            $team_jums[] = $fix;
+                            if ($fix->teams->home->id == $team_id && $fix->teams->home->winner == true) {
+                                $win++;
+                            } elseif ($fix->teams->home->id == $team_id && $fix->teams->away->winner == true) {
+                                $lost++;
+                            } elseif ($fix->teams->away->id == $team_id && $fix->teams->away->winner == true) {
+                                $win++;
+                            } elseif ($fix->teams->away->id == $team_id && $fix->teams->home->winner == true) {
+                                $lost++;
+                            } else {
+                                $draw++;
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+
+        }
+        return [
+            'win' => $win,
+            'lost' => $lost,
+            'draw' => $draw,
+            'list_game' => $team_jums
         ];
     }
 }
