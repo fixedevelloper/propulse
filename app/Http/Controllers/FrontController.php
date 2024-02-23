@@ -427,21 +427,20 @@ class FrontController extends Controller
         $fixture = Fixture::query()->firstWhere('fixture_id', '=', $request->get('id'));
         $team_home_id = $fixture->team_home_id;
         $team_away_id = $fixture->team_away_id;
+
  /*       $standing_home = Helpers::rankTeam($fixture);
         $standing_away = Helpers::rankTeamAway($fixture);
-
-        $last_home = str_split($standing_home->form);
-        $last_home_ = $last_home[0];
-        $last_away = str_split($standing_away->form);
-        $last_away_ = $last_away[0];*/
+*/
+        $last_home_ = Helpers::lastFixture($team_home_id);
+        $last_away_ = Helpers::lastFixture($team_away_id);
         $list_home=Helpers::getLastFixtureByTeam($team_home_id,"w");
         $list_away=Helpers::getLastFixtureByTeam($team_away_id,"w");
-        //dump($list_home);
+        dump($last_home_);
         return view('event_after', [
             'team_home' => Team::query()->firstWhere(['team_id' => $team_home_id]),
             'team_away' => Team::query()->firstWhere(['team_id' => $team_away_id]),
-            'home_lastgame'=>"",
-            'away_lastgame'=>"",
+            'home_lastgame'=>$last_home_,
+            'away_lastgame'=>$last_away_,
             'home' => $list_home,
             'away' => $list_away
         ]);

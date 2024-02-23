@@ -79,6 +79,21 @@ class Helpers
         return $arrays;
     }
 
+    static function lastFixture($team_id){
+        $fixture=Fixture::query()->where('team_home_id','=',$team_id)
+            ->orWhere('team_away_id','=',$team_id)->orderByDesc('fixture_id')->first();
+        if ($fixture->team_home_id == $team_id && $fixture->team_home_winner == true) {
+            return "W";
+        } elseif ($fixture->team_home_id == $team_id && $fixture->team_away_winner == true) {
+            return "L";
+        } elseif ($fixture->team_away_id == $team_id && $fixture->team_away_winner == true) {
+            return "W";
+        } elseif ($fixture->team_away_id == $team_id && $fixture->team_home_winner == true) {
+            return "L";
+        } else {
+            return "D";
+        }
+    }
     static function fixtureOfDayByLeague($league, $time, $rang)
     {
         $arrays = [];
