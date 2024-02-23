@@ -67,7 +67,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <div class="card card_dark mt-3 text-white   @if($home_lastgame=="W") bg-warning @endif">
+            <div class="card card_dark mt-3 text-white   @if($home_lastgame=="D") bg-warning @endif">
                 <div class="card-header">
                     <h3>{{$team_home->name}} After Draw</h3>
                 </div>
@@ -81,7 +81,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card card_dark mt-3 text-white @if($away_lastgame=="W") bg-warning @endif">
+            <div class="card card_dark mt-3 text-white @if($away_lastgame=="D") bg-warning @endif">
                 <div class="card-header">
                     <h3>{{$team_away->name}} After Draw</h3>
                 </div>
