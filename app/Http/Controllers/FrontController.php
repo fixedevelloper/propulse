@@ -435,7 +435,7 @@ class FrontController extends Controller
         $last_away_ = Helpers::lastFixture($team_away_id);
         $list_home=Helpers::getLastFixtureByTeam($team_home_id,"w");
         $list_away=Helpers::getLastFixtureByTeam($team_away_id,"w");
-        dump($last_home_);
+
         return view('event_after', [
             'team_home' => Team::query()->firstWhere(['team_id' => $team_home_id]),
             'team_away' => Team::query()->firstWhere(['team_id' => $team_away_id]),

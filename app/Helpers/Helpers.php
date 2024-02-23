@@ -80,15 +80,15 @@ class Helpers
     }
 
     static function lastFixture($team_id){
-        $fixture=Fixture::query()->where('team_home_id','=',$team_id)
+        $fixture=Fixture::query()->where('st_short','=',"FT")->where('team_home_id','=',$team_id)
             ->orWhere('team_away_id','=',$team_id)->orderByDesc('fixture_id')->first();
-        if ($fixture->team_home_id == $team_id && $fixture->team_home_winner == true) {
+        if ($fixture->team_home_id == $team_id && $fixture->team_home_winner == 1) {
             return "W";
-        } elseif ($fixture->team_home_id == $team_id && $fixture->team_away_winner == true) {
+        } elseif ($fixture->team_home_id == $team_id && $fixture->team_away_winner == 1) {
             return "L";
-        } elseif ($fixture->team_away_id == $team_id && $fixture->team_away_winner == true) {
+        } elseif ($fixture->team_away_id == $team_id && $fixture->team_away_winner == 1) {
             return "W";
-        } elseif ($fixture->team_away_id == $team_id && $fixture->team_home_winner == true) {
+        } elseif ($fixture->team_away_id == $team_id && $fixture->team_home_winner == 1) {
             return "L";
         } else {
             return "D";
