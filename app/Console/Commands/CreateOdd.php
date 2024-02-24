@@ -34,7 +34,7 @@ class CreateOdd extends Command
         $leagues = Fixture::query()->where(['day_timestamp' => $timestamp])->distinct()->get(['league_id']);;
         foreach ($leagues as $league) {
             $this->createOddDay($league->league->league_id);
-            $this->createOdd($league->league->league_id);
+           // $this->createOdd($league->league->league_id);
 
         }
     }
@@ -45,7 +45,6 @@ class CreateOdd extends Command
         $season = "2023";
         $res = FootballAPIService::getAllBetOddvalue1xbetByDate($league_id, $season, $date);
         $reponse = $res->response;
-        logger(sizeof($reponse));
         for ($k = 0; $k < sizeof($reponse); $k++) {
             $fixture_id = $reponse[$k]->fixture->id;
             $odd = OddDay::query()->firstWhere(['fixture_id' => $fixture_id]);
@@ -62,12 +61,38 @@ class CreateOdd extends Command
             if (isset($bookmakers->bets[18])) {
                 $data_home = $bookmakers->bets[18]->values;
 
-                $odd->h1 = isset($data_home[6]) ? $data_home[6]->odd : "-";
+                for ($i=0;$i<sizeof($data_home);$i++){
+                    switch ($data_home[$i]->value){
+                        case "Over 0.5":
+                            $odd->h1=$data_home[$i]->odd;
+                            break;
+                        case "Over 1.5":
+                            $odd->h2=$data_home[$i]->odd;
+                            break;
+                        case "Over 2.5":
+                            $odd->h3=$data_home[$i]->odd;
+                            break;
+                        case "Over 3.5":
+                            $odd->h4=$data_home[$i]->odd;
+                            break;
+                        case "Over 4.5":
+                            $odd->h5=$data_home[$i]->odd;
+                            break;
+                        case "Over 5.5":
+                            $odd->h6=$data_home[$i]->odd;
+                            break;
+                    }
+
+                 /*   if ($data_home[$i]->value=="Over 3.5"){
+                    logger($data_home[$i]->odd);
+                    }*/
+                }
+             /*   $odd->h1 = isset($data_home[6]) ? $data_home[6]->odd : "-";
                 $odd->h2 = isset($data_home[2]) ? $data_home[2]->odd : "-";
                 $odd->h3 = isset($data_home[4]) ? $data_home[4]->odd : "-";
                 $odd->h4 = isset($data_home[0]) ? $data_home[0]->odd : "-";
                 $odd->h5 = isset($data_home[4]) ? $data_home[4]->odd : "-";
-                $odd->h6 = isset($data_home[18]) ? $data_home[18]->odd : "-";
+                $odd->h6 = isset($data_home[18]) ? $data_home[18]->odd : "-";*/
             }else{
                 $odd->h1 ="-";
                 $odd->h2 ="-";
@@ -77,12 +102,28 @@ class CreateOdd extends Command
             }
             if (isset($bookmakers->bets[19])){
                 $data_away = $bookmakers->bets[19]->values;
-                $odd->a1 = isset($data_away[5])?$data_away[5]->odd:"-";
-                $odd->a2 = isset($data_away[1])?$data_away[1]->odd:"-";
-                $odd->a3 = isset($data_away[3])?$data_away[3]->odd:"-";
-                $odd->a4 = isset($data_away[0])?$data_away[0]->odd:"-";
-                $odd->a5 = "-";
-                $odd->a6 = "-";
+                for ($i=0;$i<sizeof($data_away);$i++){
+                switch ($data_away[$i]->value){
+                    case "Over 0.5":
+                        $odd->a1=$data_away[$i]->odd;
+                        break;
+                    case "Over 1.5":
+                        $odd->a2=$data_away[$i]->odd;
+                        break;
+                    case "Over 2.5":
+                        $odd->a3=$data_away[$i]->odd;
+                        break;
+                    case "Over 3.5":
+                        $odd->a4=$data_away[$i]->odd;
+                        break;
+                    case "Over 4.5":
+                        $odd->a5=$data_away[$i]->odd;
+                        break;
+                    case "Over 5.5":
+                        $odd->a6=$data_away[$i]->odd;
+                        break;
+                }
+                }
             }else{
                 $odd->a1 ="-";
                 $odd->a2 ="-";
@@ -93,7 +134,6 @@ class CreateOdd extends Command
 
             $odd->save();
         }
-
 
     }
 

@@ -131,7 +131,7 @@ class FootballAPIService
         ];
         $client = new Client(['headers' => $options]);
         $res = $client->request('GET', env("APIFOOT_KEY_URL").'/odds',
-            ['query' => [ 'league' => $league,'bookmaker'=>11,'season'=>$season,'date'=>$date]]);
+            ['query' => [ 'league' => $league,'bookmaker'=>6,'season'=>$season,'date'=>$date]]);
         return json_decode($res->getBody());
     }
     static function getAllBetOddvalue1xbetAll($fixture){
