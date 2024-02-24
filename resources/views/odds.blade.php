@@ -42,8 +42,8 @@
                                 <td>{{Carbon\Carbon::createFromTimestamp($odd->day_timestamp)->format('Y-m-d')}}</td>
                                 <td>{{$team_home['name']}}</td>
                                 <td>{{$team_away['name']}}</td>
-                                <td></td>
-                                <td>{{$league['name']}}</td>
+                                <td><img src="{{$odd->country_flag}}" width="50">{{$odd->country}}</td>
+                                <td>{{$odd->league}}</td>
 
                                 <td>{{$odd->h1}}</td>
                                 <td>{{$odd->h2}}</td>

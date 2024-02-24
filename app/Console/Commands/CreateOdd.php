@@ -54,22 +54,30 @@ class CreateOdd extends Command
                 $odd->fixture_id = $fixture_id;
                 $odd->league_id = $reponse[$k]->league->id;
             }
+            $odd->league = $reponse[$k]->league->name;
+            $odd->country = $reponse[$k]->league->country;
+            $odd->country_flag = $reponse[$k]->league->flag;
             $bookmakers = $reponse[$k]->bookmakers[0];
-            $data_home = $bookmakers->bets[14]->values;
-            $data_away = $bookmakers->bets[15]->values;
-            $odd->h1 = isset($data_home[16])? $data_home[16]->odd:"-";
-            $odd->h2 = isset($data_home[10])?$data_home[10]->odd:"-";
-            $odd->h3 = isset($data_home[6])?$data_home[6]->odd:"-";
-            $odd->h4 = isset($data_home[14])?$data_home[14]->odd:"-";
-            $odd->h5 = isset($data_home[18])?$data_home[18]->odd:"-";
-            $odd->h6 = isset($data_home[6])?$data_home[6]->odd:"-";
+            if (isset($bookmakers->bets[14])) {
+                $data_home = $bookmakers->bets[14]->values;
 
-            $odd->a1 = isset($data_away[4])?$data_away[4]->odd:"-";
-            $odd->a2 = isset($data_away[0])?$data_away[0]->odd:"-";
-            $odd->a3 = isset($data_away[2])?$data_away[2]->odd:"-";
-            $odd->a4 = "-";
-            $odd->a5 = "-";
-            $odd->a6 = "-";
+                $odd->h1 = isset($data_home[2]) ? $data_home[2]->odd : "-";
+                $odd->h2 = isset($data_home[6]) ? $data_home[6]->odd : "-";
+                $odd->h3 = isset($data_home[0]) ? $data_home[0]->odd : "-";
+                $odd->h4 = isset($data_home[4]) ? $data_home[4]->odd : "-";
+                $odd->h5 = isset($data_home[18]) ? $data_home[18]->odd : "-";
+                $odd->h6 = isset($data_home[20]) ? $data_home[20]->odd : "-";
+            }
+            if (isset($bookmakers->bets[15])){
+                $data_away = $bookmakers->bets[15]->values;
+                $odd->a1 = isset($data_away[8])?$data_away[8]->odd:"-";
+                $odd->a2 = isset($data_away[6])?$data_away[6]->odd:"-";
+                $odd->a3 = isset($data_away[2])?$data_away[2]->odd:"-";
+                $odd->a4 = "-";
+                $odd->a5 = "-";
+                $odd->a6 = "-";
+            }
+
             $odd->save();
         }
 
