@@ -12,7 +12,7 @@ class OddController extends Controller
 {
     public function odds()
     {
-        $json = \File::get('39.json');
+/*        $json = \File::get('39.json');
         $arrays=json_decode($json,true);
         $reponse = $arrays['response'];
         for ($k = 0; $k < sizeof($reponse); $k++) {
@@ -26,10 +26,10 @@ class OddController extends Controller
                     }
                 }
             }
-        }
+        }*/
 
         $odds=OddDay::query()
-            ->where('day_timestamp','=',Carbon::parse(date("Y-m-d"))->getTimestamp())->paginate(2);
+            ->where('day_timestamp','=',Carbon::parse(date("Y-m-d"))->getTimestamp())->paginate(20);
 
         return view('odds', [
             "odds"=>$odds
