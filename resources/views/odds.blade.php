@@ -11,6 +11,7 @@
                     <table class="table table-bordered text-white">
                         <thead>
                         <tr>
+                            <th></th>
                             <th>Date</th>
                             <th>Home</th>
                             <th>Away</th>
@@ -39,6 +40,7 @@
                              $league=App\Helpers\Helpers::getLeagueByID($fixture->league_id);
                             @endphp
                             <tr>
+                                <td>{{$loop->index+1}}</td>
                                 <td>{{Carbon\Carbon::createFromTimestamp($odd->day_timestamp)->format('Y-m-d')}}</td>
                                 <td>{{$team_home['name']}}</td>
                                 <td>{{$team_away['name']}}</td>

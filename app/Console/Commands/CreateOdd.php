@@ -61,21 +61,33 @@ class CreateOdd extends Command
             if (isset($bookmakers->bets[14])) {
                 $data_home = $bookmakers->bets[14]->values;
 
-                $odd->h1 = isset($data_home[2]) ? $data_home[2]->odd : "-";
-                $odd->h2 = isset($data_home[6]) ? $data_home[6]->odd : "-";
-                $odd->h3 = isset($data_home[0]) ? $data_home[0]->odd : "-";
-                $odd->h4 = isset($data_home[4]) ? $data_home[4]->odd : "-";
-                $odd->h5 = isset($data_home[18]) ? $data_home[18]->odd : "-";
-                $odd->h6 = isset($data_home[20]) ? $data_home[20]->odd : "-";
+                $odd->h1 = isset($data_home[8]) ? $data_home[8]->odd : "-";
+                $odd->h2 = isset($data_home[2]) ? $data_home[2]->odd : "-";
+                $odd->h3 = isset($data_home[6]) ? $data_home[6]->odd : "-";
+                $odd->h4 = isset($data_home[0]) ? $data_home[0]->odd : "-";
+                $odd->h5 = isset($data_home[4]) ? $data_home[4]->odd : "-";
+                $odd->h6 = isset($data_home[18]) ? $data_home[18]->odd : "-";
+            }else{
+                $odd->h1 ="-";
+                $odd->h2 ="-";
+                $odd->h3 ="-";
+                $odd->h4 ="-";$odd->h5 ="-";
+                $odd->h6 ="-";
             }
             if (isset($bookmakers->bets[15])){
                 $data_away = $bookmakers->bets[15]->values;
-                $odd->a1 = isset($data_away[8])?$data_away[8]->odd:"-";
-                $odd->a2 = isset($data_away[6])?$data_away[6]->odd:"-";
+                $odd->a1 = isset($data_away[4])?$data_away[4]->odd:"-";
+                $odd->a2 = isset($data_away[0])?$data_away[0]->odd:"-";
                 $odd->a3 = isset($data_away[2])?$data_away[2]->odd:"-";
                 $odd->a4 = "-";
                 $odd->a5 = "-";
                 $odd->a6 = "-";
+            }else{
+                $odd->a1 ="-";
+                $odd->a2 ="-";
+                $odd->a3 ="-";
+                $odd->a4 ="-";$odd->a5 ="-";
+                $odd->a6 ="-";
             }
 
             $odd->save();
