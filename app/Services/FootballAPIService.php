@@ -124,14 +124,14 @@ class FootballAPIService
             ['query' => [ 'fixture' => $fixture,'bookmaker'=>11,'bet'=>1]]);
         return json_decode($res->getBody());
     }
-    static function getAllBetOddvalue1xbetByDate($date){
+    static function getAllBetOddvalue1xbetByDate($league,$season,$date){
         $options=[
             'x-rapidapi-host' => 'api-football-v1.p.rapidapi.com',
             'x-rapidapi-key' => env("APIFOOT_KEY")
         ];
         $client = new Client(['headers' => $options]);
         $res = $client->request('GET', env("APIFOOT_KEY_URL").'/odds',
-            ['query' => [ 'date' => $date,'bookmaker'=>11]]);
+            ['query' => [ 'league' => $league,'bookmaker'=>11,'season'=>$season,'date'=>$date]]);
         return json_decode($res->getBody());
     }
     static function getAllBetOddvalue1xbetAll($fixture){

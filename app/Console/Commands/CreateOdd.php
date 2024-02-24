@@ -33,8 +33,9 @@ class CreateOdd extends Command
         $timestamp = Carbon::today()->getTimestamp();
         $leagues = Fixture::query()->where(['day_timestamp' => $timestamp])->distinct()->get(['league_id']);;
         foreach ($leagues as $league) {
-            $this->createOdd($league->league->league_id);
             $this->createOddDay($league->league->league_id);
+            $this->createOdd($league->league->league_id);
+
         }
     }
 
@@ -42,7 +43,7 @@ class CreateOdd extends Command
     {
         $date = date('Y-m-d');
         $season = "2023";
-        $res = FootballAPIService::getAllBetOddvalue1xbetAllByleague($league_id, $season, $date);
+        $res = FootballAPIService::getAllBetOddvalue1xbetByDate($league_id, $season, $date);
         $reponse = $res->response;
         logger(sizeof($reponse));
         for ($k = 0; $k < sizeof($reponse); $k++) {
@@ -58,12 +59,12 @@ class CreateOdd extends Command
             $odd->country = $reponse[$k]->league->country;
             $odd->country_flag = $reponse[$k]->league->flag;
             $bookmakers = $reponse[$k]->bookmakers[0];
-            if (isset($bookmakers->bets[14])) {
-                $data_home = $bookmakers->bets[14]->values;
+            if (isset($bookmakers->bets[18])) {
+                $data_home = $bookmakers->bets[18]->values;
 
-                $odd->h1 = isset($data_home[8]) ? $data_home[8]->odd : "-";
+                $odd->h1 = isset($data_home[6]) ? $data_home[6]->odd : "-";
                 $odd->h2 = isset($data_home[2]) ? $data_home[2]->odd : "-";
-                $odd->h3 = isset($data_home[6]) ? $data_home[6]->odd : "-";
+                $odd->h3 = isset($data_home[4]) ? $data_home[4]->odd : "-";
                 $odd->h4 = isset($data_home[0]) ? $data_home[0]->odd : "-";
                 $odd->h5 = isset($data_home[4]) ? $data_home[4]->odd : "-";
                 $odd->h6 = isset($data_home[18]) ? $data_home[18]->odd : "-";
@@ -74,12 +75,12 @@ class CreateOdd extends Command
                 $odd->h4 ="-";$odd->h5 ="-";
                 $odd->h6 ="-";
             }
-            if (isset($bookmakers->bets[15])){
-                $data_away = $bookmakers->bets[15]->values;
-                $odd->a1 = isset($data_away[4])?$data_away[4]->odd:"-";
-                $odd->a2 = isset($data_away[0])?$data_away[0]->odd:"-";
-                $odd->a3 = isset($data_away[2])?$data_away[2]->odd:"-";
-                $odd->a4 = "-";
+            if (isset($bookmakers->bets[19])){
+                $data_away = $bookmakers->bets[19]->values;
+                $odd->a1 = isset($data_away[5])?$data_away[5]->odd:"-";
+                $odd->a2 = isset($data_away[1])?$data_away[1]->odd:"-";
+                $odd->a3 = isset($data_away[3])?$data_away[3]->odd:"-";
+                $odd->a4 = isset($data_away[0])?$data_away[0]->odd:"-";
                 $odd->a5 = "-";
                 $odd->a6 = "-";
             }else{
