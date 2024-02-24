@@ -7,32 +7,26 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\OddDay;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class OddController extends Controller
 {
-    public function odds()
+    public function odds(Request $request)
     {
-/*        $json = \File::get('39.json');
-        $arrays=json_decode($json,true);
-        $reponse = $arrays['response'];
-        for ($k = 0; $k < sizeof($reponse); $k++) {
-            $bookmakers = $reponse[$k]['bookmakers'][0];
-            if (isset($bookmakers['bets'][18])) {
-                $data_home = $bookmakers['bets'][18]['values'];
-
-                for ($i=0;$i<sizeof($data_home);$i++){
-                    if ($data_home[$i]['value']=="Over 3.5"){
-                        logger($data_home[$i]['odd']);
-                    }
-                }
-            }
-        }*/
-
+        if (is_null($request->get('date'))) {
+            $date_ = Carbon::today()->format('Y-m-d');
+            $timestamp = Carbon::today()->getTimestamp();
+        } else {
+            $date_ = $request->get('date');
+            $timestamp = Carbon::parse($date_)->getTimestamp();
+        }
+        $request_filter = $request->get('filter');
         $odds=OddDay::query()
-            ->where('day_timestamp','=',Carbon::parse(date("Y-m-d"))->getTimestamp())->paginate(20);
+            ->where('day_timestamp','=',$timestamp)->paginate(20)->appends(['date' => $date_, 'act' => $request_filter]);
 
         return view('odds', [
-            "odds"=>$odds
+            "odds"=>$odds,
+            "date"=>$date_
         ]);
 
     }
