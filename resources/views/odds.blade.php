@@ -63,6 +63,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    {{$odds->links()}}
                 </div>
 
             </div>
