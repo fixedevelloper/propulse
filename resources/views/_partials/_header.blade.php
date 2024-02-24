@@ -82,6 +82,11 @@
                             <span>Statistic event</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{route('odds')}}">
+                            <span>Odds</span>
+                        </a>
+                    </li>
                 {{--    <li class="cmn-grp">
                             <span class="cmn--btn" data-bs-toggle="modal" data-bs-target="#signup">
                                 <span class="rela">Sign In</span>

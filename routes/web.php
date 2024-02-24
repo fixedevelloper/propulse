@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OddController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,8 @@ Route::get('/live', [FrontController::class, 'live'])
     ->name('live');
 Route::get('/standings', [FrontController::class, 'standings'])
     ->name('standings');
+Route::get('/odds', [OddController::class, 'odds'])
+    ->name('odds');
 Route::get('/score-stat', [FrontController::class, 'score_statistic'])
     ->name('score_statistic');
 Route::get('/sportbetting', [FrontController::class, 'sportbetting'])

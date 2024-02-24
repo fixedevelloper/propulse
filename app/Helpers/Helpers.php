@@ -5,6 +5,7 @@ namespace App\Helpers;
 
 
 use App\Models\Fixture;
+use App\Models\League;
 use App\Models\Odd;
 use App\Models\Stadings;
 use App\Models\Team;
@@ -17,6 +18,11 @@ class Helpers
     static function odd($fixture_id)
     {
         $odd = Odd::query()->firstWhere(['fixture_id' => $fixture_id]);
+        return $odd;
+    }
+    static function fixture($fixture_id)
+    {
+        $odd = Fixture::query()->firstWhere(['fixture_id' => $fixture_id]);
         return $odd;
     }
 
@@ -135,6 +141,15 @@ class Helpers
             'logo' => is_null($team) ? "" : $team->logo,
         ];
     }
+    static function getLeagueByID($league_id)
+    {
+        $league = League::query()->firstWhere(['league_id' => $league_id]);
+        return [
+            'name' => is_null($league) ? "" : $league->name,
+            'logo' => is_null($league) ? "" : $league->logo,
+        ];
+    }
+
 
     static function calculPointHome($stading)
     {
